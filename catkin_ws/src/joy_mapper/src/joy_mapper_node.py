@@ -2,8 +2,12 @@
 import rospy
 import numpy as np
 import math
+from duckietown_utils.jpg import image_cv_from_jpg
+from duckietown_msgs.msg import Image
+from cv_bridge import Cvbridge, CvBridgeError
 from duckietown_msgs.msg import  Twist2DStamped, BoolStamped
 from sensor_msgs.msg import Joy
+from sensor_msgs.msg import CompressedImage, Image
 import time
 from __builtin__ import True
 
@@ -11,7 +15,8 @@ class JoyMapper(object):
     def __init__(self):
         self.node_name = rospy.get_name()
         rospy.loginfo("[%s] Initializing " %(self.node_name))
-        
+
+        self.pic=None
         self.joy = None
         self.last_pub_msg = None
         self.last_pub_time = rospy.Time.now()
@@ -33,6 +38,9 @@ class JoyMapper(object):
         self.pub_avoidance = rospy.Publisher("~start_avoidance",BoolStamped,queue_size=1)
         self.pub_pressA = rospy.Publisher("~press_A",BoolStamped,queue_size=1)
         self.pub_pressB = rospy.Publisher("~press_B",BoolStamped,queue_size=1)
+        self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
+        self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
+        self.save_image = rospy.Subscriber("~image", CompressedImage, self.cbImage, queue_size=1)
 
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
@@ -50,6 +58,9 @@ class JoyMapper(object):
         pub_msg.header.stamp = self.last_pub_time
         self.pub_parallel_autonomy.publish(pub_msg)
         
+    def cbImage(self,msg):
+        image_cv = image_cv_from_jpg(msg.data)
+        self.pic = image_cv
 
     def cbParamTimer(self,event):
         self.v_gain = rospy.get_param("~speed_gain", 1.0)
@@ -108,10 +119,22 @@ class JoyMapper(object):
             parallel_autonomy_msg.data = self.state_parallel_autonomy
             self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
         elif (joy_msg.buttons[3] == 1):
-            anti_instagram_msg = BoolStamped()
-            anti_instagram_msg.header.stamp = self.joy.header.stamp
-            anti_instagram_msg.data = True
-            self.pub_anti_instagram.publish(anti_instagram_msg)
+            pressY_msg = BoolStamped()
+            rospy.loginfo('Press "Y"')
+            rospy.loginfo('HELLO WORLD~~~~~~~')
+            pressY_msg.header.stamp = self.joy.header.stamp
+            pressY_msg.data = True
+            self.pub_pressY.publish(pressY_msg)
+        elif (joy_msg.buttons[2] == 1):
+            pressX_msg = BoolStamped()
+            #raspistill -t 1000 -o out1.jpg
+            rospy.loginfo('Press "X"')
+            rospy.loginfo('Let us take a picture~~~~~~~')
+            cv2.imwrite("/home/ubuntu/duckietown/demo"+".jpg",self.pic)
+            #cv2_img = bridge.imgmsg_to_cv2(msg, "bgr8")
+            pressX_msg.header.stamp = self.joy.header.stamp
+            pressX_msg.data = True
+            self.pub_pressX.publish(pressX_msg)
         elif (joy_msg.buttons[8] == 1): #power button (middle)
             e_stop_msg = BoolStamped()
             e_stop_msg.header.stamp = self.joy.header.stamp

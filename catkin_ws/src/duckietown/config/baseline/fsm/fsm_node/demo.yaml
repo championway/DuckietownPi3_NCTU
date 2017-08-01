@@ -14,6 +14,14 @@ events: #Maps from subscribing topic to signal ids
     topic: "joy_mapper_node/press_B"
     msg_type: "BoolStamped"
     trigger: True
+  pressX:
+    topic: "joy_mapper_node/press_X"
+    msg_type: "BoolStamped"
+    trigger: True
+  pressY:
+    topic: "joy_mapper_node/press_Y"
+    msg_type: "BoolStamped"
+    trigger: True
   joystick_override_off: 
     topic: "joy_mapper_node/joystick_override"
     msg_type: "BoolStamped"
@@ -109,8 +117,42 @@ states:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
-      joystick_override_off: "LANE_FOLLOWING"
-      start_avoidance: "LANE_FOLLOWING_AVOID"
+      pressX: "PHOTO"
+      pressY: "HELLO"
+#      joystick_override_off: "LANE_FOLLOWING"
+#      start_avoidance: "LANE_FOLLOWING_AVOID"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - stop_line_filter_node
+      - framerate_high
+      - decoder_node
+      - apriltag_node
+    lights: ["joystick"]
+HELLO:
+    transitions:
+      pressA: "JOYSTICK_CONTROL"
+      pressB: "LANE_FOLLOWING"
+      pressX: "PHOTO"
+      pressY: "HELLO"
+#      joystick_override_off: "LANE_FOLLOWING"
+#      start_avoidance: "LANE_FOLLOWING_AVOID"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - stop_line_filter_node
+      - framerate_high
+      - decoder_node
+      - apriltag_node
+    lights: ["joystick"]
+PHOTO:
+    transitions:
+      pressA: "JOYSTICK_CONTROL"
+      pressB: "LANE_FOLLOWING"
+      pressX: "PHOTO"
+      pressY: "HELLO"
+#      joystick_override_off: "LANE_FOLLOWING"
+#      start_avoidance: "LANE_FOLLOWING_AVOID"
     active_nodes:
       - lane_filter_node
       - line_detector_node
