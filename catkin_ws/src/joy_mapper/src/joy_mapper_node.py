@@ -4,7 +4,7 @@ import numpy as np
 import math
 from duckietown_utils.jpg import image_cv_from_jpg
 from duckietown_msgs.msg import Image
-from cv_bridge import Cvbridge, CvBridgeError
+from cv_bridge import CvBridge, CvBridgeError
 from duckietown_msgs.msg import  Twist2DStamped, BoolStamped
 from sensor_msgs.msg import Joy
 from sensor_msgs.msg import CompressedImage, Image
