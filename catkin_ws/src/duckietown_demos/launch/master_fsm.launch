@@ -204,6 +204,7 @@
 		</include>
 
 		<!-- joy_mapper -->
+         <remap from="joy_mapper_node/image" to="camera_node/image/compressed"/>
 		<include file="$(find joy_mapper)/launch/joy_mapper_node.launch">
 			<arg name="veh" value="$(arg veh)"/>
 			<arg name="config" value="$(arg config)"/>
