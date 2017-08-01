@@ -11,17 +11,15 @@ from sensor_msgs.msg import Joy
 from sensor_msgs.msg import CompressedImage, Image
 import time
 from __builtin__ import True
-
+#bridge = CvBridge()
 class JoyMapper(object):
     def __init__(self):
         self.node_name = rospy.get_name()
         rospy.loginfo("[%s] Initializing " %(self.node_name))
-
-        self.pic=None
+        self.pic = None
         self.joy = None
         self.last_pub_msg = None
         self.last_pub_time = rospy.Time.now()
-
 
         # Setup Parameters
         self.v_gain = self.setupParam("~speed_gain", 0.41)
@@ -42,7 +40,7 @@ class JoyMapper(object):
         self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
         self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
         self.save_image = rospy.Subscriber("~image", CompressedImage, self.cbImage, queue_size=1)
-
+#        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
         
@@ -62,7 +60,6 @@ class JoyMapper(object):
     def cbImage(self,msg):
         image_cv = image_cv_from_jpg(msg.data)
         self.pic = image_cv
-
     def cbParamTimer(self,event):
         self.v_gain = rospy.get_param("~speed_gain", 1.0)
         self.omega_gain = rospy.get_param("~steer_gain", 10)
@@ -124,7 +121,7 @@ class JoyMapper(object):
             rospy.loginfo('Press "Y"')
             rospy.loginfo('HELLO WORLD~~~~~~~')
             pressY_msg.header.stamp = self.joy.header.stamp
-            pressY_msg.data = True
+            pressY_msg.data = True 
             self.pub_pressY.publish(pressY_msg)
         elif (joy_msg.buttons[2] == 1):
             pressX_msg = BoolStamped()
@@ -134,7 +131,7 @@ class JoyMapper(object):
             cv2.imwrite("/home/ubuntu/duckietown/demo"+".jpg",self.pic)
             #cv2_img = bridge.imgmsg_to_cv2(msg, "bgr8")
             pressX_msg.header.stamp = self.joy.header.stamp
-            pressX_msg.data = True
+            pressX_msg.data = True 
             self.pub_pressX.publish(pressX_msg)
         elif (joy_msg.buttons[8] == 1): #power button (middle)
             e_stop_msg = BoolStamped()
