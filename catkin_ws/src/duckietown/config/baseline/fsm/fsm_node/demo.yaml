@@ -129,7 +129,7 @@ states:
       - decoder_node
       - apriltag_node
     lights: ["joystick"]
-HELLO:
+  HELLO:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
@@ -145,7 +145,7 @@ HELLO:
       - decoder_node
       - apriltag_node
     lights: ["joystick"]
-PHOTO:
+  PHOTO:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
