@@ -2,6 +2,7 @@
 import rospy
 import numpy as np
 import math
+import cv2
 from duckietown_utils.jpg import image_cv_from_jpg
 from duckietown_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
