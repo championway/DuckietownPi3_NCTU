@@ -31,6 +31,8 @@ class JoyMapper(object):
         self.pub_anti_instagram = rospy.Publisher("anti_instagram_node/click",BoolStamped, queue_size=1)
         self.pub_e_stop = rospy.Publisher("wheels_driver_node/emergency_stop",BoolStamped,queue_size=1)
         self.pub_avoidance = rospy.Publisher("~start_avoidance",BoolStamped,queue_size=1)
+        self.pub_pressA = rospy.Publisher("~press_A",BoolStamped,queue_size=1)
+        self.pub_pressB = rospy.Publisher("~press_B",BoolStamped,queue_size=1)
 
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
@@ -121,7 +123,20 @@ class JoyMapper(object):
             avoidance_msg.header.stamp = self.joy.header.stamp
             avoidance_msg.data = True 
             self.pub_avoidance.publish(avoidance_msg)
-
+        elif (joy_msg.buttons[0] == 1): #push left joystick button 
+            pressA_msg = BoolStamped()
+            rospy.loginfo('Press "A"')
+            rospy.loginfo('Joystick Control')
+            pressA_msg.header.stamp = self.joy.header.stamp
+            pressA_msg.data = True 
+            self.pub_pressA.publish(pressA_msg)
+        elif (joy_msg.buttons[1] == 1): #push left joystick button 
+            pressB_msg = BoolStamped()
+            rospy.loginfo('Press "B"')
+            rospy.loginfo('Lane following')
+            pressB_msg.header.stamp = self.joy.header.stamp
+            pressB_msg.data = True 
+            self.pub_pressB.publish(pressB_msg)
         else:
             some_active = sum(joy_msg.buttons) > 0
             if some_active:
