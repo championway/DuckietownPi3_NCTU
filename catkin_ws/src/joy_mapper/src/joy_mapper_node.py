@@ -175,7 +175,7 @@ class JoyMapper(object):
             pressA_msg = BoolStamped()
             rospy.loginfo('Press "A"')
             rospy.loginfo('Joystick Control')
-            MultiRobot()
+            self.MultiRobot()
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
             self.pub_pressA.publish(pressA_msg)
@@ -183,7 +183,7 @@ class JoyMapper(object):
             pressB_msg = BoolStamped()
             rospy.loginfo('Press "B"')
             rospy.loginfo('Lane following')
-            MultiRobot()
+            self.MultiRobot()
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
             self.pub_pressB.publish(pressB_msg)
