@@ -36,10 +36,10 @@ class JoyMapper(object):
         self.pub_anti_instagram = rospy.Publisher("anti_instagram_node/click",BoolStamped, queue_size=1)
         self.pub_e_stop = rospy.Publisher("wheels_driver_node/emergency_stop",BoolStamped,queue_size=1)
         self.pub_avoidance = rospy.Publisher("~start_avoidance",BoolStamped,queue_size=1)
-        self.pub_pressA = rospy.Publisher("/"+robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
-        self.pub_pressB = rospy.Publisher("/"+robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
-        self.pub_pressX = rospy.Publisher("/"+robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
-        self.pub_pressY = rospy.Publisher("/"+robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+        self.pub_pressA = rospy.Publisher("/robot/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+        self.pub_pressB = rospy.Publisher("/robot/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+        self.pub_pressX = rospy.Publisher("/robot/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+        self.pub_pressY = rospy.Publisher("/robot/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
         self.save_image = rospy.Subscriber("~image", CompressedImage, self.cbImage, queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
@@ -141,6 +141,10 @@ class JoyMapper(object):
             rospy.loginfo('Press "Y"')
             rospy.loginfo('Select "car14"')
             robot = "car14"
+            self.pub_pressA = rospy.Publisher("/car14/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+            self.pub_pressB = rospy.Publisher("/car14/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+            self.pub_pressX = rospy.Publisher("/car14/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+            self.pub_pressY = rospy.Publisher("/car14/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
             pressY_msg.header.stamp = self.joy.header.stamp
             pressY_msg.data = True 
             self.pub_pressY.publish(pressY_msg)
@@ -150,6 +154,10 @@ class JoyMapper(object):
             rospy.loginfo('Press "X"')
             rospy.loginfo('Select "car13"')
             robot = "car13"
+            self.pub_pressA = rospy.Publisher("/car13/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+            self.pub_pressB = rospy.Publisher("/car13/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+            self.pub_pressX = rospy.Publisher("/car13/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+            self.pub_pressY = rospy.Publisher("/car13/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
             pressX_msg.header.stamp = self.joy.header.stamp
             pressX_msg.data = True 
             self.pub_pressX.publish(pressX_msg)
