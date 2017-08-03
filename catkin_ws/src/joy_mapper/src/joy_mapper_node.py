@@ -57,10 +57,17 @@ class JoyMapper(object):
         pub_msg.data = self.state_parallel_autonomy
         pub_msg.header.stamp = self.last_pub_time
         self.pub_parallel_autonomy.publish(pub_msg)
+
+    def MultiRobot(self):
+            self.pub_pressA = rospy.Publisher("/"+robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+            self.pub_pressB = rospy.Publisher("/"+robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+            self.pub_pressX = rospy.Publisher("/"+robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+            self.pub_pressY = rospy.Publisher("/"+robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
         
     def cbImage(self,msg):
         image_cv = image_cv_from_jpg(msg.data)
         self.pic = image_cv
+
     def cbParamTimer(self,event):
         self.v_gain = rospy.get_param("~speed_gain", 1.0)
         self.omega_gain = rospy.get_param("~steer_gain", 10)
@@ -141,10 +148,6 @@ class JoyMapper(object):
             rospy.loginfo('Press "Y"')
             rospy.loginfo('Select "car14"')
             robot = "car14"
-            self.pub_pressA = rospy.Publisher("/car14/joy_mapper_node/press_A",BoolStamped,queue_size=1)
-            self.pub_pressB = rospy.Publisher("/car14/joy_mapper_node/press_B",BoolStamped,queue_size=1)
-            self.pub_pressX = rospy.Publisher("/car14/joy_mapper_node/press_X",BoolStamped,queue_size=1)
-            self.pub_pressY = rospy.Publisher("/car14/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
             pressY_msg.header.stamp = self.joy.header.stamp
             pressY_msg.data = True 
             self.pub_pressY.publish(pressY_msg)
@@ -154,10 +157,6 @@ class JoyMapper(object):
             rospy.loginfo('Press "X"')
             rospy.loginfo('Select "car13"')
             robot = "car13"
-            self.pub_pressA = rospy.Publisher("/car13/joy_mapper_node/press_A",BoolStamped,queue_size=1)
-            self.pub_pressB = rospy.Publisher("/car13/joy_mapper_node/press_B",BoolStamped,queue_size=1)
-            self.pub_pressX = rospy.Publisher("/car13/joy_mapper_node/press_X",BoolStamped,queue_size=1)
-            self.pub_pressY = rospy.Publisher("/car13/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
             pressX_msg.header.stamp = self.joy.header.stamp
             pressX_msg.data = True 
             self.pub_pressX.publish(pressX_msg)
@@ -176,6 +175,7 @@ class JoyMapper(object):
             pressA_msg = BoolStamped()
             rospy.loginfo('Press "A"')
             rospy.loginfo('Joystick Control')
+            MultiRobot()
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
             self.pub_pressA.publish(pressA_msg)
@@ -183,6 +183,7 @@ class JoyMapper(object):
             pressB_msg = BoolStamped()
             rospy.loginfo('Press "B"')
             rospy.loginfo('Lane following')
+            MultiRobot()
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
             self.pub_pressB.publish(pressB_msg)
