@@ -30,16 +30,16 @@ class JoyMapper(object):
         self.simulated_vehicle_length = self.setupParam("~simulated_vehicle_length", 0.18)
 
         # Publications
-        self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
+        self.pub_car_cmd = rospy.Publisher("~car_cmd", Twist2DStamped, queue_size=1)
         self.pub_joy_override = rospy.Publisher("~joystick_override", BoolStamped, queue_size=1)
         self.pub_parallel_autonomy = rospy.Publisher("~parallel_autonomy",BoolStamped, queue_size=1)
         self.pub_anti_instagram = rospy.Publisher("anti_instagram_node/click",BoolStamped, queue_size=1)
         self.pub_e_stop = rospy.Publisher("wheels_driver_node/emergency_stop",BoolStamped,queue_size=1)
         self.pub_avoidance = rospy.Publisher("~start_avoidance",BoolStamped,queue_size=1)
-        self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
-        self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
-        self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
-        self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+        self.pub_pressA = rospy.Publisher("~press_A",BoolStamped,queue_size=1)
+        self.pub_pressB = rospy.Publisher("~press_B",BoolStamped,queue_size=1)
+        self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
+        self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
         self.save_image = rospy.Subscriber("~image", CompressedImage, self.cbImage, queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
