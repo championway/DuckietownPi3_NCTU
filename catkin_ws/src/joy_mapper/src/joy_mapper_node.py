@@ -20,7 +20,8 @@ class JoyMapper(object):
         self.joy = None
         self.last_pub_msg = None
         self.last_pub_time = rospy.Time.now()
-
+        #decide which robot
+        self.robot = None
         # Setup Parameters
         self.v_gain = self.setupParam("~speed_gain", 0.41)
         self.omega_gain = self.setupParam("~steer_gain", 8.3)
@@ -35,10 +36,10 @@ class JoyMapper(object):
         self.pub_anti_instagram = rospy.Publisher("anti_instagram_node/click",BoolStamped, queue_size=1)
         self.pub_e_stop = rospy.Publisher("wheels_driver_node/emergency_stop",BoolStamped,queue_size=1)
         self.pub_avoidance = rospy.Publisher("~start_avoidance",BoolStamped,queue_size=1)
-        self.pub_pressA = rospy.Publisher("~press_A",BoolStamped,queue_size=1)
-        self.pub_pressB = rospy.Publisher("~press_B",BoolStamped,queue_size=1)
-        self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
-        self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
+        self.pub_pressA = rospy.Publisher("/robot/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+        self.pub_pressB = rospy.Publisher("/robot/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+        self.pub_pressX = rospy.Publisher("/robot/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+        self.pub_pressY = rospy.Publisher("/robot/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
         self.save_image = rospy.Subscriber("~image", CompressedImage, self.cbImage, queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
@@ -116,6 +117,7 @@ class JoyMapper(object):
             parallel_autonomy_msg.header.stamp = self.joy.header.stamp
             parallel_autonomy_msg.data = self.state_parallel_autonomy
             self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
+            """
         elif (joy_msg.buttons[3] == 1):
             pressY_msg = BoolStamped()
             rospy.loginfo('Press "Y"')
@@ -130,6 +132,24 @@ class JoyMapper(object):
             rospy.loginfo('Let us take a picture~~~~~~~')
             cv2.imwrite("/home/ubuntu/duckietown/demo"+".jpg",self.pic)
             #cv2_img = bridge.imgmsg_to_cv2(msg, "bgr8")
+            pressX_msg.header.stamp = self.joy.header.stamp
+            pressX_msg.data = True 
+            self.pub_pressX.publish(pressX_msg)
+            """
+        elif (joy_msg.buttons[3] == 1):
+            pressY_msg = BoolStamped()
+            rospy.loginfo('Press "Y"')
+            rospy.loginfo('Select "car14"')
+            robot = "car14"
+            pressY_msg.header.stamp = self.joy.header.stamp
+            pressY_msg.data = True 
+            self.pub_pressY.publish(pressY_msg)
+        elif (joy_msg.buttons[2] == 1):
+            pressX_msg = BoolStamped()
+            #raspistill -t 1000 -o out1.jpg
+            rospy.loginfo('Press "X"')
+            rospy.loginfo('Select "car13"')
+            robot = "car13"
             pressX_msg.header.stamp = self.joy.header.stamp
             pressX_msg.data = True 
             self.pub_pressX.publish(pressX_msg)
