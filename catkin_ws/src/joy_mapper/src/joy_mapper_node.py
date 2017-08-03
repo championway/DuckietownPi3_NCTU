@@ -59,10 +59,10 @@ class JoyMapper(object):
         self.pub_parallel_autonomy.publish(pub_msg)
 
     def MultiRobot(self):
-            self.pub_pressA = rospy.Publisher("/"+robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
-            self.pub_pressB = rospy.Publisher("/"+robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
-            self.pub_pressX = rospy.Publisher("/"+robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
-            self.pub_pressY = rospy.Publisher("/"+robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+            self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+            self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+            self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+            self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
         
     def cbImage(self,msg):
         image_cv = image_cv_from_jpg(msg.data)
@@ -147,7 +147,7 @@ class JoyMapper(object):
             pressY_msg = BoolStamped()
             rospy.loginfo('Press "Y"')
             rospy.loginfo('Select "car14"')
-            robot = "car14"
+            self.robot = "car14"
             pressY_msg.header.stamp = self.joy.header.stamp
             pressY_msg.data = True 
             self.pub_pressY.publish(pressY_msg)
@@ -156,7 +156,7 @@ class JoyMapper(object):
             #raspistill -t 1000 -o out1.jpg
             rospy.loginfo('Press "X"')
             rospy.loginfo('Select "car13"')
-            robot = "car13"
+            self.robot = "car13"
             pressX_msg.header.stamp = self.joy.header.stamp
             pressX_msg.data = True 
             self.pub_pressX.publish(pressX_msg)
