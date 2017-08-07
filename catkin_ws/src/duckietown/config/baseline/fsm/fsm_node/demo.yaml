@@ -124,7 +124,7 @@ states:
       pressB: "LANE_FOLLOWING"
 #      pressX: "CAR13"
 #      pressY: "CAR14"
-      at_stop_line: "LANE_FOLLOWING"
+  #    at_stop_line: "LANE_FOLLOWING"
 #      joystick_override_off: "LANE_FOLLOWING"
 #      start_avoidance: "LANE_FOLLOWING_AVOID"
     active_nodes:
