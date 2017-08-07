@@ -6,7 +6,7 @@
     <!-- <arg name="testing" default="false" doc="using for test purposes." /> -->
 
     <arg name="pkg_name" value="stop_line_filter"/>
-    <arg name="node_name" default="stop_line_filter_node"/>
+    <arg name="node_name" default="stop_line_filter_node_fsm"/>
 
     <group ns="$(arg veh)">        
         <!-- run local -->

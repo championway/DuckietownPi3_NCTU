@@ -200,7 +200,7 @@ states:
     active_nodes:
       - lane_filter_node
       - line_detector_node
-      - stop_line_filter_node
+      - stop_line_filter_node_fsm
     lights: ["lane_following"]
   LANE_FOLLOWING_AVOID:
     transitions:
