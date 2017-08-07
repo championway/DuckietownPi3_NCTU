@@ -149,18 +149,20 @@ class JoyMapper(object):
             rospy.loginfo('Press "Y"')
             rospy.loginfo('Select "car14"')
             self.robot = "car14"
+            self.MultiRobot()
             pressY_msg.header.stamp = self.joy.header.stamp
             pressY_msg.data = True 
-            self.pub_pressY.publish(pressY_msg)
+            #self.pub_pressY.publish(pressY_msg)
         elif (joy_msg.buttons[2] == 1):
             pressX_msg = BoolStamped()
             #raspistill -t 1000 -o out1.jpg
             rospy.loginfo('Press "X"')
             rospy.loginfo('Select "car13"')
             self.robot = "car13"
+            self.MultiRobot()
             pressX_msg.header.stamp = self.joy.header.stamp
             pressX_msg.data = True 
-            self.pub_pressX.publish(pressX_msg)
+            #self.pub_pressX.publish(pressX_msg)
         elif (joy_msg.buttons[8] == 1): #power button (middle)
             e_stop_msg = BoolStamped()
             e_stop_msg.header.stamp = self.joy.header.stamp
@@ -176,7 +178,6 @@ class JoyMapper(object):
             pressA_msg = BoolStamped()
             rospy.loginfo('Press "A"')
             rospy.loginfo('Joystick Control')
-            self.MultiRobot()
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
             self.pub_pressA.publish(pressA_msg)
@@ -184,7 +185,6 @@ class JoyMapper(object):
             pressB_msg = BoolStamped()
             rospy.loginfo('Press "B"')
             rospy.loginfo('Lane following')
-            self.MultiRobot()
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
             self.pub_pressB.publish(pressB_msg)

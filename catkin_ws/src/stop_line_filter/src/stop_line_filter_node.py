@@ -60,6 +60,7 @@ class StopLineFilterNode(object):
         self.lane_pose = lane_pose_msg
 
     def processSegments(self, segment_list_msg):
+        ('-*/*/*/*/*&&&&&&&&&&*/*/*/*/-')
         if not self.active or self.sleep:
             return
         good_seg_count=0

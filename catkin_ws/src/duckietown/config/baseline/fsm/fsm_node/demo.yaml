@@ -134,38 +134,38 @@ states:
       - framerate_high
       - decoder_node
       - apriltag_node
-    lights: ["joystick"]
-  CAR14:
-    transitions:
-      pressA: "JOYSTICK_CONTROL"
-      pressB: "LANE_FOLLOWING"
-      pressX: "CAR13"
-      pressY: "CAR14"
-#      joystick_override_off: "LANE_FOLLOWING"
-#      start_avoidance: "LANE_FOLLOWING_AVOID"
-    active_nodes:
-      - lane_filter_node
-      - line_detector_node
-      - stop_line_filter_node
-      - framerate_high
-      - decoder_node
-      - apriltag_node
-    lights: ["joystick"]
-  CAR13:
-    transitions:
-      pressA: "JOYSTICK_CONTROL"
-      pressB: "LANE_FOLLOWING"
-      pressX: "CAR13"
-      pressY: "CAR14"
-#      joystick_override_off: "LANE_FOLLOWING"
-#      start_avoidance: "LANE_FOLLOWING_AVOID"
-    active_nodes:
-      - lane_filter_node
-      - line_detector_node
-      - stop_line_filter_node
-      - framerate_high
-      - decoder_node
-      - apriltag_node
+    lights: ["joystick"]   
+#  CAR14:
+#    transitions:
+#      pressA: "JOYSTICK_CONTROL"
+#      pressB: "LANE_FOLLOWING"
+#      pressX: "CAR13"
+#      pressY: "CAR14"
+##      joystick_override_off: "LANE_FOLLOWING"
+##      start_avoidance: "LANE_FOLLOWING_AVOID"
+#    active_nodes:
+#      - lane_filter_node
+#      - line_detector_node
+#      - stop_line_filter_node
+#      - framerate_high
+#      - decoder_node
+#      - apriltag_node
+#    lights: ["joystick"]
+#  CAR13:
+#    transitions:
+#      pressA: "JOYSTICK_CONTROL"
+#      pressB: "LANE_FOLLOWING"
+#      pressX: "CAR13"
+#      pressY: "CAR14"
+##      joystick_override_off: "LANE_FOLLOWING"
+##      start_avoidance: "LANE_FOLLOWING_AVOID"
+#    active_nodes:
+#      - lane_filter_node
+#      - line_detector_node
+#      - stop_line_filter_node
+#      - framerate_high
+#      - decoder_node
+#      - apriltag_node
   STOP:
     transitions:
       pressA: "JOYSTICK_CONTROL"
