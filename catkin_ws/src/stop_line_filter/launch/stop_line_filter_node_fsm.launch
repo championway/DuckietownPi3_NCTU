@@ -15,7 +15,7 @@
         </node>
 
         <!-- run remote -->
-        <node unless="$(arg local)" machine="$(arg veh)" name="$(arg node_name)" pkg="$(arg pkg_name)" type="stop_line_filter_node_fsm.py" output="screen" clear_params="true" required="true">
+        <node unless="$(arg local)" machine="$(arg veh)" name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" output="screen" clear_params="true" required="true">
             <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/stop_line_filter_node/$(arg param_file_name).yaml"/>
         </node>
     </group>
