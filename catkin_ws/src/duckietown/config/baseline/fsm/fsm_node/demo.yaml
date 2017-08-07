@@ -131,7 +131,6 @@ states:
     active_nodes:
       - lane_filter_node
       - line_detector_node
-      - stop_line_filter_node
       - framerate_high
       - decoder_node
       - apriltag_node
