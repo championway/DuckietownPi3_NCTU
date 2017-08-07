@@ -122,6 +122,7 @@ states:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
+      yourturn: "LANE_FOLLOWING"
 #      pressX: "CAR13"
 #      pressY: "CAR14"
   #    at_stop_line: "LANE_FOLLOWING"
