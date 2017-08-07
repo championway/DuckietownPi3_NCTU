@@ -99,7 +99,7 @@ class StopLineFilterNode(object):
             msg = BoolStamped()
             msg.header.stamp = stop_line_reading_msg.header.stamp
             msg.data = True
-            self.pub_sendmessage = rospy.Publisher("/"+self.robot+"/stop_line_filter_node_fsm/send",BoolStamped,queue_size=1)
+            self.pub_sendmessage = rospy.Publisher("/"+self.robot+"/stop_line_filter_node/send",BoolStamped,queue_size=1)
             self.pub_sendmessage.publish(msg)
             self.pub_at_stop_line.publish(msg)
    
