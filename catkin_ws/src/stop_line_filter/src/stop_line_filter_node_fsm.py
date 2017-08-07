@@ -102,6 +102,9 @@ class StopLineFilterNode(object):
             self.pub_sendmessage = rospy.Publisher("/"+self.robot+"/stop_line_filter_node_fsm/send",BoolStamped,queue_size=1)
             self.pub_sendmessage.publish(msg)
             self.pub_at_stop_line.publish(msg)
+            rospy.loginfo('*****************YES*****************')
+        else
+            rospy.loginfo('-----------------NO-----------------')
    
     def to_lane_frame(self, point):
         p_homo = np.array([point.x,point.y,1])
