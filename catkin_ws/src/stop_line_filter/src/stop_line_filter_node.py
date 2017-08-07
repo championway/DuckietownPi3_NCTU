@@ -28,7 +28,7 @@ class StopLineFilterNode(object):
         self.sub_mode      = rospy.Subscriber("fsm_node/mode",FSMState, self.processStateChange)
         self.pub_stop_line_reading = rospy.Publisher("~stop_line_reading", StopLineReading, queue_size=1)
         self.pub_at_stop_line = rospy.Publisher("~at_stop_line", BoolStamped, queue_size=1)
-
+        self.pub_sendmessage = rospy.Publisher("~send",BoolStamped,queue_size=1)
 
         self.params_update = rospy.Timer(rospy.Duration.from_sec(1.0), self.updateParams)
 
@@ -99,6 +99,8 @@ class StopLineFilterNode(object):
             msg = BoolStamped()
             msg.header.stamp = stop_line_reading_msg.header.stamp
             msg.data = True
+            self.pub_sendmessage = rospy.Publisher("/"+self.robot+"/stop_line_filter_node_fsm/send",BoolStamped,queue_size=1)
+            self.pub_sendmessage.publish(msg)
             self.pub_at_stop_line.publish(msg)
    
     def to_lane_frame(self, point):
