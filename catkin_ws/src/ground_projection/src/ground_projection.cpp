@@ -97,7 +97,7 @@ public:
 
     // Publisher
     pub_lineseglist_ = nh_.advertise<duckietown_msgs::SegmentList>("lineseglist_out", 1);
-
+    ROS_INFO("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     // Ready the services
     service_homog_ = nh_.advertiseService("estimate_homography", &GroundProjection::estimate_homography_cb, this);
     ROS_INFO("estimate_homography is ready.");
