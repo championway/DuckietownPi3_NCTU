@@ -3,6 +3,7 @@ import rospy
 import copy
 from duckietown_msgs.msg import FSMState, BoolStamped
 from duckietown_msgs.srv import SetFSMState, SetFSMStateRequest, SetFSMStateResponse
+import Adafruit_PCA9685
 
 class FSMNode(object):
     def __init__(self):
@@ -62,6 +63,7 @@ class FSMNode(object):
         # Publish initial state
         self.publish()
 
+ 
 
     def _validateGlobalTransitions(self,global_transitions, valid_states):
         pass_flag = True
@@ -166,6 +168,14 @@ class FSMNode(object):
             # rospy.loginfo("[%s] Node %s set to %s." %(self.node_name, node_name, node_state))
         self.active_nodes = copy.deepcopy(active_nodes)
 
+   def ledlight(self):
+        if (self.state_msg.state == "JOYSTICK_CONTROL"):
+            self.pwm.set_pwm(0,0,4095)
+        elif (self.state_msg.state == "LANE_FOLLOWING"):
+            self.pwm.set_pwm(0,0,4095)
+        else:
+            self.pwm.set_pwm(0,0,0)
+
     def cbEvent(self,msg,event_name):
         if (msg.data == self.event_trigger_dict[event_name]):
             # Update timestamp
@@ -176,6 +186,7 @@ class FSMNode(object):
                 # Has a defined transition
                 self.state_msg.state = next_state
                 self.publish()
+        self.ledlight()
 
     def on_shutdown(self):
         rospy.loginfo("[%s] Shutting down." %(self.node_name))
