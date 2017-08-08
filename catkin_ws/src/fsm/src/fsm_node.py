@@ -173,7 +173,7 @@ class FSMNode(object):
         if (self.state_msg.state == "JOYSTICK_CONTROL"):
             self.pwm.set_pwm(0,0,4095)
         elif (self.state_msg.state == "LANE_FOLLOWING"):
-            self.pwm.set_pwm(0,0,4095)
+            self.pwm.set_pwm(1,0,4095)
         else:
             self.pwm.set_pwm(0,0,0)
 
