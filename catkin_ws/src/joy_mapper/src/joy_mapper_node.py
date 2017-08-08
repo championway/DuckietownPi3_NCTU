@@ -156,7 +156,8 @@ class JoyMapper(object):
             self.pub_pressX.publish(pressX_msg)
             """
         elif (joy_msg.buttons[3] == 1):
-            pressY_msg = BoolStamped()
+            closeled_msg = BoolStamped()
+            closeled_msg.header.stamp = self.joy.header.stamp
             rospy.loginfo('Press "Y"')
             self.count += 1
             if (self.count >= 3):
@@ -164,18 +165,33 @@ class JoyMapper(object):
             if (self.count == 0):
                 self.robot = "car13"
                 self.robot1 = "robot1"
+                closeled_msg.data = False 
+                self.pub_pressY = rospy.Publisher("/car14/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                closeled_msg.data = True 
+                self.pub_pressY = rospy.Publisher("/car13/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
                 rospy.loginfo('Select "car13"')
             if (self.count == 1):
                 self.robot = "car14"
                 self.robot1 = "robot1"
+                closeled_msg.data = False 
+                self.pub_pressY = rospy.Publisher("/car13/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                closeled_msg.data = True 
+                self.pub_pressY = rospy.Publisher("/car14/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
                 rospy.loginfo('Select "car14"')
             if (self.count == 2):
                 self.robot = "car13"
                 self.robot1 = "car14"
+                closeled_msg.data = True 
+                self.pub_pressY = rospy.Publisher("/car14/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                closeled_msg.data = True 
+                self.pub_pressY = rospy.Publisher("/car13/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
                 rospy.loginfo('Select "all car"')
-            pressY_msg.header.stamp = self.joy.header.stamp
-            pressY_msg.data = True 
-            #self.pub_pressY.publish(pressY_msg)
         elif (joy_msg.buttons[2] == 1):
             pressX_msg = BoolStamped()
             #raspistill -t 1000 -o out1.jpg
