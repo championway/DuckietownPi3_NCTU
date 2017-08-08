@@ -165,11 +165,11 @@ class JoyMapper(object):
                 self.robot = "car13"
                 self.robot1 = "robot1"
                 rospy.loginfo('Select "car13"')
-            if (self.count == 0):
+            if (self.count == 1):
                 self.robot = "car14"
                 self.robot1 = "robot1"
                 rospy.loginfo('Select "car14"')
-            if (self.count == 0):
+            if (self.count == 2):
                 self.robot = "car13"
                 self.robot1 = "car14"
                 rospy.loginfo('Select "all car"')
@@ -181,10 +181,10 @@ class JoyMapper(object):
             #raspistill -t 1000 -o out1.jpg
             rospy.loginfo('Press "X"')
             rospy.loginfo('Select "car13"')
-            self.robot = "car13"
-            self.MultiRobot()
-            pressX_msg.header.stamp = self.joy.header.stamp
-            pressX_msg.data = True 
+            #self.robot = "car13"
+            #self.MultiRobot()
+            #pressX_msg.header.stamp = self.joy.header.stamp
+            #pressX_msg.data = True 
             #self.pub_pressX.publish(pressX_msg)
         elif (joy_msg.buttons[8] == 1): #power button (middle)
             e_stop_msg = BoolStamped()
