@@ -172,10 +172,20 @@ class FSMNode(object):
     def ledlight(self):
         if (self.state_msg.state == "JOYSTICK_CONTROL"):
             self.pwm.set_pwm(0,0,4095)
+            self.pwm.set_pwm(1,0,0)
+            self.pwm.set_pwm(2,0,0)
         elif (self.state_msg.state == "LANE_FOLLOWING"):
+            self.pwm.set_pwm(0,0,0)
             self.pwm.set_pwm(1,0,4095)
+            self.pwm.set_pwm(2,0,0)
+        elif (self.state_msg.state == "STOP"):
+            self.pwm.set_pwm(0,0,0)
+            self.pwm.set_pwm(1,0,0)
+            self.pwm.set_pwm(2,0,4095)
         else:
             self.pwm.set_pwm(0,0,0)
+            self.pwm.set_pwm(1,0,0)
+            self.pwm.set_pwm(2,0,0)
 
     def cbEvent(self,msg,event_name):
         if (msg.data == self.event_trigger_dict[event_name]):
