@@ -8,7 +8,8 @@ import Adafruit_PCA9685
 class FSMNode(object):
     def __init__(self):
         self.node_name = rospy.get_name()
-
+        self.pwm = Adafruit_PCA9685.PCA9685()
+        self.pwm.set_pwm_freq(60)
         # Build transition dictionray
         self.states_dict = rospy.get_param("~states",{})        
         # Validate state and global transitions
