@@ -168,7 +168,7 @@ class FSMNode(object):
             # rospy.loginfo("[%s] Node %s set to %s." %(self.node_name, node_name, node_state))
         self.active_nodes = copy.deepcopy(active_nodes)
 
-   def ledlight(self):
+    def ledlight(self):
         if (self.state_msg.state == "JOYSTICK_CONTROL"):
             self.pwm.set_pwm(0,0,4095)
         elif (self.state_msg.state == "LANE_FOLLOWING"):
