@@ -178,7 +178,11 @@ class FSMNode(object):
             self.pwm.set_pwm(0,0,0)
             self.pwm.set_pwm(1,0,4095)
             self.pwm.set_pwm(2,0,0)
-        elif (self.state_msg.state == "LANESTOP" || self.state_msg.state == "JOYSTOP"):
+        elif (self.state_msg.state == "LANESTOP"):
+            self.pwm.set_pwm(0,0,0)
+            self.pwm.set_pwm(1,0,0)
+            self.pwm.set_pwm(2,0,4095)
+        elif (self.state_msg.state == "JOYSTOP"):
             self.pwm.set_pwm(0,0,0)
             self.pwm.set_pwm(1,0,0)
             self.pwm.set_pwm(2,0,4095)
