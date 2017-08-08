@@ -123,7 +123,7 @@ states:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
       yourturn: "LANE_FOLLOWING"
-      notpressY: "STOP"
+      notpressY: "JOYSTOP"
 #      pressX: "CAR13"
 #      pressY: "CAR14"
   #    at_stop_line: "LANE_FOLLOWING"
@@ -167,7 +167,7 @@ states:
 #      - framerate_high
 #      - decoder_node
 #      - apriltag_node
-  STOP:
+  JOYSTOP:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
@@ -184,6 +184,21 @@ states:
       - decoder_node
       - apriltag_node
     lights: ["joystick"]   
+  LANESTOP:
+    transitions:
+      pressA: "JOYSTICK_CONTROL"
+      pressB: "LANE_FOLLOWING"
+      pressY: "LANE_FOLLOWING"
+#      pressX: "CAR13"
+#      pressY: "CAR14"
+      at_stop_line: "JOYSTICK_CONTROL"
+#      at_stop_line: "COORDINATION"
+#      lost_lane: "LANE_RECOVERY"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - stop_line_filter_node
+    lights: ["lane_following"]
   PARALLEL_AUTONOMY:
     transitions:
       vehicle_detection: "AVOID_VEHICLE"
@@ -200,6 +215,7 @@ states:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
+      notpressY: "LANESTOP"
 #      pressX: "CAR13"
 #      pressY: "CAR14"
       at_stop_line: "JOYSTICK_CONTROL"
