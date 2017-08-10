@@ -194,10 +194,10 @@ class LineDetectorNode(object):
         if len(red.lines) > 0:
             lines_normalized_red = ((red.lines + arr_cutoff) * arr_ratio)
             segmentList.segments.extend(self.toSegmentMsg(lines_normalized_red, red.normals, Segment.RED))
-        '''if len(blue.lines) > 0:
+        if len(blue.lines) > 0:
             lines_normalized_blue = ((blue.lines + arr_cutoff) * arr_ratio)
-            segmentList.segments.extend(self.toSegmentMsg(lines_normalized_blue, blue.normals, Segment.blue))
-        '''
+            segmentList.segments.extend(self.toSegmentMsg(lines_normalized_blue, blue.normals, Segment.BLUE))
+    
         self.intermittent_log('# segments: white %3d yellow %3d red %3d blue %3d' % (len(white.lines),
                 len(yellow.lines), len(red.lines), len(blue.lines)))
         
