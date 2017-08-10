@@ -59,7 +59,7 @@ def color_segment(area_white, area_red, area_yellow,area_blue):
         return x
 
     h, w = area_white.shape
-    orig = [area_white, area_red, area_yellow]
+    orig = [area_white, area_red, area_yellow, area_blue]
     masks = [white(area_white), red(area_red), yellow(area_yellow),blue(area_blue)]
 
     res = np.zeros((h,w,3), dtype=np.uint8)
