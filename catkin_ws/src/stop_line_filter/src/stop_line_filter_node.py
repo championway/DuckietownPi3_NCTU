@@ -67,7 +67,7 @@ class StopLineFilterNode(object):
         stop_line_x_accumulator=0.0
         stop_line_y_accumulator=0.0
         for segment in segment_list_msg.segments:
-            if segment.color != segment.RED:
+            if segment.color != segment.RED and segment.color != segment.BLUE:
                 continue
             if segment.points[0].x < 0 or segment.points[1].x < 0: # the point is behind us 
                 continue
@@ -99,9 +99,11 @@ class StopLineFilterNode(object):
             msg = BoolStamped()
             msg.header.stamp = stop_line_reading_msg.header.stamp
             msg.data = True
-            self.pub_sendmessage = rospy.Publisher("/"+self.robot+"/stop_line_filter_node/send",BoolStamped,queue_size=1)
-            self.pub_sendmessage.publish(msg)
-            self.pub_at_stop_line.publish(msg)
+            if segment.color == segment.BLUE:
+                self.pub_sendmessage = rospy.Publisher("/"+self.robot+"/stop_line_filter_node/send",BoolStamped,queue_size=1)
+                self.pub_sendmessage.publish(msg)
+            elif segment.color == segment.RED:
+                self.pub_at_stop_line.publish(msg)
    
     def to_lane_frame(self, point):
         p_homo = np.array([point.x,point.y,1])

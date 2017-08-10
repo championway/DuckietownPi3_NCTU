@@ -33,7 +33,7 @@ def drawNormals2(bgr, centers, normals, paint):
             cv2.circle(bgr, (x4,y4), 1, (0,0,255))
 
 # generate color segments
-def color_segment(area_white, area_red, area_yellow):
+def color_segment(area_white, area_red, area_yellow,area_blue):
     B, G, R = 0, 1, 2
 
     def white(x):
@@ -51,10 +51,16 @@ def color_segment(area_white, area_red, area_yellow):
         x[:,:,G] *= 1
         x[:,:,B] *= 0
         return x
+    def blue(x):
+        x = cv2.cvtColor(x, cv2.COLOR_GRAY2BGR)
+        x[:,:,R] *= 0
+        x[:,:,G] *= 0
+        x[:,:,B] *= 1
+        return x
 
     h, w = area_white.shape
     orig = [area_white, area_red, area_yellow]
-    masks = [white(area_white), red(area_red), yellow(area_yellow)]
+    masks = [white(area_white), red(area_red), yellow(area_yellow),blue(area_blue)]
 
     res = np.zeros((h,w,3), dtype=np.uint8)
 
