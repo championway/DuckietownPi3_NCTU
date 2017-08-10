@@ -22,6 +22,8 @@ class LineDetector2Dense(Configurable, LineDetectorInterface):
             'hsv_red2',
             'hsv_red3',
             'hsv_red4',
+            'hsv_blue1'
+            'hsv_blue2'
 
             'dilation_kernel_size',
             'canny_thresholds',
@@ -56,6 +58,8 @@ class LineDetector2Dense(Configurable, LineDetectorInterface):
             bw1 = cv2.inRange(self.hsv, self.hsv_red1, self.hsv_red2)
             bw2 = cv2.inRange(self.hsv, self.hsv_red3, self.hsv_red4)
             bw = cv2.bitwise_or(bw1, bw2)
+        elif color == 'blue':
+            bw = cv2.inRange(self.hsv, self.hsv_blue1, self.hsv_blue2)
         else:
             raise Exception('Error: Undefined color strings...')
 
