@@ -19,5 +19,5 @@ detector:
       hsv_red2:    [15,255,255]
       hsv_red3:    [165,100,100]
       hsv_red4:    [180,255,255]
-      hsv_blue1:   [95,20,90]
-      hsv_blue2:   [115,180,180]
+      hsv_blue1:   [90,80,50]
+      hsv_blue2:   [110,255,255]
