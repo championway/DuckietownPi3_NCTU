@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import numpy as np
-from duckietown_msgs.msg import  Twist2DStamped, LanePose, RobotName
-from sensor_msgs.msg import CompressedImage, Image
-from cv_bridge import CvBridge, CvBridgeError
-import cv2
+from duckietown_msgs.msg import  RobotName
 import sys
 from duckietown_utils.jpg import image_cv_from_jpg
 
@@ -34,9 +31,9 @@ class robotName(object):
         return value
 '''
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     rospy.init_node("robot_name",anonymous=False)
-    robot_name = robotName()
+    robot_name_node = robotName()
     rospy.on_shutdown(robot_name_node.onShutdown)
     rospy.spin()
  
