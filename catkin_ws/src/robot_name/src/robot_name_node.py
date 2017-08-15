@@ -23,15 +23,8 @@ class robotName(object):
         name_msg = RobotName()
         name_msg.robot_name = self.name
         self.pub_name.publish(name_msg)
-'''
-    def setupParameter(self):
-        self.name = rospy.get_param(name)
-        
-        rospy.loginfo("The car name = %s " %(self.node_name,param_name,value))
-        return value
-'''
 
 if __name__ == "__main__":
     rospy.init_node("robot_name",anonymous=False)
-    #name_node = robotName()
+    name_node = robotName()
     rospy.spin()
