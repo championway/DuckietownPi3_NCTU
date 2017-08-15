@@ -3,7 +3,6 @@ import rospy
 import numpy as np
 from duckietown_msgs.msg import RobotName
 import sys
-from duckietown_utils.jpg import image_cv_from_jpg
 
 class robotName(object):
     def __init__(self):
@@ -34,5 +33,5 @@ class robotName(object):
 
 if __name__ == "__main__":
     rospy.init_node("robot_name",anonymous=False)
-    name_node = robotName()
+    #name_node = robotName()
     rospy.spin()
