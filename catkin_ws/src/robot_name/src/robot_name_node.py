@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import numpy as np
-from duckietown_msgs.msg import  RobotName
+#rom duckietown_msgs.msg import  RobotName
 import sys
 from duckietown_utils.jpg import image_cv_from_jpg
 
@@ -20,9 +20,10 @@ class robotName(object):
         self.publishName()
 
     def publishName(self):
-        name_msg = RobotName()
-        name_msg.robot_name = self.name
-        self.pub_name.publish(name_msg)
+        rospy.loginfo("Test Test Test") 
+        #name_msg = RobotName()
+        #name_msg.robot_name = self.name
+        #self.pub_name.publish(name_msg)
 '''
     def setupParameter(self):
         self.name = rospy.get_param(name)
