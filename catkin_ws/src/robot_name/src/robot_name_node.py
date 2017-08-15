@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 import rospy
 import numpy as np
-import math
 from duckietown_msgs.msg import  Twist2DStamped, LanePose, RobotName
 from sensor_msgs.msg import CompressedImage, Image
 from cv_bridge import CvBridge, CvBridgeError
 import cv2
 import sys
 from duckietown_utils.jpg import image_cv_from_jpg
-class robot_name(object):
+
+class robotName(object):
     def __init__(self):
         self.node_name = rospy.get_name()
 
@@ -19,11 +19,10 @@ class robot_name(object):
         self.pub_name = rospy.Publisher("~robot_name", RobotName, queue_size=1)
 
         # safe shutdown
-        rospy.on_shutdown(self.custom_shutdown)
 
-        self.publishname(None)
+        self.publishName()
 
-    def publishname(self,_event):
+    def publishName(self):
         name_msg = RobotName()
         name_msg.robot_name = self.name
         self.pub_name.publish(name_msg)
@@ -37,5 +36,7 @@ class robot_name(object):
 
 if __name__ == "__main__":
     rospy.init_node("robot_name",anonymous=False)
-    robot_name = robot_name()
+    robot_name = robotName()
+    rospy.on_shutdown(robot_name_node.onShutdown)
     rospy.spin()
+ 
