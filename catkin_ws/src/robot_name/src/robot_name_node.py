@@ -4,7 +4,7 @@ import numpy as np
 from duckietown_msgs.msg import RobotName
 import sys
 from duckietown_utils.jpg import image_cv_from_jpg
-"""
+
 class robotName(object):
     def __init__(self):
         self.node_name = rospy.get_name()
@@ -37,9 +37,3 @@ if __name__ == '__main__':
     name_node = robotName()
     rospy.on_shutdown(name_node.onShutdown)
     rospy.spin()
- """
-self.name = rospy.get_param(name)
-self.pub_name = rospy.Publisher("~robot_name", RobotName, queue_size=1)
-name_msg = RobotName()
-name_msg.robot_name = self.name
-self.pub_name.publish(name_msg)
