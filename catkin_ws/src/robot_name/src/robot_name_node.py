@@ -9,7 +9,7 @@ class carName(object):
         #self.node_name = rospy.get_name()
 
         # Setup parameters
-        self.name = rospy.get_param(name,default_value)
+        self.name = rospy.get_param('~name',default_value)
         # Publicaiton
         self.pub_name = rospy.Publisher("~robot_name", RobotName, queue_size=1)
 
