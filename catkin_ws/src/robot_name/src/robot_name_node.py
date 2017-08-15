@@ -10,7 +10,7 @@ class robotName(object):
         self.node_name = rospy.get_name()
 
         # Setup parameters
-        self.name = rospy.get_param(name)
+        #self.name = rospy.get_param(name)
           
         # Publicaiton
         self.pub_name = rospy.Publisher("~robot_name", RobotName, queue_size=1)
@@ -34,7 +34,7 @@ class robotName(object):
 
 if __name__ == '__main__':
     rospy.init_node("robot_name_node",anonymous=False)
-    robot_name_node = robotName()
-    rospy.on_shutdown(robot_name_node.onShutdown)
+    name_node = robotName()
+    rospy.on_shutdown(name_node.onShutdown)
     rospy.spin()
  
