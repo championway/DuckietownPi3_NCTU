@@ -6,6 +6,7 @@ import sys
         
 class carName(object):
     def __init__(self):
+        super(robotName, self).__init__()
         self.node_name = rospy.get_name()
 
         # Setup parameters
