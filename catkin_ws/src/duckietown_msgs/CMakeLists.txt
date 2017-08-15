@@ -75,6 +75,7 @@ add_message_files(
   SegmentList.msg
   Rect.msg
   Rects.msg
+  RobotName.msg
   SceneSegments.msg
   SourceTargetNodes.msg
   CoordinationClearance.msg
