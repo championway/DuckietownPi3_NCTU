@@ -9,10 +9,10 @@ class carName(object):
         #self.node_name = rospy.get_name()
 
         # Setup parameters
-        self.name = rospy.get_param(name)
-          
+        #self.name = rospy.get_param(name)
+        self.name = "abc"
         # Publicaiton
-        #self.pub_name = rospy.Publisher("~robot_name", RobotName, queue_size=1)
+        self.pub_name = rospy.Publisher("~robot_name", RobotName, queue_size=1)
 
         # safe shutdown
 
@@ -20,9 +20,9 @@ class carName(object):
 
     def publishName(self):
         rospy.loginfo("Test Test Test") 
-        #name_msg = RobotName()
-        #name_msg.robot_name = self.name
-        #self.pub_name.publish(name_msg)
+        name_msg = RobotName()
+        name_msg.robot_name = self.name
+        self.pub_name.publish(name_msg)
 
 if __name__ == "__main__":
     rospy.init_node("robot_name",anonymous=False)
