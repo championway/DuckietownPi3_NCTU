@@ -3,8 +3,8 @@ import rospy
 import numpy as np
 from duckietown_msgs.msg import RobotName
 import sys
-
-class robotName(object):
+        
+class carName(object):
     def __init__(self):
         self.node_name = rospy.get_name()
 
@@ -26,5 +26,5 @@ class robotName(object):
 
 if __name__ == "__main__":
     rospy.init_node("robot_name",anonymous=False)
-    name_node = robotName()
+    name_node = carName()
     rospy.spin()
