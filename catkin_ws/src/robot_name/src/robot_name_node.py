@@ -11,10 +11,10 @@ class carName(object):
         # Setup parameters
         self.name = rospy.get_param('~name')
         # Publicaiton
-        self.pub_name = rospy.Publisher("robot_name", RobotName, queue_size=1)
+        self.pub_name = rospy.Publisher("/robot_name", RobotName, queue_size=1)
 
         # safe shutdown
-        self.sub_name = rospy.Subscriber("robot_name", RobotName, self.subname, queue_size=1)
+        self.sub_name = rospy.Subscriber("/robot_name", RobotName, self.subname, queue_size=1)
 
         self.publishName()
 
