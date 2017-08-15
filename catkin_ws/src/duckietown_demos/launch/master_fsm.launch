@@ -27,6 +27,7 @@
 <!-- general convention on remappings is that we remap the "subscribers" -->
 
 	<!-- start switch args -->
+	<arg name="robot_name" default="true"/>
 	<arg name="camera" default="true"/>
 	<arg name="/camera/raw" default="false"/>
 	<arg name="/camera/cam_info" default="true"/>
@@ -98,6 +99,12 @@
 	
 	<!-- Enable statistics -->
 	<param name="enable_statistics" value="$(arg statistics)"/>
+	<!-- Publish name -->
+	<group if="$(arg robot_name)">
+		<include file="$(find robot_name)/launch/robot_name_node.launch">
+			<arg name="veh" value="$(arg veh)"/>
+		</include>	 
+	</group>
 
 	<!-- Start Camera -->  
 	<group if="$(arg camera)">
