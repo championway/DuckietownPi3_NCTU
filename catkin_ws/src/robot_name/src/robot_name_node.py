@@ -32,7 +32,7 @@ class robotName(object):
 '''
 
 if __name__ == '__main__':
-    rospy.init_node("robot_name",anonymous=False)
+    rospy.init_node("robot_name_node",anonymous=False)
     robot_name_node = robotName()
     rospy.on_shutdown(robot_name_node.onShutdown)
     rospy.spin()
