@@ -6,7 +6,6 @@ import sys
         
 class carName(object):
     def __init__(self):
-        super(robotName, self).__init__()
         self.node_name = rospy.get_name()
 
         # Setup parameters
@@ -27,5 +26,5 @@ class carName(object):
 
 if __name__ == "__main__":
     rospy.init_node("robot_name",anonymous=False)
-    name_node = carName()
+    #name_node = carName()
     rospy.spin()
