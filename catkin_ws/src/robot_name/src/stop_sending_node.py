@@ -15,7 +15,7 @@ class carName(object):
         self.pub_name = rospy.Publisher("/robot_name", RobotName, queue_size=1)
 
         # safe shutdown
-        self.sub_name = rospy.Subscriber("/"+self.name+"/stop_sending", RobotName, self.subname, queue_size=1)
+        self.sub_name = rospy.Subscriber("/"+self.name+"robot_name", RobotName, self.subname, queue_size=1)
 
         self.publishName()
 
