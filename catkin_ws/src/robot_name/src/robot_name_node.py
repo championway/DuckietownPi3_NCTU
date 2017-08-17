@@ -24,8 +24,10 @@ class carName(object):
         name_msg = RobotName()
         name_msg.send = True
         name_msg.robot_name = self.name
+        r = rospy.Rate(1)
         while self.stop == False :
             self.pub_name.publish(name_msg)
+            r.sleep()
 
     def subname(self, msg):
         self.stop = msg.send
