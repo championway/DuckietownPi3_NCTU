@@ -15,7 +15,7 @@ class carName(object):
         self.pub_name = rospy.Publisher("/robot_name", RobotName, queue_size=1)
 
         # safe shutdown
-        self.sub_name = rospy.Subscriber("/"+self.name+"/stop_sending", RobotName, self.subname, queue_size=1)
+        #self.sub_name = rospy.Subscriber("/"+self.name+"/stop_sending", RobotName, self.subname, queue_size=1)
 
         self.publishName()
 
@@ -24,14 +24,15 @@ class carName(object):
         name_msg = RobotName()
         name_msg.send = True
         name_msg.robot_name = self.name
-        r = rospy.Rate(1)
+        r = rospy.Rate(2)
         while self.stop == False :
+        while True :
             self.pub_name.publish(name_msg)
             r.sleep()
 
-    def subname(self, msg):
+    '''def subname(self, msg):
         self.stop = msg.send
-        rospy.loginfo(msg)
+        rospy.loginfo(msg)'''
 
 if __name__ == "__main__":
     rospy.init_node("robot_name",anonymous=False)
