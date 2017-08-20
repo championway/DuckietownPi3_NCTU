@@ -170,13 +170,11 @@ class carName(object):
                     self.rcount = 0
                 self.robot = self.rlist[self.rcount]
                 print "choose", self.robot
+        elif (joy_msg.buttons[2] == 1):
             print "--------- ", len(self.robotlist), " ---------"
             print self.rlist
             print
             print
-        elif (joy_msg.buttons[2] == 1):
-            pressX_msg = BoolStamped()
-            rospy.loginfo('Press "X"')
         elif (joy_msg.buttons[8] == 1): #power button (middle)
             e_stop_msg = BoolStamped()
             e_stop_msg.header.stamp = self.joy.header.stamp
