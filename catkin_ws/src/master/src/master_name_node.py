@@ -82,7 +82,7 @@ class carName(object):
         self.count()
 
     def AllRobot(self,pb,msg):
-        for i in self.rlist:
+        for i in self.robotlist.keys():
             print i
             self.robot = i
             self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
