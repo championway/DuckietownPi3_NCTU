@@ -17,6 +17,7 @@ class carName(object):
         self.rlist = []
         self.rnumber = len(self.rlist)
         self.rcount = 0
+        self.allrb = False
         # Setup parameters
         self.name = "master"
         # Publicaitons
@@ -79,11 +80,17 @@ class carName(object):
                     self.rnumber = len(self.rlist)
             else :
                 self.robotlist[msg.robot_name]=0
-        print "--------- ", len(self.robotlist), " ---------"
-        print(self.robotlist.keys())
-        print
-        print
         self.count()
+
+    def AllRobot(self,pb,msg):
+        for i in self.rlist:
+            self.robot = i
+            self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
+            self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+            self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+            self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+            self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1) 
+            self.pb.publish(msg)
 
     def MultiRobot(self):
         self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
@@ -118,8 +125,11 @@ class carName(object):
         else:
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
-        self.MultiRobot()
-        self.pub_car_cmd.publish(car_cmd_msg)
+        if allrb == True:
+            self.AllRobot(pub_car_cmd,car_cmd_msg)
+        else:
+            self.MultiRobot()
+            self.pub_car_cmd.publish(car_cmd_msg)
 
 # Button List index of joy.buttons array:
 # a = 0, b=1, x=2. y=3, lb=4, rb=5, back = 6, start =7,
@@ -150,10 +160,19 @@ class carName(object):
         elif (joy_msg.buttons[3] == 1):
             rospy.loginfo('Press "Y"')
             self.rcount += 1
-            if self.rcount >= self.rnumber:
-                self.rcount = 0
-            self.robot = self.rlist[self.rcount]
-            print "choose", self.robot
+            if self.rcount == self.rnumber:
+                allrb = True
+                print "choose all robot"
+            else:
+                allrb = False
+                if self.rcount > self.rnumber:
+                    self.rcount = 0
+                self.robot = self.rlist[self.rcount]
+                print "choose", self.robot
+            print "--------- ", len(self.robotlist), " ---------"
+            print rlist
+            print
+            print
         elif (joy_msg.buttons[2] == 1):
             pressX_msg = BoolStamped()
             rospy.loginfo('Press "X"')
@@ -174,16 +193,22 @@ class carName(object):
             rospy.loginfo('Joystick Control')
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
-            self.MultiRobot()
-            self.pub_pressA.publish(pressA_msg)
+            if allrb == True:
+                self.AllRobot(pub_pressA,pressA_msg)
+            else:
+                self.MultiRobot()
+                self.pub_pressA.publish(pressA_msg)
         elif (joy_msg.buttons[1] == 1): #press B
             pressB_msg = BoolStamped()
             rospy.loginfo('Press "B"')
             rospy.loginfo('Lane following')
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
-            self.MultiRobot()
-            self.pub_pressB.publish(pressB_msg)
+            if allrb == True:
+                self.AllRobot(pub_pressB,pressB_msg)
+            else:
+                self.MultiRobot()
+                self.pub_pressB.publish(pressB_msg)
         else:
             some_active = sum(joy_msg.buttons) > 0
             if some_active:
