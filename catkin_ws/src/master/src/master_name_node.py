@@ -148,14 +148,12 @@ class carName(object):
             parallel_autonomy_msg.data = self.state_parallel_autonomy
             self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
         elif (joy_msg.buttons[3] == 1):
-            closeled_msg = BoolStamped()
-            closeled_msg.header.stamp = self.joy.header.stamp
             rospy.loginfo('Press "Y"')
             if self.rcount < self.rnumber:
                 self.rcount += 1
             else:
                 self.rcount = 0
-            self.robot = self.rlist(self.rcount)
+            self.robot = self.rlist[self.rcount]
             print "choose", self.robot
         elif (joy_msg.buttons[2] == 1):
             pressX_msg = BoolStamped()
