@@ -75,9 +75,8 @@ class carName(object):
         if msg.send == True :
             if msg.robot_name not in self.robotlist :
                 self.robotlist[msg.robot_name]=0
-                for i in self.robotlist.keys():
-                    self.rlist.append(i)
-                    self.rnumber = len(self.rlist)
+                self.rlist.append(msg.robot_name)
+                self.rnumber = len(self.rlist)
             else :
                 self.robotlist[msg.robot_name]=0
         self.count()
@@ -126,7 +125,7 @@ class carName(object):
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
         if self.allrb == True:
-            self.AllRobot(pub_car_cmd,car_cmd_msg)
+            self.AllRobot(self.pub_car_cmd,car_cmd_msg)
         else:
             self.MultiRobot()
             self.pub_car_cmd.publish(car_cmd_msg)
@@ -194,7 +193,7 @@ class carName(object):
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
             if self.allrb == True:
-                self.AllRobot(pub_pressA,pressA_msg)
+                self.AllRobot(self.pub_pressA,pressA_msg)
             else:
                 self.MultiRobot()
                 self.pub_pressA.publish(pressA_msg)
@@ -205,7 +204,7 @@ class carName(object):
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
             if self.allrb == True:
-                self.AllRobot(pub_pressB,pressB_msg)
+                self.AllRobot(self.pub_pressB,pressB_msg)
             else:
                 self.MultiRobot()
                 self.pub_pressB.publish(pressB_msg)
