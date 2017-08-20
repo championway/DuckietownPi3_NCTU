@@ -1,0 +1,12 @@
+<launch>
+	<arg name="veh" default="master"/>
+	<!-- start basic args -->
+	<include file="$(find master)/launch/master_joy_node.launch">
+		<arg name="veh" value="$(arg veh)"/>
+		<arg name="param_file_name" default="default" />
+	</include>
+	<include file="$(find master)/launch/master_name_node.launch">
+		<arg name="veh" value="$(arg veh)"/>
+		<arg name="param_file_name" default="default" />
+	</include>
+</launch>

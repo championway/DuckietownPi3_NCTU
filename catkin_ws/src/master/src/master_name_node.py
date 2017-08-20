@@ -1,29 +1,33 @@
 #!/usr/bin/env python
 import rospy
 import numpy as np
+from duckietown_msgs.msg import RobotName, Twist2DStamped, BoolStamped
+import sys
 import math
-import cv2
-from duckietown_utils.jpg import image_cv_from_jpg
-from sensor_msgs.msg import Image
-from cv_bridge import CvBridge, CvBridgeError
-from duckietown_msgs.msg import  Twist2DStamped, BoolStamped
 from sensor_msgs.msg import Joy
-from sensor_msgs.msg import CompressedImage, Image
 import time
 from __builtin__ import True
-#bridge = CvBridge()
-class JoyMapper(object):
+
+class carName(object):
     def __init__(self):
-        self.node_name = rospy.get_name()
-        rospy.loginfo("[%s] Initializing " %(self.node_name))
+        #self.node_name = rospy.get_name()
+        #decide which robot
+        self.robot = "robot"
+        self.robotlist = {}
+        self.rlist = []
+        self.rnumber = len(self.rlist)
+        self.rcount = 0
+        # Setup parameters
+        self.name = "master"
+        # Publicaitons
+        self.pub_name = rospy.Publisher("/stop_sending", RobotName, queue_size=1)
+        #Subscriptions
+        self.sub_name = rospy.Subscriber('/robot_name', RobotName, self.subname, queue_size=1)
+
         self.pic = None
-        self.count = 0
         self.joy = None
         self.last_pub_msg = None
         self.last_pub_time = rospy.Time.now()
-        #decide which robot
-        self.robot = "robot"
-        self.robot1 = "robot1"
         # Setup Parameters
         self.v_gain = self.setupParam("~speed_gain", 0.41)
         self.omega_gain = self.setupParam("~steer_gain", 8.3)
@@ -60,6 +64,35 @@ class JoyMapper(object):
         pub_msg.header.stamp = self.last_pub_time
         self.pub_parallel_autonomy.publish(pub_msg)
 
+    def count (self):
+        r = rospy.Rate(1)
+        for i in self.robotlist.keys():
+            self.robotlist[i] = self.robotlist[i] + 1
+            if self.robotlist[i] >=10 :
+                self.robotlist.pop(i)
+
+    def subname(self, msg):
+        if msg.send == True :
+            if msg.robot_name not in self.robotlist :
+                self.robotlist[msg.robot_name]=0
+                for i in self.robotlist.keys():
+                    self.rlist.append(i)
+                    self.rnumber = len(self.rlist)
+            else :
+                self.robotlist[msg.robot_name]=0
+        print "--------- ", len(self.robotlist), " ---------"
+        print(self.robotlist.keys())
+        print
+        print
+        self.count()
+
+    def MultiRobot(self):
+        self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
+        self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+        self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+        self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+        self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1) 
+
     def cbImage(self,msg):
         image_cv = image_cv_from_jpg(msg.data)
         self.pic = image_cv
@@ -91,6 +124,7 @@ class JoyMapper(object):
         else:
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
+        self.MultiRobot()
         self.pub_car_cmd.publish(car_cmd_msg)
 
 # Button List index of joy.buttons array:
@@ -112,7 +146,6 @@ class JoyMapper(object):
             self.state_verbose ^= True
             rospy.loginfo('state_verbose = %s' % self.state_verbose)
             rospy.set_param('line_detector_node/verbose', self.state_verbose) # bad - should be published for all to hear - not set a specific param
-
         elif (joy_msg.buttons[4] == 1): #Left back button
             self.state_parallel_autonomy ^= True
             rospy.loginfo('state_parallel_autonomy = %s' % self.state_parallel_autonomy)
@@ -120,39 +153,19 @@ class JoyMapper(object):
             parallel_autonomy_msg.header.stamp = self.joy.header.stamp
             parallel_autonomy_msg.data = self.state_parallel_autonomy
             self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
-            """
-        elif (joy_msg.buttons[3] == 1):
-            pressY_msg = BoolStamped()
-            rospy.loginfo('Press "Y"')
-            rospy.loginfo('HELLO WORLD~~~~~~~')
-            pressY_msg.header.stamp = self.joy.header.stamp
-            pressY_msg.data = True 
-            self.pub_pressY.publish(pressY_msg)
-        elif (joy_msg.buttons[2] == 1):
-            pressX_msg = BoolStamped()
-            #raspistill -t 1000 -o out1.jpg
-            rospy.loginfo('Press "X"')
-            rospy.loginfo('Let us take a picture~~~~~~~')
-            cv2.imwrite("/home/ubuntu/duckietown/demo"+".jpg",self.pic)
-            #cv2_img = bridge.imgmsg_to_cv2(msg, "bgr8")
-            pressX_msg.header.stamp = self.joy.header.stamp
-            pressX_msg.data = True 
-            self.pub_pressX.publish(pressX_msg)
-            """
         elif (joy_msg.buttons[3] == 1):
             closeled_msg = BoolStamped()
             closeled_msg.header.stamp = self.joy.header.stamp
             rospy.loginfo('Press "Y"')
+            if self.rcount < self.rnumber:
+                self.rcount += 1
+            else:
+                self.rcount = 0
+            self.robot = self.rlist(self.rcount)
+            print "choose", self.robot
         elif (joy_msg.buttons[2] == 1):
             pressX_msg = BoolStamped()
-            #raspistill -t 1000 -o out1.jpg
             rospy.loginfo('Press "X"')
-            rospy.loginfo('Select "arg1"')
-            #self.robot = "car13"
-            #self.MultiRobot()
-            #pressX_msg.header.stamp = self.joy.header.stamp
-            #pressX_msg.data = True 
-            #self.pub_pressX.publish(pressX_msg)
         elif (joy_msg.buttons[8] == 1): #power button (middle)
             e_stop_msg = BoolStamped()
             e_stop_msg.header.stamp = self.joy.header.stamp
@@ -164,27 +177,28 @@ class JoyMapper(object):
             avoidance_msg.header.stamp = self.joy.header.stamp
             avoidance_msg.data = True 
             self.pub_avoidance.publish(avoidance_msg)
-        elif (joy_msg.buttons[0] == 1): #push left joystick button 
+        elif (joy_msg.buttons[0] == 1): #press A 
             pressA_msg = BoolStamped()
             rospy.loginfo('Press "A"')
             rospy.loginfo('Joystick Control')
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
+            self.MultiRobot()
             self.pub_pressA.publish(pressA_msg)
-        elif (joy_msg.buttons[1] == 1): #push left joystick button 
+        elif (joy_msg.buttons[1] == 1): #press B
             pressB_msg = BoolStamped()
             rospy.loginfo('Press "B"')
             rospy.loginfo('Lane following')
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
+            self.MultiRobot()
             self.pub_pressB.publish(pressB_msg)
         else:
             some_active = sum(joy_msg.buttons) > 0
             if some_active:
                 rospy.loginfo('No binding for joy_msg.buttons = %s' % str(joy_msg.buttons))
-                                          
 
 if __name__ == "__main__":
-    rospy.init_node("joy_mapper",anonymous=False)
-    joy_mapper = JoyMapper()
+    rospy.init_node("robot_name",anonymous=False)
+    name_node = carName()
     rospy.spin()

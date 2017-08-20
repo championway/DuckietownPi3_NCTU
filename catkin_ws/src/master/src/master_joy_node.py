@@ -59,6 +59,19 @@ class JoyMapper(object):
         pub_msg.data = self.state_parallel_autonomy
         pub_msg.header.stamp = self.last_pub_time
         self.pub_parallel_autonomy.publish(pub_msg)
+    
+    def MultiRobot(self):
+        self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
+        self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+        self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+        self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+        self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1) 
+    def MultiRobot1(self):
+        self.pub_car_cmd = rospy.Publisher("/"+self.robot1+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
+        self.pub_pressA = rospy.Publisher("/"+self.robot1+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
+        self.pub_pressB = rospy.Publisher("/"+self.robot1+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
+        self.pub_pressX = rospy.Publisher("/"+self.robot1+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
+        self.pub_pressY = rospy.Publisher("/"+self.robot1+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
 
     def cbImage(self,msg):
         image_cv = image_cv_from_jpg(msg.data)
@@ -91,6 +104,9 @@ class JoyMapper(object):
         else:
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
+        self.MultiRobot()
+        self.pub_car_cmd.publish(car_cmd_msg)
+        self.MultiRobot1()
         self.pub_car_cmd.publish(car_cmd_msg)
 
 # Button List index of joy.buttons array:
@@ -143,6 +159,39 @@ class JoyMapper(object):
             closeled_msg = BoolStamped()
             closeled_msg.header.stamp = self.joy.header.stamp
             rospy.loginfo('Press "Y"')
+            self.count += 1
+            if (self.count >= 3):
+                self.count = 0
+            if (self.count == 0):
+                self.robot = "arg1"
+                self.robot1 = "robot1"
+                closeled_msg.data = False 
+                self.pub_pressY = rospy.Publisher("/arg2/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                closeled_msg.data = True 
+                self.pub_pressY = rospy.Publisher("/arg1/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                rospy.loginfo('Select "arg1"')
+            if (self.count == 1):
+                self.robot = "arg2"
+                self.robot1 = "robot1"
+                closeled_msg.data = False 
+                self.pub_pressY = rospy.Publisher("/arg1/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                closeled_msg.data = True 
+                self.pub_pressY = rospy.Publisher("/arg2/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                rospy.loginfo('Select "arg2"')
+            if (self.count == 2):
+                self.robot = "arg1"
+                self.robot1 = "arg2"
+                closeled_msg.data = True 
+                self.pub_pressY = rospy.Publisher("/arg2/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                closeled_msg.data = True 
+                self.pub_pressY = rospy.Publisher("/arg1/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+                self.pub_pressY.publish(closeled_msg)
+                rospy.loginfo('Select "all car"')
         elif (joy_msg.buttons[2] == 1):
             pressX_msg = BoolStamped()
             #raspistill -t 1000 -o out1.jpg
@@ -170,6 +219,9 @@ class JoyMapper(object):
             rospy.loginfo('Joystick Control')
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
+            self.MultiRobot()
+            self.pub_pressA.publish(pressA_msg)
+            self.MultiRobot1()
             self.pub_pressA.publish(pressA_msg)
         elif (joy_msg.buttons[1] == 1): #push left joystick button 
             pressB_msg = BoolStamped()
@@ -177,6 +229,9 @@ class JoyMapper(object):
             rospy.loginfo('Lane following')
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
+            self.MultiRobot()
+            self.pub_pressB.publish(pressB_msg)
+            self.MultiRobot1()
             self.pub_pressB.publish(pressB_msg)
         else:
             some_active = sum(joy_msg.buttons) > 0
