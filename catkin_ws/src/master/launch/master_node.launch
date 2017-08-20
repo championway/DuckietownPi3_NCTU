@@ -1,10 +1,13 @@
 <launch>
 	<arg name="veh" default="master"/>
+	<arg name="local" default="true"/>
+	
+	<!-- joy -->
+    <node ns="$(arg veh)" if="$(arg local)" pkg="joy" type="joy_node" name="joy" output="screen">
+        <rosparam command="load" file="$(find duckietown)/config/$(arg config)/joy/joy_node/$(arg param_file_name).yaml"/>
+    </node>
+
 	<!-- start basic args -->
-	<include file="$(find master)/launch/master_joy_node.launch">
-		<arg name="veh" value="$(arg veh)"/>
-		<arg name="param_file_name" default="default" />
-	</include>
 	<include file="$(find master)/launch/master_name_node.launch">
 		<arg name="veh" value="$(arg veh)"/>
 		<arg name="param_file_name" default="default" />
