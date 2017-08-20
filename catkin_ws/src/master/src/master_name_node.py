@@ -46,7 +46,6 @@ class carName(object):
         self.pub_pressB = rospy.Publisher("~press_B",BoolStamped,queue_size=1)
         self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
         self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
-        self.save_image = rospy.Subscriber("~image", CompressedImage, self.cbImage, queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
@@ -92,10 +91,6 @@ class carName(object):
         self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
         self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
         self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1) 
-
-    def cbImage(self,msg):
-        image_cv = image_cv_from_jpg(msg.data)
-        self.pic = image_cv
 
     def cbParamTimer(self,event):
         self.v_gain = rospy.get_param("~speed_gain", 1.0)
