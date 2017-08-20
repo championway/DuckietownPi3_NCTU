@@ -170,7 +170,7 @@ class carName(object):
                 self.robot = self.rlist[self.rcount]
                 print "choose", self.robot
             print "--------- ", len(self.robotlist), " ---------"
-            print rlist
+            print self.rlist
             print
             print
         elif (joy_msg.buttons[2] == 1):
