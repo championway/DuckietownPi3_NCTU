@@ -125,7 +125,7 @@ class carName(object):
         else:
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
-        if allrb == True:
+        if self.allrb == True:
             self.AllRobot(pub_car_cmd,car_cmd_msg)
         else:
             self.MultiRobot()
@@ -161,10 +161,10 @@ class carName(object):
             rospy.loginfo('Press "Y"')
             self.rcount += 1
             if self.rcount == self.rnumber:
-                allrb = True
+                self.allrb = True
                 print "choose all robot"
             else:
-                allrb = False
+                self.allrb = False
                 if self.rcount > self.rnumber:
                     self.rcount = 0
                 self.robot = self.rlist[self.rcount]
@@ -193,7 +193,7 @@ class carName(object):
             rospy.loginfo('Joystick Control')
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
-            if allrb == True:
+            if self.allrb == True:
                 self.AllRobot(pub_pressA,pressA_msg)
             else:
                 self.MultiRobot()
@@ -204,7 +204,7 @@ class carName(object):
             rospy.loginfo('Lane following')
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
-            if allrb == True:
+            if self.allrb == True:
                 self.AllRobot(pub_pressB,pressB_msg)
             else:
                 self.MultiRobot()
