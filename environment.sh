@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Activating ROS..."
-source /opt/ros/indigo/setup.bash
+source /opt/ros/kinetic/setup.bash
 echo "...done."
 
 echo "Setting up PYTHONPATH."
@@ -22,3 +22,4 @@ source $DUCKIETOWN_ROOT/catkin_ws/devel/setup.bash
 # TODO: run a python script that checks all libraries are installed
 
 exec "$@" #Passes arguments. Need this for ROS remote launching to work.
+
