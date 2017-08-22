@@ -70,7 +70,7 @@ class carName(object):
             self.robotlist[i] = self.robotlist[i] + 1
             if self.robotlist[i] >=10 :
                 self.robotlist.pop(i)
-                self.rlist.remove(self.i)
+                self.rlist.remove(i)
 
     def subname(self, msg):
         if msg.send == True :
