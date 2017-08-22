@@ -77,9 +77,9 @@ class carName(object):
             if msg.robot_name not in self.robotlist :
                 self.robotlist[msg.robot_name]=0
                 self.rlist.append(msg.robot_name)
-                self.rnumber = len(self.rlist)
             else :
                 self.robotlist[msg.robot_name]=0
+        self.rnumber = len(self.rlist)
         self.count()
 
     def AllRobot(self,pb,msg):
