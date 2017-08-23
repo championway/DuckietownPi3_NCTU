@@ -134,8 +134,10 @@ class LineDetectorHSV(Configurable, LineDetectorInterface):
         lines = cv2.HoughLinesP(edge, 1, np.pi/180, self.hough_threshold, np.empty(1), self.hough_min_line_length, self.hough_max_line_gap)
         if lines is not None:
             lines = np.array(lines[0])
+            print "1111111111111"
         else:
             lines = []
+            print "2222222222222"
         return lines
     
     def _checkBounds(self, val, bound):
@@ -195,7 +197,7 @@ class LineDetectorHSV(Configurable, LineDetectorInterface):
         bw, edge_color = self._colorFilter(color)
         lines = self._HoughLine(edge_color)
         centers, normals = self._findNormal(bw, lines)
-        print "--- ", color," ---", lines ," ---"
+        #print "--- ", color," ---", lines ," ---"
         return Detections(lines=lines, normals=normals, area=bw, centers=centers)
 
     def setImage(self, bgr):
