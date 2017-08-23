@@ -195,6 +195,7 @@ class LineDetectorHSV(Configurable, LineDetectorInterface):
         bw, edge_color = self._colorFilter(color)
         lines = self._HoughLine(edge_color)
         centers, normals = self._findNormal(bw, lines)
+        print "--- ", color," ---", lines ," ---"
         return Detections(lines=lines, normals=normals, area=bw, centers=centers)
 
     def setImage(self, bgr):
