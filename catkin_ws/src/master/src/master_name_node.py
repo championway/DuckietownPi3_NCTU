@@ -140,7 +140,6 @@ class carName(object):
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
         if self.allrb == True:
-            print "select all robots"
             self.AllRobot(4,car_cmd_msg)
         else:
             self.MultiRobot()
@@ -177,7 +176,7 @@ class carName(object):
             self.rcount += 1
             if self.rcount == self.rnumber:
                 self.allrb = True
-                print "choose all robot"
+                print "broadcast to all robots"
             else:
                 self.allrb = False
                 if self.rcount > self.rnumber:
@@ -207,7 +206,6 @@ class carName(object):
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
             if self.allrb == True:
-                print "select all robots"
                 self.AllRobot(2,pressA_msg)
             else:
                 self.MultiRobot()
@@ -219,7 +217,6 @@ class carName(object):
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
             if self.allrb == True:
-                print "select all robots"
                 self.AllRobot(3,pressB_msg)
             else:
                 self.MultiRobot()
