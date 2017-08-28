@@ -132,7 +132,7 @@ class LineDetectorHSV(Configurable, LineDetectorInterface):
 
     def _HoughLine(self, edge):
         lines = cv2.HoughLinesP(edge, 1, np.pi/180, self.hough_threshold, np.empty(1), self.hough_min_line_length, self.hough_max_line_gap)
-        line = [[0,0,0,0]]*1
+        line = [[0,0,0,0]]*len(lines)
         for i in range(len(lines)):
             line[0][i] = lines[i][0]
         print()
