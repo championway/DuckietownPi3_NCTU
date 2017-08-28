@@ -68,7 +68,7 @@ def color_segment(area_white, area_red, area_yellow,area_blue):
         nz = (orig[i] > 0) * 1.0
         assert nz.shape == (h, w), nz.shape
 
-        for j in [0, 1, 2, 3]:
+        for j in [0, 1, 2]:
             res[:,:,j] = (1-nz) * res[:,:,j].copy() + (nz) * m[:,:,j]
 
     return res
