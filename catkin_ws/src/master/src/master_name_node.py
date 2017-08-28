@@ -90,9 +90,17 @@ class carName(object):
             self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
             self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
             self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
-            self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1) 
-            self.pub_car_cmd.publish(msg)
-            print "select all robots"
+            self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+            if pub == 1:
+                self.pub_car_cmd.publish(msg)
+            elif pub == 2:
+                self.pub_pressA.publish(msg)
+            elif pub == 3:
+                self.pub_pressB.publish(msg)
+            elif pub == 4:
+                self.pub_pressX.publish(msg)
+            elif pub == 5:
+                self.pub_pressY.publish(msg)
             #rospy.sleep(0.1)
 
     def MultiRobot(self):
@@ -129,7 +137,8 @@ class carName(object):
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
         if self.allrb == True:
-            self.AllRobot(self.pub_car_cmd,car_cmd_msg)
+            print "select all robots"
+            self.AllRobot(4,car_cmd_msg)
         else:
             self.MultiRobot()
             self.pub_car_cmd.publish(car_cmd_msg)
@@ -195,7 +204,8 @@ class carName(object):
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
             if self.allrb == True:
-                self.AllRobot(self.pub_pressA,pressA_msg)
+                print "select all robots"
+                self.AllRobot(2,pressA_msg)
             else:
                 self.MultiRobot()
                 self.pub_pressA.publish(pressA_msg)
@@ -206,7 +216,8 @@ class carName(object):
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
             if self.allrb == True:
-                self.AllRobot(self.pub_pressB,pressB_msg)
+                print "select all robots"
+                self.AllRobot(3,pressB_msg)
             else:
                 self.MultiRobot()
                 self.pub_pressB.publish(pressB_msg)
