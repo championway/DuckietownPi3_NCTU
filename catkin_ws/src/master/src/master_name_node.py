@@ -82,7 +82,7 @@ class carName(object):
         self.rnumber = len(self.rlist)
         self.count()
 
-    def AllRobot(self,pb,msg):
+    def AllRobot(pub,msg):
         for i in self.robotlist.keys():
             print i
             self.robot = i
