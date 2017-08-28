@@ -137,7 +137,7 @@ class LineDetectorHSV(Configurable, LineDetectorInterface):
         print ("-------------------")
         print ("/////",lines,"/////")
         if lines is not None:
-            lines = np.array(lines[0])
+            lines = np.array(lines)
         else:
             lines = []
         return lines
