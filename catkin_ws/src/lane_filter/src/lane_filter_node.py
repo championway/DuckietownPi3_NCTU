@@ -131,8 +131,8 @@ For more info on algorithm and parameters please refer to the google doc:
             if self.use_max_segment_dist and (l_i > self.max_segment_dist):
                 continue
 
-            i = floor((d_i - self.d_min)/self.delta_d)
-            j = floor((phi_i - self.phi_min)/self.delta_phi)
+            i = int(floor((d_i - self.d_min)/self.delta_d))
+            j = int(floor((phi_i - self.phi_min)/self.delta_phi))
 
             if self.use_distance_weighting:           
                 dist_weight = self.dwa*l_i**3+self.dwb*l_i**2+self.dwc*l_i+self.zero_val
