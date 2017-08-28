@@ -216,6 +216,7 @@ class LineDetectorNode(object):
             drawLines(image_with_lines, white.lines, (0, 0, 0))
             drawLines(image_with_lines, yellow.lines, (255, 0, 0))
             drawLines(image_with_lines, red.lines, (0, 255, 0))
+            drawLines(image_with_lines, blue.lines, (255, 255, 0))
 
             tk.completed('drawn')
 
@@ -227,7 +228,7 @@ class LineDetectorNode(object):
             tk.completed('pub_image')
 
 #         if self.verbose:
-            colorSegment = color_segment(white.area, red.area, yellow.area) 
+            colorSegment = color_segment(white.area, red.area, yellow.area, blue.area) 
             edge_msg_out = self.bridge.cv2_to_imgmsg(self.detector.edges, "mono8")
             colorSegment_msg_out = self.bridge.cv2_to_imgmsg(colorSegment, "bgr8")
             self.pub_edge.publish(edge_msg_out)
