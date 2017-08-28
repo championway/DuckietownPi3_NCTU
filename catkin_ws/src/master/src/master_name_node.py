@@ -93,7 +93,7 @@ class carName(object):
             self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1) 
             pb.publish(msg)
             print "select all robots"
-            rospy.sleep(0.1)
+            rospy.sleep(1)
 
     def MultiRobot(self):
         self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
