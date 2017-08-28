@@ -85,7 +85,7 @@ class carName(object):
     def AllRobot(self,pb,msg):
         for i in self.robotlist.keys():
             print i
-            self.robot = i
+            self.robot = abc
             self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
             self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
             self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
