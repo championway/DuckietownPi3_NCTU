@@ -132,13 +132,11 @@ class LineDetectorHSV(Configurable, LineDetectorInterface):
 
     def _HoughLine(self, edge):
         lines = cv2.HoughLinesP(edge, 1, np.pi/180, self.hough_threshold, 10, self.hough_min_line_length, self.hough_max_line_gap)
+        print ("/////",lines,"/////")
         if lines is not None:
-            for a in lines:
-                line = np.array(a[0])
-            lines = line
+            lines = np.array(lines[0])
         else:
             lines = []
-        print ("/////",lines,"/////")
         return lines
     
     def _checkBounds(self, val, bound):
