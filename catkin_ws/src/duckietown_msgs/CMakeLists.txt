@@ -64,7 +64,9 @@ add_message_files(
   WheelsCmdStamped.msg
   Pose2DStamped.msg
   SignalsDetection.msg
+  TagDetection.msg
   Twist2DStamped.msg
+  AprilTags.msg
   AprilTagDetection.msg
   AprilTagDetectionArray.msg
   AprilTagsWithInfos.msg
