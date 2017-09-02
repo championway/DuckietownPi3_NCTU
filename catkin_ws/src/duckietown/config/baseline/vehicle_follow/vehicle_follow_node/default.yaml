@@ -1,0 +1,11 @@
+dist_ref: 0.13
+head_ref: 0.0
+k_follow: 1.6
+k_heading: 7.7
+head_thres: 0.85
+max_speed: 0.8
+max_heading: 8.0
+deadspace_speed: 0.03
+deadspace_heading: 0.05
+alpha: 0.0
+alpha_psi: 0.0
