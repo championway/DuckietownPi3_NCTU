@@ -230,7 +230,7 @@ namespace apriltags_ros{
       tag_detection.size = tag_size;
       tag_detection_array.detections.push_back(tag_detection);
       tag_pose_array.poses.push_back(tag_pose.pose);
-
+      print (tag_pose)
       tf::Stamped<tf::Transform> tag_transform;
       tf::poseStampedMsgToTF(tag_pose, tag_transform);
       tf_pub_.sendTransform(tf::StampedTransform(tag_transform, tag_transform.stamp_, tag_transform.frame_id_, description.frame_name()));

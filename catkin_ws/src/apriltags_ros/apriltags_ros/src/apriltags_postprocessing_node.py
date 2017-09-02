@@ -31,7 +31,7 @@ class AprilPostPros(object):
         tags_file = open(tags_filepath, 'r')
         self.tags_dict = yaml.load(tags_file)
         tags_file.close()
-        #self.info = TagInfo()
+        self.info = TagInfo()
  
         self.sign_types = {"StreetName": self.info.S_NAME,
             "TrafficSign": self.info.SIGN,
