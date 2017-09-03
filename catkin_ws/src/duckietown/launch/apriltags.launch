@@ -19,6 +19,8 @@
  	</include>
  
  	<!-- AprilTags Detections -->
+    <remap from="switch" to="decoder_node/switch" />
+    <remap from="compressed" to="camera_node/image/compressed" />
     <remap from="image_rect" to="camera_node/image/rect" />
     <remap from="camera_node/image/camera_info" to="camera_node/raw_camera_info" />
     <include file="$(find apriltags_ros)/launch/apriltag_detector_node.launch">

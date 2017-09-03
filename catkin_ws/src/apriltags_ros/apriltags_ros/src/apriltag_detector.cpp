@@ -39,11 +39,11 @@ namespace apriltags_ros{
     tag_detector_= boost::shared_ptr<AprilTags::TagDetector>(new AprilTags::TagDetector(tag_codes));
     tag_rect_detector_= boost::shared_ptr<AprilTags::TagRectDetector>(new AprilTags::TagRectDetector(tag_codes));
     image_sub_ = it_.subscribeCamera("image_rect", 1, &AprilTagDetector::imageCb, this);
-    switch_sub_ = nh.subscribe("/arg3/decoder_node/switch",1,&AprilTagDetector::switchCB, this);
+    switch_sub_ = nh.subscribe("switch",1,&AprilTagDetector::switchCB, this);
     image_pub_ = it_.advertise("tag_detections_image", 1);
     detections_pub_ = nh.advertise<duckietown_msgs::AprilTagDetectionArray>("tag_detections", 1);
     proposals_pub_ = nh.advertise<duckietown_msgs::Rects>("quad_proposals", 1);
-    image_compress_sub_ = nh.subscribe("/arg3/camera_node/image/compressed", 1, &AprilTagDetector::image_compress_Cb, this);
+    image_compress_sub_ = nh.subscribe("compressed", 1, &AprilTagDetector::image_compress_Cb, this);
     //crop_image_pub_ = it2_.advertise("crop_image", 1);
     pose_pub_ = nh.advertise<geometry_msgs::PoseArray>("tag_detections_pose", 1);
     on_switch=false;
