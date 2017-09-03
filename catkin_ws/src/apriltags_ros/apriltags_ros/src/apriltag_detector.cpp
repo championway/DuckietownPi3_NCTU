@@ -25,9 +25,9 @@ namespace apriltags_ros{
     }
     else{
       try{
-	descriptions_ = parse_tag_descriptions(april_tag_descriptions);
+      	descriptions_ = parse_tag_descriptions(april_tag_descriptions);
       } catch(XmlRpc::XmlRpcException e){
-	ROS_ERROR_STREAM("Error loading tag descriptions: "<<e.getMessage());
+        ROS_ERROR_STREAM("Error loading tag descriptions: "<<e.getMessage());
       }
     }
     
@@ -43,10 +43,10 @@ namespace apriltags_ros{
     image_pub_ = it_.advertise("tag_detections_image", 1);
     detections_pub_ = nh.advertise<duckietown_msgs::AprilTagDetectionArray>("tag_detections", 1);
     proposals_pub_ = nh.advertise<duckietown_msgs::Rects>("quad_proposals", 1);
-    image_compress_sub_ = nh.subscribe("/wama/camera_node/image/compressed", 1, &AprilTagDetector::image_compress_Cb, this);
+    image_compress_sub_ = nh.subscribe("compressed", 1, &AprilTagDetector::image_compress_Cb, this);
     //crop_image_pub_ = it2_.advertise("crop_image", 1);
     pose_pub_ = nh.advertise<geometry_msgs::PoseArray>("tag_detections_pose", 1);
-    on_switch=true;
+    on_switch=false;
   }
   AprilTagDetector::~AprilTagDetector(){
     image_sub_.shutdown();
@@ -290,13 +290,13 @@ namespace apriltags_ros{
 
       std::string frame_name;
       if(tag_description.hasMember("frame_id")){
-	ROS_ASSERT(tag_description["frame_id"].getType() == XmlRpc::XmlRpcValue::TypeString);
-	frame_name = (std::string)tag_description["frame_id"];
+      	ROS_ASSERT(tag_description["frame_id"].getType() == XmlRpc::XmlRpcValue::TypeString);
+      	frame_name = (std::string)tag_description["frame_id"];
       }
       else{
-	std::stringstream frame_name_stream;
-	frame_name_stream << "tag_" << id;
-	frame_name = frame_name_stream.str();
+      	std::stringstream frame_name_stream;
+      	frame_name_stream << "tag_" << id;
+      	frame_name = frame_name_stream.str();
       }
       AprilTagDescription description(id, size, frame_name);
       ROS_INFO_STREAM("Loaded tag config: "<<id<<", size: "<<size<<", frame_name: "<<frame_name);
