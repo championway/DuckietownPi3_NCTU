@@ -60,7 +60,7 @@ class AprilPostPros(object):
         self.sub_prePros        = rospy.Subscriber("~apriltags_in", AprilTagDetectionArray, self.callback, queue_size=1)
         self.pub_postPros       = rospy.Publisher("~apriltags_out", AprilTagsWithInfos, queue_size=1)
         self.pub_visualize = rospy.Publisher("~tag_pose", PoseStamped, queue_size=1)
-
+        self.sub_my = = rospy.Subscriber("~apriltags_out", AprilTagsWithInfos, self.cb, queue_size=1)
         rospy.loginfo("[%s] has started", self.node_name)
 
     def setupParam(self,param_name,default_value):
@@ -68,7 +68,8 @@ class AprilPostPros(object):
         rospy.set_param(param_name,value) #Write to parameter server for transparancy
         rospy.loginfo("[%s] %s = %s " %(self.node_name,param_name,value))
         return value
-
+    def cb(self, msg):
+        print "apriltags_out"
     def callback(self, msg):
 
         tag_infos = []
