@@ -46,7 +46,7 @@ namespace apriltags_ros{
     image_compress_sub_ = nh.subscribe("compressed", 1, &AprilTagDetector::image_compress_Cb, this);
     //crop_image_pub_ = it2_.advertise("crop_image", 1);
     pose_pub_ = nh.advertise<geometry_msgs::PoseArray>("tag_detections_pose", 1);
-    on_switch=true;
+    on_switch=false;
   }
   AprilTagDetector::~AprilTagDetector(){
     image_sub_.shutdown();
