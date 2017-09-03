@@ -25,9 +25,9 @@
 	<!-- start switch args -->
 	<arg name="robot_name" default="true"/>
 	<arg name="camera" default="true"/>
-	<arg name="/camera/raw" default="false"/>
+	<arg name="/camera/raw" default="true"/>
 	<arg name="/camera/cam_info" default="true"/>
-	<arg name="/camera/raw/rect" default="false"/>
+	<arg name="/camera/raw/rect" default="true"/>
 	<arg name="/camera/local" default="false" />
 	<arg name="wheels" default="true"/>
 	<arg name="joystick" default="true"/>
