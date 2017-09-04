@@ -1,0 +1,11 @@
+<launch>
+	<arg name="veh" default="master"/>
+	<arg name="local" default="true"/>
+	<arg name="pkg_name" value="android_app"/>
+	<arg name="node_name" default="socket_node"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+
+	<!-- phone connect -->
+    <node ns="$(arg veh)" if="$(arg local)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen">
+    </node>
+</launch>
