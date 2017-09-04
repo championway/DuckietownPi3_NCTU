@@ -10,8 +10,9 @@ from __builtin__ import True
 import socket
 if "__main__" == __name__:
     try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print("create socket succ!")
+        sock.setsockopt(secket.SOL_SOCKET, scket.S0_REUSEADDR, 1)
         sock.bind(('', 50007))
         print("bind socket succ!")
         sock.listen(5)
@@ -20,7 +21,7 @@ if "__main__" == __name__:
         print("init socket err!")
     while True:
         print("listen for client...")
-        conn, addr = sock.accept()
+        (conn, addr) = sock.accept()
         print("get client")
         print(addr)
         conn.settimeout(5)
