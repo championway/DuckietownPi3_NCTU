@@ -13,7 +13,7 @@ if "__main__" == __name__:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print("create socket succ!")
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        sock.bind(('', 50007))
+        sock.bind(('192.168.1.103', 8001))
         print("bind socket succ!")
         sock.listen(5)
         print("listen succ!")
