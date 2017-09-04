@@ -27,7 +27,7 @@ if "__main__" == __name__:
         conn.settimeout(5)
         szBuf = conn.recv(1024)
         print("recv:" + szBuf)
-        if "0" == szBuf:
+        if "1" == szBuf:
             conn.send('exit')
         else:
             conn.send('welcome client!')
