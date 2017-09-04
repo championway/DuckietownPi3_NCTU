@@ -21,7 +21,7 @@ if "__main__" == __name__:
         print("init socket err!")
     while True:
         print("listen for client...")
-        (conn, addr) = sock.accept()
+        conn, addr = sock.accept()
         print("get client")
         print(addr)
         conn.settimeout(5)
