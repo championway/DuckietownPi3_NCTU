@@ -25,6 +25,7 @@ if "__main__" == __name__:
             print("listen for client...")
             conn, addr = sock.accept()
             print("get client")
+            szBuf = conn.recv(1024)
             if szBuf != "":
                 con = True
         #print(addr)
