@@ -29,10 +29,11 @@ if "__main__" == __name__:
         print("recv:" + szBuf)
         #try:
         if szBuf == "0":
-            conn.send('exit')
+            conn.send("exit")
             conn.close()
+            print("disconnect")
         else:
-            conn.send('welcome client!')
+            conn.send("welcome client!'")
         #except socket.timeout:
             #continue
         #conn.close();
