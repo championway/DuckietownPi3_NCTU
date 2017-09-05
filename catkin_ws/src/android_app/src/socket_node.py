@@ -27,18 +27,18 @@ if "__main__" == __name__:
         print(addr)
         #conn.setblocking(1)
         conn.send('d')
-            #conn.settimeout(5)
-            #szBuf = conn.recv(1024)
-            #print("recv:" + szBuf)
-            #try:
-            '''if szBuf == "0":
-                #conn.send("exit")
-                print("disconnect")
-                conn.close()
-            else:
-                print("receive mess")
-                #conn.send("welcome client!'")'''
-            #except socket.timeout:
-                #continue
+        #conn.settimeout(5)
+        #szBuf = conn.recv(1024)
+        #print("recv:" + szBuf)
+        #try:
+        '''if szBuf == "0":
+            #conn.send("exit")
+            print("disconnect")
+            conn.close()
+        else:
+            print("receive mess")
+            #conn.send("welcome client!'")'''
+        #except socket.timeout:
+            #continue
         conn.close();
         #print("end of sevice")
