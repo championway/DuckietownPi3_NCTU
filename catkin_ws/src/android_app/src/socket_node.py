@@ -30,8 +30,9 @@ if "__main__" == __name__:
         #conn.setblocking(1)
         #conn.send('d')
         #conn.settimeout(5)
-        szBuf = conn.recv(1024)
-        print("recv:" + szBuf)
+        szBuf = "1"
+        #szBuf = conn.recv(1024)
+        #print("recv:" + szBuf)
         #conn.close();
         if szBuf == "0":
             #conn.send("exit")
