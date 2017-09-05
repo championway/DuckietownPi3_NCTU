@@ -26,6 +26,7 @@ if "__main__" == __name__:
             conn, addr = sock.accept()
             print("get client")
             con = True
+            conn.send('d')
             #print(addr)
         #conn.setblocking(1)
         #conn.send('d')
@@ -41,7 +42,7 @@ if "__main__" == __name__:
             con = False
         else:
             print("receive mess")
-            conn.send("welcome client!")
+            #conn.send("welcome client!")
         #except socket.timeout:
             #continue
         #conn.close();
