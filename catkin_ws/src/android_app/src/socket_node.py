@@ -29,12 +29,12 @@ if "__main__" == __name__:
         print("recv:" + szBuf)
         #try:
         if szBuf == "0":
-            print("disconnect")
-            conn.send("exit")
+            #conn.send("exit")
             conn.close()
+            print("disconnect")
         else:
             print("receive mess")
-            conn.send("welcome client!'")
+            #conn.send("welcome client!'")
         #except socket.timeout:
             #continue
         #conn.close();
