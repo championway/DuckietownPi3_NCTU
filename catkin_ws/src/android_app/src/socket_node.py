@@ -21,14 +21,12 @@ if "__main__" == __name__:
     except:
         print("init socket err!")
     while True:
-        if con == False:
-            print("listen for client...")
-            conn, addr = sock.accept()
-            print("get client")
-            print(addr)
-        else:
-            #conn.setblocking(1)
-            conn.send('d')
+        print("listen for client...")
+        conn, addr = sock.accept()
+        print("get client")
+        print(addr)
+        #conn.setblocking(1)
+        conn.send('d')
             #conn.settimeout(5)
             #szBuf = conn.recv(1024)
             #print("recv:" + szBuf)
@@ -42,5 +40,5 @@ if "__main__" == __name__:
                 #conn.send("welcome client!'")'''
             #except socket.timeout:
                 #continue
-            #conn.close();
+        conn.close();
         #print("end of sevice")
