@@ -26,7 +26,7 @@ if "__main__" == __name__:
             conn, addr = sock.accept()
             print("get client")
             szBuf = conn.recv(1024)
-            if szBuf == "1":
+            if szBuf == "S":
                 con = True
                 break
         #print(addr)
