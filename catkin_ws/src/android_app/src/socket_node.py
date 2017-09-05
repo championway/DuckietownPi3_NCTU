@@ -30,7 +30,7 @@ if "__main__" == __name__:
         print("recv:" + szBuf)
         #try:
         if szBuf == "0":
-            conn.send("exit")
+            #conn.send("exit")
             print("disconnect")
             conn.close()
         else:
