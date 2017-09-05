@@ -32,10 +32,10 @@ if "__main__" == __name__:
         szBuf = conn.recv(1024)
         print("recv:" + szBuf)
         try:
-        if szBuf == "0":
-            #conn.send("exit")
-            print("disconnect")
-            conn.close()
+            if szBuf == "0":
+                #conn.send("exit")
+                print("disconnect")
+                conn.close()
         else:
             print("receive mess")
             #conn.send("welcome client!'")'''
