@@ -28,6 +28,7 @@ if "__main__" == __name__:
             szBuf = conn.recv(1024)
             if szBuf == "1":
                 con = True
+                break
         #print(addr)
         #conn.setblocking(1)
         #conn.send('d')
