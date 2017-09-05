@@ -26,7 +26,7 @@ if "__main__" == __name__:
             conn, addr = sock.accept()
             print("get client")
             szBuf = conn.recv(1024)
-            if szBuf != "":
+            if szBuf != None:
                 con = True
         #print(addr)
         #conn.setblocking(1)
