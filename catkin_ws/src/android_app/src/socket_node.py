@@ -24,8 +24,8 @@ if "__main__" == __name__:
         while con==False:
             print("listen for client...")
             conn, addr = sock.accept()
-            print("get client")
             con = True
+            print("get client")
             '''szBuf = conn.recv(1024)
             if szBuf == "S":
                 con = True'''
