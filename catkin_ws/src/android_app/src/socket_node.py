@@ -38,7 +38,7 @@ if "__main__" == __name__:
             print("disconnect")
             conn.close()
             con = False
-        else:
+        elif szBuf != "":
             print("receive mess")
             #conn.send("welcome client!'")'''
         #except socket.timeout:
