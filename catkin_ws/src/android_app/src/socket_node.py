@@ -31,5 +31,5 @@ if "__main__" == __name__:
             conn.send('exit')
         else:
             conn.send('welcome client!')
-        conn.close();
-        print("end of sevice")
+        #conn.close();
+        #print("end of sevice")
