@@ -8,6 +8,7 @@ from sensor_msgs.msg import Joy
 import time
 from __builtin__ import True
 import socket
+con = False 
 if "__main__" == __name__:
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,24 +21,26 @@ if "__main__" == __name__:
     except:
         print("init socket err!")
     while True:
-        print("listen for client...")
-        conn, addr = sock.accept()
-        print("get client")
-        print(addr)
-        #conn.setblocking(1)
-        conn.sendall('welcome client!')
-        #conn.settimeout(5)
-        #szBuf = conn.recv(1024)
-        #print("recv:" + szBuf)
-        #try:
-        '''if szBuf == "0":
-            #conn.send("exit")
-            print("disconnect")
-            conn.close()
+        if con == False:
+            print("listen for client...")
+            conn, addr = sock.accept()
+            print("get client")
+            print(addr)
         else:
-            print("receive mess")
-            #conn.send("welcome client!'")'''
-        #except socket.timeout:
-            #continue
-        #conn.close();
+            #conn.setblocking(1)
+            conn.send('d')
+            #conn.settimeout(5)
+            #szBuf = conn.recv(1024)
+            #print("recv:" + szBuf)
+            #try:
+            '''if szBuf == "0":
+                #conn.send("exit")
+                print("disconnect")
+                conn.close()
+            else:
+                print("receive mess")
+                #conn.send("welcome client!'")'''
+            #except socket.timeout:
+                #continue
+            #conn.close();
         #print("end of sevice")
