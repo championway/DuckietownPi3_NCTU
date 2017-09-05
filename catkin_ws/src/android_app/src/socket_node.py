@@ -24,6 +24,7 @@ if "__main__" == __name__:
         conn, addr = sock.accept()
         print("get client")
         print(addr)
+        conn.setblocking(0)
         conn.send("welcome client!'")
         #conn.settimeout(5)
         szBuf = conn.recv(1024)
