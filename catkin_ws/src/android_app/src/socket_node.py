@@ -26,10 +26,6 @@ if "__main__" == __name__:
             conn, addr = sock.accept()
             print("get client")
             #print(addr)
-        if conn.isConnected():
-            print("still connedted")
-        else:
-            print("off line")
         #conn.setblocking(1)
         #conn.send('d')
         #conn.settimeout(5)
@@ -44,5 +40,5 @@ if "__main__" == __name__:
             #conn.send("welcome client!'")'''
         #except socket.timeout:
             #continue
-        #conn.close();
+        conn.close();
         #print("end of sevice")
