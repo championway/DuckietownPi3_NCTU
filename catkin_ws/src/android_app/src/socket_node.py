@@ -24,15 +24,16 @@ if "__main__" == __name__:
         conn, addr = sock.accept()
         print("get client")
         print(addr)
-        conn.settimeout(5)
+        #conn.settimeout(5)
         szBuf = conn.recv(1024)
         print("recv:" + szBuf)
-        try:
-            if "0" == szBuf:
-                conn.send('exit')
-            else:
-                conn.send('welcome client!')
-        except socket.timeout:
-            continue
+        #try:
+        if szBuf == "0":
+            conn.send('exit')
+            conn.close()
+        else:
+            conn.send('welcome client!')
+        #except socket.timeout:
+            #continue
         #conn.close();
         #print("end of sevice")
