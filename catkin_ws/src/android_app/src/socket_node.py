@@ -25,7 +25,7 @@ if "__main__" == __name__:
         print("get client")
         print(addr)
         conn.setblocking(1)
-        conn.send("welcome client!'")
+        conn.sendall('welcome client!')
         #conn.settimeout(5)
         szBuf = conn.recv(1024)
         print("recv:" + szBuf)
