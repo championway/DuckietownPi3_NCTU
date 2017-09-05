@@ -21,12 +21,13 @@ if "__main__" == __name__:
     except:
         print("init socket err!")
     while True:
-        if con==False:
+        while con==False:
             print("listen for client...")
             conn, addr = sock.accept()
             print("get client")
-            con = True
-            #print(addr)
+            if szBuf != "":
+                con = True
+        #print(addr)
         #conn.setblocking(1)
         #conn.send('d')
         #conn.settimeout(5)
