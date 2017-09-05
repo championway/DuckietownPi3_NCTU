@@ -27,9 +27,12 @@ if "__main__" == __name__:
         conn.settimeout(5)
         szBuf = conn.recv(1024)
         print("recv:" + szBuf)
-        if "0" == szBuf:
-            conn.send('exit')
-        else:
-            conn.send('welcome client!')
+        try:
+            if "0" == szBuf:
+                conn.send('exit')
+            else:
+                conn.send('welcome client!')
+        except socket.timeout:
+            continue
         #conn.close();
         #print("end of sevice")
