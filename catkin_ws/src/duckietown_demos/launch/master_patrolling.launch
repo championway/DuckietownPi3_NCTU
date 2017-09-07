@@ -175,7 +175,7 @@
     <!-- Start timer -->
     <group if="$(arg timer)">
         <!-- Timer -->
-            <remap from="timer_node/mode" to="fsm_patrolling_node/mode"/>
+            <remap from="timer_node/mode" to="fsm_node/mode"/>
     		<remap from="timer_node/in_lane" to="lane_filter_patrolling_node/in_lane"/>
             <include file="$(find timer)/launch/timer_node.launch">
                 <arg name="veh" value="$(arg veh)"/>
@@ -218,7 +218,7 @@
 		<!-- Lane Filter -->
 		<group if="$(arg /lane_following/lane_filter)">
 			<remap from="lane_filter_node/time_is_up" to="timer_node/time_is_up"/>
-			<remap from="lane_filter_node/mode" to="fsm_patrolling_node/mode" />
+			<remap from="lane_filter_node/mode" to="fsm_node/mode" />
 			<remap from="lane_filter_node/segment_list" to="ground_projection/lineseglist_out"/>
 			<include file="$(find lane_filter)/launch/lane_filter_patrolling_node.launch">
 				<arg name="veh" value="$(arg veh)"/>
