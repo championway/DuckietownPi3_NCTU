@@ -157,8 +157,8 @@ For more info on algorithm and parameters please refer to the google doc:
                         continue
                 else:
                     print "---------------------- No Turn -----------------------"
-            else:
-                print "-----------------------Time is up-------------------------"
+            #else:
+                #print "-----------------------Time is up-------------------------"
 
             if d_i > self.d_max or d_i < self.d_min or phi_i < self.phi_min or phi_i>self.phi_max:
                 continue

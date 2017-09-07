@@ -87,10 +87,12 @@ class AprilPostPros(object):
                 turn_right = BoolStamped()
                 turn_right.data = True
                 self.pub_turn_right.publish(turn_right)
+                print "---------Tag 1---------Turn Right-----------"
             elif new_info.id == 2:
                 turn_left = BoolStamped()
                 turn_left.data = True
                 self.pub_turn_left.publish(turn_left)
+                print "---------Tag 2---------Turn Left-----------"
             # Check yaml file to fill in ID-specific information
             new_info.tag_type = self.sign_types[id_info['tag_type']]
             if new_info.tag_type == self.info.S_NAME:
