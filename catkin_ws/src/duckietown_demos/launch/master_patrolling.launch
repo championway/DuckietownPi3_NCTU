@@ -41,7 +41,7 @@
 	<arg name="/lane_following/lane_filter" default="true"/>
 	<arg name="/lane_following/stop_line_filter" default="true"/>
 	<arg name="/lane_following/lane_controller" default="true"/>
-	<arg name="timer" default="true">
+	<arg name="timer" default="true"/>
 	<!-- end switch args -->
 	
 	<!-- Enable statistics -->
