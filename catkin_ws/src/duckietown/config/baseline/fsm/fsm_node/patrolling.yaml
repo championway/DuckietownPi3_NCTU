@@ -85,6 +85,7 @@ states:
 
   LANE_FOLLOWING_TURN_LEFT:
     transitions:
+      pressA: "JOYSTICK_CONTROL"
       time_is_up: "LANE_FOLLOWING"
     active_nodes:
       - lane_filter_node
@@ -94,6 +95,7 @@ states:
 
   LANE_FOLLOWING_TURN_RIGHT:
     transitions:
+      pressA: "JOYSTICK_CONTROL"
       time_is_up: "LANE_FOLLOWING"
     active_nodes:
       - lane_filter_node
