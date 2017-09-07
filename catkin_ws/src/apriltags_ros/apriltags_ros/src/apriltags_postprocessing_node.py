@@ -56,7 +56,8 @@ class AprilPostPros(object):
 # ---- end tag info stuff 
 
 
-
+        self.pub_turn_right = rospy.Publisher("~turn_right", BoolStamped, queue_size=1)
+        self.pub_turn_left = rospy.Publisher("~turn_left", BoolStamped, queue_size=1)
         self.sub_prePros        = rospy.Subscriber("~apriltags_in", AprilTagDetectionArray, self.callback, queue_size=1)
         self.pub_postPros       = rospy.Publisher("~apriltags_out", AprilTagsWithInfos, queue_size=1)
         self.pub_visualize = rospy.Publisher("~tag_pose", PoseStamped, queue_size=1)
@@ -82,7 +83,14 @@ class AprilPostPros(object):
             new_info = TagInfo()
             new_info.id = int(detection.id)
             id_info = self.tags_dict[new_info.id]
-            
+            if new_info.id == 1:
+                turn_right = BoolStamped()
+                turn_right.data = True
+                self.pub_turn_right.publish(turn_right)
+            elif new_info.id == 2:
+                turn_left = BoolStamped()
+                turn_left.data = True
+                self.pub_turn_left.publish(turn_left)
             # Check yaml file to fill in ID-specific information
             new_info.tag_type = self.sign_types[id_info['tag_type']]
             if new_info.tag_type == self.info.S_NAME:

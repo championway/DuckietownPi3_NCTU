@@ -2,10 +2,6 @@
 initial_state: "JOYSTICK_CONTROL"
 
 events: #Maps from subscribing topic to signal ids
-  yourturn: 
-    topic: "stop_line_filter_node/send"
-    msg_type: "BoolStamped"
-    trigger: True
   joystick_override_on: 
     topic: "joy_mapper_node/joystick_override"
     msg_type: "BoolStamped"
@@ -30,8 +26,20 @@ events: #Maps from subscribing topic to signal ids
     topic: "joy_mapper_node/joystick_override"
     msg_type: "BoolStamped"
     trigger: False
+  time_is_up:
+    topic: "timer_node/time_is_up"
+    msg_type: "BoolStamped"
+    trigger: True
   at_stop_line:
     topic: "stop_line_filter_node/at_stop_line"
+    msg_type: "BoolStamped"
+    trigger: True
+  turn_right:
+    topic: "apriltags_postprocessing_node/turn_right"
+    msg_type: "BoolStamped"
+    trigger: True
+  turn_left:
+    topic: "apriltags_postprocessing_node/turn_left"
     msg_type: "BoolStamped"
     trigger: True
 
@@ -43,48 +51,52 @@ global_transitions:
 # Define nodes 
 nodes:
   decoder_node: "decoder_node/switch"
-# anti_instagram_node: "anti_instagram/switch"
   apriltag_node: "apriltag_detector_node/switch"
   line_detector_node: "line_detector_node/switch"
   lane_filter_node: "lane_filter_node/switch"
   stop_line_filter_node: "stop_line_filter_node/switch"
-  stop_line_filter_node_fsm: "stop_line_filter_node_fsm/switch"
   framerate_high: "camera_node/framerate_high_switch"
+  timer: "timer_node/switch"
 
 # Define state transitions
 states:
   JOYSTICK_CONTROL:
     transitions:
       pressA: "JOYSTICK_CONTROL"
-      #pressB: "LANE_FOLLOWING"
-      #yourturn: "LANE_FOLLOWING"
-      notpressY: "JOYSTOP"
-#      pressX: "CAR13"
-#      pressY: "CAR14"
-#      at_stop_line: "LANE_FOLLOWING"
-#      joystick_override_off: "LANE_FOLLOWING"
-#      start_avoidance: "LANE_FOLLOWING_AVOID"
+      pressB: "LANE_FOLLOWING"
     active_nodes:
       - lane_filter_node
       - line_detector_node
       - framerate_high
       - decoder_node
       - apriltag_node
-    lights: ["joystick"]   
-  JOYSTOP:
+    lights: ["joystick"]
+
+  LANE_FOLLOWING:
     transitions:
       pressA: "JOYSTICK_CONTROL"
-      #pressB: "LANE_FOLLOWING"
-      #yourturn: "LANE_FOLLOWING"
-#      pressX: "CAR13"
-      pressY: "JOYSTICK_CONTROL"
-#      at_stop_line: "LANE_FOLLOWING"
-#      joystick_override_off: "LANE_FOLLOWING"
-#      start_avoidance: "LANE_FOLLOWING_AVOID"
+      turn_right: "LANE_FOLLOWING_TURN_RIGHT"
+      turn_left: "LANE_FOLLOWING_TURN_LEFT"
     active_nodes:
       - lane_filter_node
       - line_detector_node
-      - framerate_high
-      - decoder_node
-      - apriltag_node
-    lights: ["joystick"]   
+      - stop_line_filter_node
+    lights: ["lane_following"]
+
+  LANE_FOLLOWING_TURN_LEFT:
+    transitions:
+      time_is_up: "LANE_FOLLOWING"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - timer
+    lights: ["lane_following"]
+
+  LANE_FOLLOWING_TURN_RIGHT:
+    transitions:
+      time_is_up: "LANE_FOLLOWING"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - timer
+    lights: ["lane_following"]
