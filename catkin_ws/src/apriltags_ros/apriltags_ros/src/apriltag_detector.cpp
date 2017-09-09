@@ -152,7 +152,7 @@ namespace apriltags_ros{
       //cv::rectangle(cv_ptr->image, quad_proposals[qi], cv::Scalar(255,0,0));
       quad_proposal_array.rects.push_back(quad_proposal);
     }
-    printf("image-------");
+    //printf("image-------");
     detections_pub_.publish(tag_detection_array);
     proposals_pub_.publish(quad_proposal_array);
     pose_pub_.publish(tag_pose_array);
