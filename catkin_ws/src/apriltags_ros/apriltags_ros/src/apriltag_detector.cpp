@@ -162,7 +162,7 @@ namespace apriltags_ros{
 
   void AprilTagDetector::image_compress_Cb(const sensor_msgs::CompressedImageConstPtr& msg){
     // measure process time
-    cout << "start" << endl;
+    //cout << "start" << endl;
     const clock_t begin_time = clock();
     //
     if(on_switch == false){
@@ -270,8 +270,8 @@ namespace apriltags_ros{
     image_pub_.publish(cv_crop->toImageMsg());
     //image_pub_.publish(cv_ptr->toImageMsg());
     // measure process time
-    cout << "end" << endl;
-    cout << "processtime : "<< float( clock () - begin_time ) << endl;
+    //cout << "end" << endl;
+    //cout << "processtime : "<< float( clock () - begin_time ) << endl;
     //
   }
 
