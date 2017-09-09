@@ -168,7 +168,7 @@ class carName(object):
             parallel_autonomy_msg.data = self.state_parallel_autonomy
             self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
         elif (joy_msg.buttons[3] == 1):
-            '''rospy.loginfo('Press "Y"')
+            rospy.loginfo('Press "Y"')
             if self.rnumber == 0:
                 self.allrb = False
                 self.rcount = 0
@@ -185,8 +185,8 @@ class carName(object):
                 self.robot = self.rlist[self.rcount]
                 print "choose", self.robot
                 self.allrb = False
-            self.rcount += 1'''
             self.rcount += 1
+            '''self.rcount += 1
             if self.rcount == self.rnumber:
                 self.allrb = True
                 print "broadcast to all robots"
@@ -195,7 +195,7 @@ class carName(object):
                 if self.rcount > self.rnumber:
                     self.rcount = 0
                 self.robot = self.rlist[self.rcount]
-                print "choose", self.robot
+                print "choose", self.robot'''
         elif (joy_msg.buttons[2] == 1):
             print "--------- ", len(self.robotlist), " ---------"
             print self.rlist
