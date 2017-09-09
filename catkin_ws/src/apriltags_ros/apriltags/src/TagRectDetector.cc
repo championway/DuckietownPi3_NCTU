@@ -413,7 +413,7 @@ namespace AprilTags {
       vertices.push_back(cv::Point(p3.first, p3.second));
       vertices.push_back(cv::Point(p4.first, p4.second));
       cv::Rect r = boundingRect(cv::Mat(vertices));
-	  std::cout << r << std::endl;
+	  //std::cout << r << std::endl;
       
 	  quad_proposals.push_back(r);
   }
