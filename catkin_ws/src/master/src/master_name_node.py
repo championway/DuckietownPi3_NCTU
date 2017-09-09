@@ -173,7 +173,7 @@ class carName(object):
         elif (joy_msg.buttons[3] == 1):
             rospy.loginfo('Press "Y"')
             self.rcount += 1
-            if self.rcount == self.rnumber:
+            if self.rcount == self.rnumber and self.rcount != 1:
                 self.allrb = True
                 print "broadcast to all robots"
             else:
