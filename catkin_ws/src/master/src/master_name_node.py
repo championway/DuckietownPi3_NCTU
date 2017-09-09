@@ -84,15 +84,13 @@ class carName(object):
 
     def AllRobot(self, pub, msg):
         for i in self.robotlist.keys():
-            sendmsg = BoolStamped()
-            sendmsg = msg
             self.robot = i
             self.pub_car_cmd = rospy.Publisher("/"+self.robot+"/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
             self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
             self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
             self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
             self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
-            self.pub_car_cmd.publish(sendmsg)
+            self.pub_car_cmd.publish(msg)
             '''
             if pub == 1:
                 self.pub_car_cmd.publish(msg)
@@ -173,7 +171,7 @@ class carName(object):
             parallel_autonomy_msg.data = self.state_parallel_autonomy
             self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
         elif (joy_msg.buttons[3] == 1):
-            rospy.loginfo('Press "Y"')
+            '''rospy.loginfo('Press "Y"')
             if self.rnumber == 0:
                 self.allrb = False
                 self.rcount = 0
@@ -190,18 +188,17 @@ class carName(object):
                 self.robot = self.rlist[self.rcount]
                 print "choose", self.robot
                 self.allrb = False
+            self.rcount += 1'''
             self.rcount += 1
-
-            '''self.rcount += 1
-            if self.rcount == self.rnumber and self.rcount != 1:
+            if self.rcount == self.rnumber:
                 self.allrb = True
                 print "broadcast to all robots"
             else:
                 self.allrb = False
                 if self.rcount > self.rnumber:
                     self.rcount = 0
-                self.robot = self.rlist[self.rocount]
-                print "choose", self.robot'''
+                self.robot = self.rlist[self.rcount]
+                print "choose", self.robot
         elif (joy_msg.buttons[2] == 1):
             print "--------- ", len(self.robotlist), " ---------"
             print self.rlist
