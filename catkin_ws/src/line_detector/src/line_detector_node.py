@@ -106,7 +106,7 @@ class LineDetectorNode(object):
         self.loginfo("AntiInstagram transform received")
 
     def loginfo(self, s):
-        #rospy.loginfo('[%s] %s' % (self.node_name, s))
+        rospy.loginfo('[%s] %s' % (self.node_name, s))
 
     def intermittent_log_now(self):
         return self.intermittent_counter % self.intermittent_interval == 1
@@ -114,7 +114,7 @@ class LineDetectorNode(object):
     def intermittent_log(self, s):
         if not self.intermittent_log_now():
             return
-        self.loginfo('%3d:%s' % (self.intermittent_counter, s))
+        #self.loginfo('%3d:%s' % (self.intermittent_counter, s))
 
     def processImage(self, image_msg):
         if not self.thread_lock.acquire(False):
