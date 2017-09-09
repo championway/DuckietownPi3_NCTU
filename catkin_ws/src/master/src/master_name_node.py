@@ -174,6 +174,7 @@ class carName(object):
             rospy.loginfo('Press "Y"')
             if self.rcount+1 <= self.rnumber:
                 self.robot = self.rlist[self.rcount]
+                self.allrb = False
                 print "choose", self.robot
             elif self.rcount == self.rnumber:
                 self.allrb = True
@@ -182,6 +183,7 @@ class carName(object):
                 self.rcount = 0
                 self.robot = self.rlist[self.rcount]
                 print "choose", self.robot
+                self.allrb = False
             self.rcount += 1
 
             '''self.rcount += 1
