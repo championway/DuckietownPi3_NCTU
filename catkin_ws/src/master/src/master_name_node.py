@@ -176,7 +176,7 @@ class carName(object):
                 self.robot = self.rlist[self.rcount]
                 self.allrb = False
                 print "choose", self.robot
-            elif self.rcount == self.rnumber:
+            elif self.rcount == self.rnumber and self.rnumber != 1:
                 self.allrb = True
                 print "broadcast to all robots"
             else:
