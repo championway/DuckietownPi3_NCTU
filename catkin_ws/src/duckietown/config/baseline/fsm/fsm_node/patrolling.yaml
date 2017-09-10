@@ -75,12 +75,22 @@ states:
   LANE_FOLLOWING:
     transitions:
       pressA: "JOYSTICK_CONTROL"
+      at_stop_line: "WAIT_FOR_TURN"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - stop_line_filter_node
+      - decoder_node
+      - apriltag_node
+    lights: ["lane_following"]
+
+  WAIT_FOR_TURN:
+    transitions:
       turn_right: "LANE_FOLLOWING_TURN_RIGHT"
       turn_left: "LANE_FOLLOWING_TURN_LEFT"
     active_nodes:
       - lane_filter_node
       - line_detector_node
-      - stop_line_filter_node
       - decoder_node
       - apriltag_node
     lights: ["lane_following"]
