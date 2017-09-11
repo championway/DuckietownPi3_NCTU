@@ -84,12 +84,19 @@ class Timer(object):
 			print "start time: ", self.timer_start
 		self.timer_end = time.time() # record time now
 		print "time: ", self.timer_end - self.timer_start
-		if (self.timer_end - self.timer_start) > 1.7: #if time duration between start time and time now bigger than 2 seconsds
-			# publish time is up
-			msg = BoolStamped()
-			msg.data = True
-			self.pub_time_is_up.publish(msg)
-			print "time is up"
+		if(self.state==LANE_FOLLOWING_TURN_RIGHT or self.state==LANE_FOLLOWING_TURN_LEFT):
+			if (self.timer_end - self.timer_start) > 1.7: #if time duration between start time and time now bigger than 2 seconsds
+				# publish time is up
+				msg = BoolStamped()
+				msg.data = True
+				self.pub_time_is_up.publish(msg)
+				print "recovery"
+		elif(self.state==WAIT_FOR_TURN):
+			if (self.timer_end - self.timer_start) > 1:
+				msg = BoolStamped()
+				msg.data = True
+				self.pub_time_is_up.publish(msg)
+				print "start to turn"
 
 	def cbSwitch(self, switch_msg):
 		self.active = switch_msg.data

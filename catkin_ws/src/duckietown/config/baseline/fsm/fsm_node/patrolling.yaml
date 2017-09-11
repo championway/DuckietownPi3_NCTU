@@ -86,6 +86,17 @@ states:
 
   WAIT_FOR_TURN:
     transitions:
+      time_is_up: "START_TO_TURN"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - decoder_node
+      - apriltag_node
+      - timer
+    lights: ["lane_following"]
+
+  START_TO_TURN:
+    transitions:
       turn_right: "LANE_FOLLOWING_TURN_RIGHT"
       turn_left: "LANE_FOLLOWING_TURN_LEFT"
     active_nodes:
@@ -93,6 +104,7 @@ states:
       - line_detector_node
       - decoder_node
       - apriltag_node
+      - timer
     lights: ["lane_following"]
 
   LANE_FOLLOWING_TURN_LEFT:
