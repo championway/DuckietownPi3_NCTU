@@ -79,7 +79,7 @@ class AprilPostPros(object):
                 turn_right = BoolStamped()
                 turn_right.data = True
                 self.pub_turn_right.publish(turn_right)
-            else if self.turnleft==True:
+            elif self.turnleft==True:
                 turn_left = BoolStamped()
                 turn_left.data = True
                 self.pub_turn_left.publish(turn_left)
