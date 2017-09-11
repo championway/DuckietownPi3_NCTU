@@ -26,7 +26,7 @@ class Timer(object):
 		self.pub_lane_recovery = rospy.Publisher("~lane_recovery", BoolStamped, queue_size=1)
 
 	def processStateChange(self, msg):
-		self.state=msg.state #
+		self.state=msg.state
 
 	def cbtime(self,msg):
 		self.car_cmd_pub(msg.data)
@@ -84,14 +84,14 @@ class Timer(object):
 			print "start time: ", self.timer_start
 		self.timer_end = time.time() # record time now
 		print "time: ", self.timer_end - self.timer_start
-		if(self.state==LANE_FOLLOWING_TURN_RIGHT or self.state==LANE_FOLLOWING_TURN_LEFT):
+		if(self.state == "LANE_FOLLOWING_TURN_RIGHT" or self.state == "LANE_FOLLOWING_TURN_LEFT"):
 			if (self.timer_end - self.timer_start) > 1.7: #if time duration between start time and time now bigger than 2 seconsds
 				# publish time is up
 				msg = BoolStamped()
 				msg.data = True
 				self.pub_time_is_up.publish(msg)
 				print "recovery"
-		elif(self.state==WAIT_FOR_TURN):
+		elif(self.state == "WAIT_FOR_TURN"):
 			if (self.timer_end - self.timer_start) > 1:
 				msg = BoolStamped()
 				msg.data = True
