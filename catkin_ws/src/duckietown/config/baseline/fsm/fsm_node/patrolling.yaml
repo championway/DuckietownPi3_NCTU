@@ -87,6 +87,7 @@ states:
   WAIT_FOR_TURN:
     transitions:
       time_is_up: "START_TO_TURN"
+      pressA: "JOYSTICK_CONTROL"
     active_nodes:
       - lane_filter_node
       - line_detector_node
@@ -99,6 +100,7 @@ states:
     transitions:
       turn_right: "LANE_FOLLOWING_TURN_RIGHT"
       turn_left: "LANE_FOLLOWING_TURN_LEFT"
+      pressA: "JOYSTICK_CONTROL"
     active_nodes:
       - lane_filter_node
       - line_detector_node
