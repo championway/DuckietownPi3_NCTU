@@ -148,7 +148,7 @@ For more info on algorithm and parameters please refer to the google doc:
                         continue
             d_i,phi_i,l_i = self.generateVote(segment)
             
-            if not self.timer_switch:
+            if self.timer_switch:
                 if self.state == "LANE_FOLLOWING_TURN_RIGHT":
                     if phi_i > 0 :
                         print "------------------Turn Right----------------------"
