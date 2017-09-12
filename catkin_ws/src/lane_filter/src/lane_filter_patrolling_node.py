@@ -150,11 +150,11 @@ For more info on algorithm and parameters please refer to the google doc:
             
             if self.timer_switch:
                 if self.state == "LANE_FOLLOWING_TURN_RIGHT":
-                    if phi_i > 0 :
+                    if phi_i < 0 :
                         print "------------------Turn Right----------------------"
                         continue
                 elif self.state == "LANE_FOLLOWING_TURN_LEFT":
-                    if phi_i < 0 :
+                    if phi_i > 0 :
                         print "------------------Turn Left-----------------------"
                         continue
                 #else:
