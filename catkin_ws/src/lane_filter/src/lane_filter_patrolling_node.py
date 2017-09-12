@@ -304,7 +304,7 @@ For more info on algorithm and parameters please refer to the google doc:
                 phi_i = -phi_i
             else: # right edge of white lane
                 d_i = -d_i
-            d_i =  self.lanewidth/2 - d_i
+            #d_i =  self.lanewidth/2 - d_i
 
         return d_i, phi_i, l_i
 
