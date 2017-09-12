@@ -85,7 +85,7 @@ class Timer(object):
 		self.timer_end = time.time() # record time now
 		print "time: ", self.timer_end - self.timer_start
 		if(self.state == "LANE_FOLLOWING_TURN_RIGHT" or self.state == "LANE_FOLLOWING_TURN_LEFT"):
-			if (self.timer_end - self.timer_start) > 17: #if time duration between start time and time now bigger than 2 seconsds
+			if (self.timer_end - self.timer_start) > 2: #if time duration between start time and time now bigger than 2 seconsds
 				# publish time is up
 				msg = BoolStamped()
 				msg.data = True
