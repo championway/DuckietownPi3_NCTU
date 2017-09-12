@@ -59,6 +59,7 @@ class AprilPostPros(object):
         self.sub_mode = rospy.Subscriber("~mode",FSMState, self.processStateChange)
         self.pub_turn_right = rospy.Publisher("~turn_right", BoolStamped, queue_size=1)
         self.pub_turn_left = rospy.Publisher("~turn_left", BoolStamped, queue_size=1)
+        self.pub_detected = rospy.Publisher("~detected", BoolStamped, queue_size=1)
         self.sub_prePros        = rospy.Subscriber("~apriltags_in", AprilTagDetectionArray, self.callback, queue_size=1)
         self.pub_postPros       = rospy.Publisher("~apriltags_out", AprilTagsWithInfos, queue_size=1)
         self.pub_visualize = rospy.Publisher("~tag_pose", PoseStamped, queue_size=1)
@@ -85,7 +86,9 @@ class AprilPostPros(object):
                 self.pub_turn_left.publish(turn_left)
         self.state=msg.state
     def callback(self, msg):
-
+        detect_msg = BoolStamped()
+        detect_msg.data = True
+        self.pub_detected.publish(detect_msg)
         tag_infos = []
 
         # Load tag detections message

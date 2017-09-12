@@ -143,7 +143,9 @@ For more info on algorithm and parameters please refer to the google doc:
                 continue
             if segment.points[0].x < 0 or segment.points[1].x < 0:
                 continue
-
+            if self.state == "CLOSE_TO_INTERSECTION":
+                    if segment.points[0].x > 0.2 or segment.points[1].x > 0.2:
+                        continue
             d_i,phi_i,l_i = self.generateVote(segment)
             
             if not self.timer_switch:
