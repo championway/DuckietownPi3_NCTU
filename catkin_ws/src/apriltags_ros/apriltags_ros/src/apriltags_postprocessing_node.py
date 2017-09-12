@@ -102,11 +102,11 @@ class AprilPostPros(object):
             if new_info.id == 1:
                 self.turnright = True
                 self.turnleft = False
-                print "---------Tag 1---------Turn Right-----------"
+                #print "---------Tag 1---------Turn Right-----------"
             elif new_info.id == 2:
                 self.turnright = False
                 self.turnleft = True
-                print "---------Tag 2---------Turn LEFT-----------"
+                #print "---------Tag 2---------Turn LEFT-----------"
             # Check yaml file to fill in ID-specific information
             new_info.tag_type = self.sign_types[id_info['tag_type']]
             if new_info.tag_type == self.info.S_NAME:
