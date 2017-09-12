@@ -79,7 +79,6 @@ states:
 
   LANE_FOLLOWING:
     transitions:
-      detected: CLOSE_TO_INTERSECTION
       pressA: "JOYSTICK_CONTROL"
       at_stop_line: "WAIT_FOR_TURN"
     active_nodes:
