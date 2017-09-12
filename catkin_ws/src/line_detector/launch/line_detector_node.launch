@@ -7,7 +7,7 @@
     <arg name="pkg_name" value="line_detector"/>
     <arg name="node_name" default="line_detector_node"/>
     
-    <arg name="verbose" default="false" />
+    <arg name="verbose" default="true" />
 
     <group ns="$(arg veh)">        
         <!-- run local -->
