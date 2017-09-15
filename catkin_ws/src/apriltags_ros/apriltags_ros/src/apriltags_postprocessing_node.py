@@ -14,6 +14,7 @@ class AprilPostPros(object):
         self.node_name = "apriltags_postprocessing_node"
         self.turnright = False
         self.turnleft = False
+        self.turnaround = False
         # Load parameters
         self.camera_x     = self.setupParam("~camera_x", 0.065)
         self.camera_y     = self.setupParam("~camera_y", 0.0)
@@ -59,6 +60,7 @@ class AprilPostPros(object):
         self.sub_mode = rospy.Subscriber("~mode",FSMState, self.processStateChange)
         self.pub_turn_right = rospy.Publisher("~turn_right", BoolStamped, queue_size=1)
         self.pub_turn_left = rospy.Publisher("~turn_left", BoolStamped, queue_size=1)
+        self.pub_turn_around = rospy.Publisher("~turn_around", BoolStamped, queue_size=1)
         self.pub_detected = rospy.Publisher("~detected", BoolStamped, queue_size=1)
         self.sub_prePros        = rospy.Subscriber("~apriltags_in", AprilTagDetectionArray, self.callback, queue_size=1)
         self.pub_postPros       = rospy.Publisher("~apriltags_out", AprilTagsWithInfos, queue_size=1)
@@ -84,6 +86,10 @@ class AprilPostPros(object):
                 turn_left = BoolStamped()
                 turn_left.data = True
                 self.pub_turn_left.publish(turn_left)
+            elif self.turnaround==True:
+                turn_around = BoolStamped()
+                turn_around.data = True
+                self.pub_turn_around.publish(turn_around)
         self.state=msg.state
     def callback(self, msg):
         detect_msg = BoolStamped()
@@ -102,11 +108,17 @@ class AprilPostPros(object):
             if new_info.id == 1:
                 self.turnright = True
                 self.turnleft = False
+                self.turnaround = False
                 #print "---------Tag 1---------Turn Right-----------"
             elif new_info.id == 2:
                 self.turnright = False
                 self.turnleft = True
+                self.turnaround = False
                 #print "---------Tag 2---------Turn LEFT-----------"
+            elif new_info.id == 3:
+                self.turnright = False
+                self.turnleft = False
+                self.turnaround = True
             # Check yaml file to fill in ID-specific information
             new_info.tag_type = self.sign_types[id_info['tag_type']]
             if new_info.tag_type == self.info.S_NAME:

@@ -34,8 +34,12 @@ events: #Maps from subscribing topic to signal ids
     topic: "stop_line_filter_node/at_stop_line"
     msg_type: "BoolStamped"
     trigger: True
-  turn_right:
+  turn_around:
     topic: "apriltags_postprocessing_node/turn_right"
+    msg_type: "BoolStamped"
+    trigger: True
+  turn_right:
+    topic: "apriltags_postprocessing_node/turn_around"
     msg_type: "BoolStamped"
     trigger: True
   turn_left:
@@ -103,6 +107,7 @@ states:
 
   START_TO_TURN:
     transitions:
+      turn_around: "TURN_AROUND"
       turn_right: "LANE_FOLLOWING_TURN_RIGHT"
       turn_left: "LANE_FOLLOWING_TURN_LEFT"
       pressA: "JOYSTICK_CONTROL"
@@ -133,6 +138,16 @@ states:
       - line_detector_node
       - timer
     lights: ["lane_following"]
+
+  TURN_AROUND:
+    transitions:
+      pressA: "JOYSTICK_CONTROL"
+      time_is_up: "LANE_FOLLOWING"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+    lights: ["lane_following"]
+
   CLOSE_TO_INTERSECTION:
     transitions:
       pressA: "JOYSTICK_CONTROL"

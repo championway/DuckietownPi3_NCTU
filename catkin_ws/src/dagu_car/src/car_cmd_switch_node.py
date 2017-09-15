@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from duckietown_msgs.msg import Twist2DStamped, FSMState
+import time
 
 class CarCmdSwitchNode(object):
     def __init__(self):
@@ -10,13 +11,12 @@ class CarCmdSwitchNode(object):
         self.mappings = rospy.get_param("~mappings")
         source_topic_dict = rospy.get_param("~source_topics")
         self.current_src_name = None
-
+        self.state = None
         # Construct publisher
         self.pub_cmd = rospy.Publisher("~cmd",Twist2DStamped,queue_size=1)
-        
+        self.pub_stop_around = rospy.Publisher("~stop_around", BoolStamped, queue_size=1, latch=True)
         # Construct subscribers
         self.sub_fsm_state = rospy.Subscriber(rospy.get_param("~mode_topic"),FSMState,self.cbFSMState)
-
         self.sub_dict = dict()
         for src_name, topic_name in source_topic_dict.items():
             self.sub_dict[src_name] = rospy.Subscriber(topic_name,Twist2DStamped,self.cbWheelsCmd,callback_args=src_name)
@@ -27,6 +27,22 @@ class CarCmdSwitchNode(object):
         if self.current_src_name == "stop":
             self.pubStop()
             rospy.loginfo("[%s] Car cmd switched to STOP in state %s." %(self.node_name,fsm_state_msg.state))
+        elif self.current_src_name = "around":
+            print "start to turn around"
+            self.timer_start = time.time()
+            while True:
+                msg = Twist2DStamped()
+                msg.v = 0
+                msg.omega = 3
+                self.pub_cmd.publish(msg)
+                self.timer_end = time.time()
+                if self.timer_end - self.timer_start > 1:
+                    msg = BoolStamped()
+                    msg.data = True
+                    self.pub_stop_around.publish(msg)
+                    print "stop to turn around"
+                    break
+        self.pub_cmd.publish(msg)
         elif self.current_src_name is None:
             rospy.logwarn("[%s] FSMState %s not handled. No msg pass through the switch." %(self.node_name,fsm_state_msg.state))
         else: 
