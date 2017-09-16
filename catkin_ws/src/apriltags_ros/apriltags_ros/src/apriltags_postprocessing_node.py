@@ -119,6 +119,7 @@ class AprilPostPros(object):
                 self.turnright = False
                 self.turnleft = False
                 self.turnaround = True
+                print "---------Tag 3---------Turn around-----------"
             # Check yaml file to fill in ID-specific information
             new_info.tag_type = self.sign_types[id_info['tag_type']]
             if new_info.tag_type == self.info.S_NAME:
