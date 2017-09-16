@@ -27,7 +27,7 @@ class CarCmdSwitchNode(object):
         if self.current_src_name == "stop":
             self.pubStop()
             rospy.loginfo("[%s] Car cmd switched to STOP in state %s." %(self.node_name,fsm_state_msg.state))
-        elif self.current_src_name = "around":
+        elif self.current_src_name == "around":
             print "start to turn around"
             self.timer_start = time.time()
             while True:
