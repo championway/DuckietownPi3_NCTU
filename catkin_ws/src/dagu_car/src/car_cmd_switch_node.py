@@ -36,7 +36,7 @@ class CarCmdSwitchNode(object):
                 msg.omega = 3
                 self.pub_cmd.publish(msg)
                 self.timer_end = time.time()
-                if self.timer_end - self.timer_start > 2:
+                if self.timer_end - self.timer_start > 10:
                     msg = BoolStamped()
                     msg.data = True
                     self.pub_stop_around.publish(msg)
