@@ -32,12 +32,12 @@ class CarCmdSwitchNode(object):
             self.timer_start = time.time()
             msga = Twist2DStamped()
             msga.v = 0
-            msga.omega = 3
+            msga.omega = 4
             while True:
                 self.pub_cmd.publish(msga)
                 self.timer_end = time.time()
                 print"start counting time@@@@@@@@"
-                if self.timer_end - self.timer_start > 1.7:
+                if self.timer_end - self.timer_start > 1.5:
                     msgb = BoolStamped()
                     msgb.data = True
                     self.pub_stop_around.publish(msgb)
