@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from duckietown_msgs.msg import Twist2DStamped, FSMState
+from duckietown_msgs.msg import Twist2DStamped, FSMState, BoolStamped
 import time
 
 class CarCmdSwitchNode(object):
