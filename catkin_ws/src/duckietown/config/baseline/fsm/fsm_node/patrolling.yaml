@@ -35,11 +35,11 @@ events: #Maps from subscribing topic to signal ids
     msg_type: "BoolStamped"
     trigger: True
   turn_around:
-    topic: "apriltags_postprocessing_node/turn_right"
+    topic: "apriltags_postprocessing_node/turn_around"
     msg_type: "BoolStamped"
     trigger: True
   turn_right:
-    topic: "apriltags_postprocessing_node/turn_around"
+    topic: "apriltags_postprocessing_node/turn_right"
     msg_type: "BoolStamped"
     trigger: True
   turn_left:
