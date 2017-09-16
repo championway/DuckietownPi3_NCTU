@@ -36,13 +36,12 @@ class CarCmdSwitchNode(object):
                 msg.omega = 3
                 self.pub_cmd.publish(msg)
                 self.timer_end = time.time()
-                if self.timer_end - self.timer_start > 1:
+                if self.timer_end - self.timer_start > 2:
                     msg = BoolStamped()
                     msg.data = True
                     self.pub_stop_around.publish(msg)
                     print "stop to turn around"
                     break
-        self.pub_cmd.publish(msg)
         elif self.current_src_name is None:
             rospy.logwarn("[%s] FSMState %s not handled. No msg pass through the switch." %(self.node_name,fsm_state_msg.state))
         else: 
