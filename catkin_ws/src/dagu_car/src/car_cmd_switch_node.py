@@ -30,13 +30,14 @@ class CarCmdSwitchNode(object):
         elif self.current_src_name == "around":
             print "start to turn around"
             self.timer_start = time.time()
+            msg = Twist2DStamped()
+            msg.v = 0
+            msg.omega = 3
             while True:
-                msg = Twist2DStamped()
-                msg.v = 0
-                msg.omega = 3
                 self.pub_cmd.publish(msg)
                 self.timer_end = time.time()
-                if self.timer_end - self.timer_start > 10:
+                print"start counting time@@@@@@@@"
+                if self.timer_end - self.timer_start > 2:
                     msg = BoolStamped()
                     msg.data = True
                     self.pub_stop_around.publish(msg)
