@@ -50,6 +50,10 @@ events: #Maps from subscribing topic to signal ids
     topic: "apriltags_postprocessing_node/detected"
     msg_type: "BoolStamped"
     trigger: True
+  stop_around:
+    topic: "car_cmd_switch_node/stop_around"
+    msg_type: "BoolStamped"
+    trigger: True
     
 
 # Define global transitions. Available from all states.
@@ -142,7 +146,7 @@ states:
   TURN_AROUND:
     transitions:
       pressA: "JOYSTICK_CONTROL"
-      time_is_up: "LANE_FOLLOWING"
+      stop_around: "LANE_FOLLOWING"
     active_nodes:
       - lane_filter_node
       - line_detector_node
