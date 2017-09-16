@@ -37,7 +37,7 @@ class CarCmdSwitchNode(object):
                 self.pub_cmd.publish(msga)
                 self.timer_end = time.time()
                 print"start counting time@@@@@@@@"
-                if self.timer_end - self.timer_start > 1.5:
+                if self.timer_end - self.timer_start > 1.8:
                     msgb = BoolStamped()
                     msgb.data = True
                     self.pub_stop_around.publish(msgb)
