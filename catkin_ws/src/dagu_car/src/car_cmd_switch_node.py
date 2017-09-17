@@ -32,7 +32,7 @@ class CarCmdSwitchNode(object):
             self.timer_start = time.time()
             msga = Twist2DStamped()
             msga.v = 0
-            msga.omega = 5
+            msga.omega = 4
             while True:
                 self.pub_cmd.publish(msga)
                 self.timer_end = time.time()
