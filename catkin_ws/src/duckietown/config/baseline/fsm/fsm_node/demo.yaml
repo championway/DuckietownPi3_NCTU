@@ -126,7 +126,7 @@ states:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
-      yourturn: "LANE_FOLLOWING"
+      yourturn: "MYTURN"
       notpressY: "JOYSTOP"
 #      pressX: "CAR13"
 #      pressY: "CAR14"
@@ -140,47 +140,12 @@ states:
       - decoder_node
       - apriltag_node
     lights: ["joystick"]   
-#  CAR14:
-#    transitions:
-#      pressA: "JOYSTICK_CONTROL"
-#      pressB: "LANE_FOLLOWING"
-#      pressX: "CAR13"
-#      pressY: "CAR14"
-##      joystick_override_off: "LANE_FOLLOWING"
-##      start_avoidance: "LANE_FOLLOWING_AVOID"
-#    active_nodes:
-#      - lane_filter_node
-#      - line_detector_node
-#      - stop_line_filter_node
-#      - framerate_high
-#      - decoder_node
-#      - apriltag_node
-#    lights: ["joystick"]
-#  CAR13:
-#    transitions:
-#      pressA: "JOYSTICK_CONTROL"
-#      pressB: "LANE_FOLLOWING"
-#      pressX: "CAR13"
-#      pressY: "CAR14"
-##      joystick_override_off: "LANE_FOLLOWING"
-##      start_avoidance: "LANE_FOLLOWING_AVOID"
-#    active_nodes:
-#      - lane_filter_node
-#      - line_detector_node
-#      - stop_line_filter_node
-#      - framerate_high
-#      - decoder_node
-#      - apriltag_node
   JOYSTOP:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
       yourturn: "MYTURN"
-#      pressX: "CAR13"
       pressY: "JOYSTICK_CONTROL"
-  #    at_stop_line: "LANE_FOLLOWING"
-#      joystick_override_off: "LANE_FOLLOWING"
-#      start_avoidance: "LANE_FOLLOWING_AVOID"
     active_nodes:
       - lane_filter_node
       - line_detector_node
@@ -193,12 +158,8 @@ states:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
       pressY: "LANE_FOLLOWING"
-#      pressX: "CAR13"
-#      pressY: "CAR14"
       rc: "LANE_FOLLOWING"
       at_stop_line: "JOYSTICK_CONTROL"
-#      at_stop_line: "COORDINATION"
-#      lost_lane: "LANE_RECOVERY"
     active_nodes:
       - lane_filter_node
       - line_detector_node
@@ -223,7 +184,7 @@ states:
       notpressY: "LANESTOP"
 #      pressX: "CAR13"
 #      pressY: "CAR14"
-      at_stop_line: "JOYSTICK_CONTROL"
+      rc: "LANE_FOLLOWING"
 #      at_stop_line: "COORDINATION"
 #      lost_lane: "LANE_RECOVERY"
     active_nodes:
