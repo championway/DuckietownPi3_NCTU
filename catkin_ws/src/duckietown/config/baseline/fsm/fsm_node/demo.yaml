@@ -78,6 +78,10 @@ events: #Maps from subscribing topic to signal ids
     topic: "vehicle_avoidance_control_node/vehicle_detected"
     msg_type: "BoolStamped"
     trigger: False
+  rc:
+    topic: "stop_line_filter_node/rc"
+    msg_type: "BoolStamped"
+    trigger: True
 #  lost_lane: # not tested
 #    topic: "lane_filter_node/in_lane"
 #    msg_type: "BoolStamped"
@@ -171,7 +175,7 @@ states:
     transitions:
       pressA: "JOYSTICK_CONTROL"
       pressB: "LANE_FOLLOWING"
-      yourturn: "LANE_FOLLOWING"
+      yourturn: "MYTURN"
 #      pressX: "CAR13"
       pressY: "JOYSTICK_CONTROL"
   #    at_stop_line: "LANE_FOLLOWING"
@@ -191,6 +195,7 @@ states:
       pressY: "LANE_FOLLOWING"
 #      pressX: "CAR13"
 #      pressY: "CAR14"
+      rc: "LANE_FOLLOWING"
       at_stop_line: "JOYSTICK_CONTROL"
 #      at_stop_line: "COORDINATION"
 #      lost_lane: "LANE_RECOVERY"
@@ -211,6 +216,21 @@ states:
       - stop_line_filter_node
       - decoder_node # remove if not doing vehicle / object avoidance
     lights: ["parallel_autonomy"]
+  MYTURN:
+    transitions:
+      pressA: "JOYSTICK_CONTROL"
+      pressB: "LANE_FOLLOWING"
+      notpressY: "LANESTOP"
+#      pressX: "CAR13"
+#      pressY: "CAR14"
+      at_stop_line: "JOYSTICK_CONTROL"
+#      at_stop_line: "COORDINATION"
+#      lost_lane: "LANE_RECOVERY"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - stop_line_filter_node
+    lights: ["lane_following"]
   LANE_FOLLOWING:
     transitions:
       pressA: "JOYSTICK_CONTROL"

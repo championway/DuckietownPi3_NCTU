@@ -28,8 +28,8 @@ class StopLineFilterNode(object):
         self.sub_mode      = rospy.Subscriber("fsm_node/mode",FSMState, self.processStateChange)
         self.pub_stop_line_reading = rospy.Publisher("~stop_line_reading", StopLineReading, queue_size=1)
         self.pub_at_stop_line = rospy.Publisher("~at_stop_line", BoolStamped, queue_size=1)
+        self.rc = rospy.Publisher("~rc", BoolStamped, queue_size=1)
         self.pub_sendmessage = rospy.Publisher("~send",BoolStamped,queue_size=1)
-
 
         self.params_update = rospy.Timer(rospy.Duration.from_sec(1.0), self.updateParams)
 
@@ -61,14 +61,24 @@ class StopLineFilterNode(object):
         self.lane_pose = lane_pose_msg
 
     def processSegments(self, segment_list_msg):
-        rospy.loginfo('-*/*/*/*/*/*/*/*/*/*/*/*/*/-')
+        #print ("-*/*/*/*/*&&&&&&&&&&*/*/*/*/-")
+        if self.state == "MYTURN":
+            self.timer_start = time.time()
+            while True:
+                self.timer_end = time.time()
+                if self.timer_end - self.timer_start > 1.5:
+                    recover = BoolStamped()
+                    recover.data = True
+                    self.rc.publish(recover)
+                    print "-----recover-----"
+                    break
         if not self.active or self.sleep:
             return
         good_seg_count=0
         stop_line_x_accumulator=0.0
         stop_line_y_accumulator=0.0
         for segment in segment_list_msg.segments:
-            if segment.color != segment.RED:
+            if segment.color != segment.RED and segment.color != segment.BLUE:
                 continue
             if segment.points[0].x < 0 or segment.points[1].x < 0: # the point is behind us 
                 continue
@@ -100,12 +110,14 @@ class StopLineFilterNode(object):
             msg = BoolStamped()
             msg.header.stamp = stop_line_reading_msg.header.stamp
             msg.data = True
-            self.pub_sendmessage = rospy.Publisher("/"+self.robot+"/stop_line_filter_node_fsm/send",BoolStamped,queue_size=1)
-            self.pub_sendmessage.publish(msg)
-            self.pub_at_stop_line.publish(msg)
-            rospy.loginfo('*****************YES*****************')
-        else
-            rospy.loginfo('-----------------NO-----------------')
+            print "-------at stop line-------"
+            '''if segment.color == segment.BLUE:
+                self.pub_sendmessage = rospy.Publisher("/arg2/stop_line_filter_node/send",BoolStamped,queue_size=1)
+                self.pub_sendmessage.publish(msg)'''
+            if segment.color == segment.RED:
+                self.pub_sendmessage = rospy.Publisher("/arg2/stop_line_filter_node/send",BoolStamped,queue_size=1)
+                self.pub_sendmessage.publish(msg)
+                self.pub_at_stop_line.publish(msg)
    
     def to_lane_frame(self, point):
         p_homo = np.array([point.x,point.y,1])
