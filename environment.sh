@@ -16,6 +16,8 @@ make -C  $DUCKIETOWN_ROOT
 echo "...done"
 echo "Activating development."
 source $DUCKIETOWN_ROOT/catkin_ws/devel/setup.bash
+source $DUCKIETOWN_ROOT/set_ros_master.sh master
+source $DUCKIETOWN_ROOT/set_vehicle_name.sh david
 
 # TODO: check that the time is >= 2015
 
