@@ -1,0 +1,7 @@
+<launch>
+  <arg name="veh" default="master"/>
+  <include file="$(find patrolling_node)/launch/tag1.launch"></include>
+  <include file="$(find patrolling_node)/launch/tag2.launch"></include>
+  <include file="$(find patrolling_node)/launch/tag3.launch"></include>
+  <include file="$(find patrolling_node)/launch/tag4.launch"></include>
+</launch>
