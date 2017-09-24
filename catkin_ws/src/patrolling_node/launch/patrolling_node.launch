@@ -1,7 +1,13 @@
 <launch>
-  <arg name="veh" default="master"/>
-  <include file="$(find patrolling_node)/launch/tag1.launch"></include>
-  <include file="$(find patrolling_node)/launch/tag2.launch"></include>
-  <include file="$(find patrolling_node)/launch/tag3.launch"></include>
-  <include file="$(find patrolling_node)/launch/tag4.launch"></include>
+    <arg name="pkg_name" value="patrolling_node"/>
+    <arg name="node_name" default="patrolling_node"/>
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <arg name="local" default="true"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+
+    <group ns="$(arg veh)">
+        <!-- run local -->
+        <node if="$(arg local)" name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" output="screen">
+        </node>
+    </group>
 </launch>
