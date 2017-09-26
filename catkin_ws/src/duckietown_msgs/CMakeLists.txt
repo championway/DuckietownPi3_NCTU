@@ -72,6 +72,7 @@ add_message_files(
   AprilTagsWithInfos.msg
   TagInfo.msg
   Pixel.msg
+  PatrolBot.msg
   Vector2D.msg
   Segment.msg
   SegmentList.msg
