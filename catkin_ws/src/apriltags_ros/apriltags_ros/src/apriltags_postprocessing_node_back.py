@@ -11,7 +11,6 @@ class AprilPostPros(object):
     """ """
     def __init__(self):    
         """ """
-        self.name = rospy.get_param('~name')
         self.node_name = "apriltags_postprocessing_node"
         self.turnright = False
         self.turnleft = False

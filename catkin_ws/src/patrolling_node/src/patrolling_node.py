@@ -46,7 +46,7 @@ class PatrollingNode(object):
         self.right4_start = self.timer_start
 
         #======Subscriber======
-        self.sub_robot_info = rospy.Subscriber("~sub_robot", PatrolBot, self.sub_robot)
+        self.sub_robot_info = rospy.Subscriber("~patrol", PatrolBot, self.sub_robot)
 
         #======Publisher======
         self.pub_command = rospy.Publisher("~command", Int8, queue_size=1)
