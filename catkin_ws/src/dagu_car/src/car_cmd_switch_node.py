@@ -25,24 +25,13 @@ class CarCmdSwitchNode(object):
     def cbFSMState(self,fsm_state_msg):
         self.current_src_name = self.mappings.get(fsm_state_msg.state)
         if self.current_src_name == "stop":
+            print "wait for stop"
             self.pubStop()
-            rospy.loginfo("[%s] Car cmd switched to STOP in state %s." %(self.node_name,fsm_state_msg.state))
+            
         elif self.current_src_name == "around":
             print "start to turn around"
-            self.timer_start = time.time()
-            msga = Twist2DStamped()
-            msga.v = 0
-            msga.omega = 4
-            while True:
-                self.pub_cmd.publish(msga)
-                self.timer_end = time.time()
-                print"start counting time@@@@@@@@"
-                if self.timer_end - self.timer_start > 2.3:
-                    msgb = BoolStamped()
-                    msgb.data = True
-                    self.pub_stop_around.publish(msgb)
-                    print "stop to turn around"
-                    break
+            self.pubTurn()
+
         elif self.current_src_name is None:
             rospy.logwarn("[%s] FSMState %s not handled. No msg pass through the switch." %(self.node_name,fsm_state_msg.state))
         else: 
@@ -56,6 +45,12 @@ class CarCmdSwitchNode(object):
         msg = Twist2DStamped()
         msg.v = 0
         msg.omega = 0
+        self.pub_cmd.publish(msg)
+
+    def pubTurn(self):
+        msg = Twist2DStamped()
+        msg.v = 0
+        msg.omega = 4
         self.pub_cmd.publish(msg)
 
     def on_shutdown(self):

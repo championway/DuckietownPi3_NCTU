@@ -30,6 +30,14 @@ events: #Maps from subscribing topic to signal ids
     topic: "timer_node/time_is_up"
     msg_type: "BoolStamped"
     trigger: True
+  forward:
+    topic: "timer_node/forward"
+    msg_type: "BoolStamped"
+    trigger: True
+  backward:
+    topic: "timer_node/backward"
+    msg_type: "BoolStamped"
+    trigger: True
   at_stop_line:
     topic: "stop_line_filter_node/at_stop_line"
     msg_type: "BoolStamped"
@@ -99,7 +107,9 @@ states:
 
   WAIT_FOR_TURN:
     transitions:
-      time_is_up: "START_TO_TURN"
+      #time_is_up: "START_TO_TURN"
+      forward: "LANE_FOLLOWING"
+      backward: "TURN_AROUND"
       pressA: "JOYSTICK_CONTROL"
     active_nodes:
       - lane_filter_node
@@ -146,7 +156,7 @@ states:
   TURN_AROUND:
     transitions:
       pressA: "JOYSTICK_CONTROL"
-      stop_around: "LANE_FOLLOWING"
+      time_is_up: "LANE_FOLLOWING"
     active_nodes:
       - lane_filter_node
       - line_detector_node

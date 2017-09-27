@@ -46,7 +46,7 @@ class PatrollingNode(object):
         self.right4_start = self.timer_start
 
         #======Subscriber======
-        self.sub_robot_info = rospy.Subscriber("~patrol", PatrolBot, self.sub_robot)
+        self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
 
         #======Publisher======
         self.pub_command = rospy.Publisher("~command", Int8, queue_size=1)
@@ -59,7 +59,7 @@ class PatrollingNode(object):
         self.count_cost()
         cmd = Int8()
         cmd.data = 0 # 1=forward 2=turnaround
-        self.pub_command = rospy.Publisher("/"+msg.name+"/command", BoolStamped, queue_size=1)
+        self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
         tar = "self." + msg.name + "_cost"
         vars()[tar] = False
         self.count_target()

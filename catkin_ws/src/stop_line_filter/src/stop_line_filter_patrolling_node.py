@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import numpy as np
-from duckietown_msgs.msg import SegmentList, Segment, BoolStamped, StopLineReading, LanePose, FSMState
+from duckietown_msgs.msg import SegmentList, Segment, BoolStamped, StopLineReading, LanePose, FSMState, PatrolBot
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Point
 import time
@@ -13,7 +13,7 @@ class StopLineFilterNode(object):
         self.active = True
         ## state vars
         self.lane_pose = LanePose()
-
+        self.patrol_info = PatrolBot()
         ## params
         self.stop_distance = self.setupParam("~stop_distance", 0.2) # distance from the stop line that we should stop 
         self.min_segs      = self.setupParam("~min_segs", 2) # minimum number of red segments that we should detect to estimate a stop
@@ -23,14 +23,19 @@ class StopLineFilterNode(object):
         self.state = "JOYSTICK_CONTROL"
         self.sleep = False
         ## publishers and subscribers
+        self.sub_info      = rospy.Subscriber("~info", PatrolBot, self.get_PatrolBot)
         self.sub_segs      = rospy.Subscriber("~segment_list", SegmentList, self.processSegments)
         self.sub_lane      = rospy.Subscriber("~lane_pose",LanePose, self.processLanePose)
         self.sub_mode      = rospy.Subscriber("fsm_node/mode",FSMState, self.processStateChange)
         self.pub_stop_line_reading = rospy.Publisher("~stop_line_reading", StopLineReading, queue_size=1)
         self.pub_at_stop_line = rospy.Publisher("~at_stop_line", BoolStamped, queue_size=1)
         self.pub_sendmessage = rospy.Publisher("~send",BoolStamped,queue_size=1)
+        self.pub_info = rospy.Publisher("/patrol", PatrolBot, queue_size=1)
 
         self.params_update = rospy.Timer(rospy.Duration.from_sec(1.0), self.updateParams)
+
+    def get_PatrolBot(self, msg):
+        self.patrol_info = msg
 
     def setupParam(self,param_name,default_value):
         value = rospy.get_param(param_name,default_value)
@@ -105,6 +110,7 @@ class StopLineFilterNode(object):
             if segment.color == segment.RED:
                 print "-------at stop line-------"
                 self.pub_at_stop_line.publish(msg)
+                self.pub_info.publish(self.patrol_info)
    
     def to_lane_frame(self, point):
         p_homo = np.array([point.x,point.y,1])
