@@ -26,7 +26,7 @@ class AprilPostPros(object):
 # ---- end tag info stuff 
 
         #self.sub_mode = rospy.Subscriber("~mode",FSMState, self.processStateChange)
-        self.pub_info = rospy.Publisher("~info", PoseStamped, queue_size=1)
+        self.pub_info = rospy.Publisher("~info", PatrolBot, queue_size=1)
         self.pub_detected = rospy.Publisher("~detected", BoolStamped, queue_size=1)
         self.sub_prePros        = rospy.Subscriber("~apriltags_in", AprilTagDetectionArray, self.callback, queue_size=1)
 
