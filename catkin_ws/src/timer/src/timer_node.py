@@ -32,10 +32,10 @@ class Timer(object):
 		self.pub_lane_recovery = rospy.Publisher("~lane_recovery", BoolStamped, queue_size=1)
 
 	def command(self, msg):
-		if msg.data = 1:
+		if msg.data == 1:
 			self.forward = True
 			self.backward = False
-		elif msg.data = 2:
+		elif msg.data == 2:
 			self.forward = False
 			self.backward = True
 
