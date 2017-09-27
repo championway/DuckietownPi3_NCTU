@@ -66,7 +66,7 @@ class AprilPostPros(object):
                 patrol_bot.tag = "right3"
             elif new_info.id == 8:
                 patrol_bot.tag = "right4"
-        self.pub_info = publish(patrol_bot)
+        self.pub_info.publish(patrol_bot)
         
 if __name__ == '__main__': 
     rospy.init_node('AprilPostPros',anonymous=False)
