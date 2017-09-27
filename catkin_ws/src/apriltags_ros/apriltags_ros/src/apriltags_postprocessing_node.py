@@ -12,7 +12,6 @@ class AprilPostPros(object):
     def __init__(self):    
         """ """
         self.veh = rospy.get_param('~veh')
-        self.name = rospy.get_param('~name')
         self.node_name = "apriltags_postprocessing_node"
 
 # -------- Start adding back the tag info stuff
