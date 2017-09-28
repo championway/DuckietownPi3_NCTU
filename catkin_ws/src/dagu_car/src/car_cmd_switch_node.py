@@ -27,11 +27,9 @@ class CarCmdSwitchNode(object):
         if self.current_src_name == "stop":
             print "wait for stop"
             self.pubStop()
-            
         elif self.current_src_name == "around":
             print "start to turn around"
             self.pubTurn()
-
         elif self.current_src_name is None:
             rospy.logwarn("[%s] FSMState %s not handled. No msg pass through the switch." %(self.node_name,fsm_state_msg.state))
         else: 
