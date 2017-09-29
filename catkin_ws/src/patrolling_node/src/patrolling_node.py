@@ -149,14 +149,14 @@ class PatrollingNode(object):
 
     #count the cost of each node (idleness)
     def count_cost(self):
-        self.left1_cost = count_time(self.left1_start)
-        self.right1_cost = count_time(self.right1_start)
-        self.left2_cost = count_time(self.left2_start)
-        self.right2_cost = count_time(self.right2_start)
-        self.left3_cost = count_time(self.left3_start)
-        self.right3_cost = count_time(self.right3_start)
-        self.left4_cost = count_time(self.left4_start)
-        self.right4_cost = count_time(self.right4_start)
+        self.left1_cost = self.count_time(self.left1_start)
+        self.right1_cost = self.count_time(self.right1_start)
+        self.left2_cost = self.count_time(self.left2_start)
+        self.right2_cost = self.count_time(self.right2_start)
+        self.left3_cost = self.count_time(self.left3_start)
+        self.right3_cost = self.count_time(self.right3_start)
+        self.left4_cost = self.count_time(self.left4_start)
+        self.right4_cost = self.count_time(self.right4_start)
 
     #initial time of all the nodes
     def start_time(self):
