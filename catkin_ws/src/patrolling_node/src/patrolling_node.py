@@ -35,7 +35,7 @@ class PatrollingNode(object):
         self.left4_target = False
         self.right4_target = False
 
-        #iniital starting time of each node
+        '''#iniital starting time of each node
         self.left1_start = self.timer_start
         self.right1_start = self.timer_start
         self.left2_start = self.timer_start
@@ -43,7 +43,7 @@ class PatrollingNode(object):
         self.left3_start = self.timer_start
         self.right3_start = self.timer_start
         self.left4_start = self.timer_start
-        self.right4_start = self.timer_start
+        self.right4_start = self.timer_start'''
 
         #======Subscriber======
         self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
