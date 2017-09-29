@@ -66,7 +66,7 @@ class PatrollingNode(object):
         self.count_target()
 
         if msg.tag == "left1":
-            if self.right1_cost > self.right2_cost:
+            if self.right1_cost >= self.right2_cost:
                 self.right1_start = time.time()
                 self.left4_target = True
                 cmd.data = 1
@@ -76,7 +76,7 @@ class PatrollingNode(object):
             self.left1_start = time.time()
 
         elif msg.tag == "right1":
-            if self.left1_cost > self.left4_cost:
+            if self.left1_cost >= self.left4_cost:
                 self.right2_target = True
                 self.left1_start = time.time()
                 cmd.data = 1
@@ -86,7 +86,7 @@ class PatrollingNode(object):
             self.right1_start = time.time()
 
         elif msg.tag == "left2":
-            if self.right2_cost > self.right3_cost:
+            if self.right2_cost >= self.right3_cost:
                 self.right2_start = time.time()
                 self.left1_target = True
                 cmd.data = 1
@@ -96,7 +96,7 @@ class PatrollingNode(object):
             self.left1_start = time.time()
 
         elif msg.tag == "right2":
-            if self.left2_cost > self.left1_cost:
+            if self.left2_cost >= self.left1_cost:
                 self.right3_target = True
                 self.left2_start = time.time()
                 cmd.data = 1
@@ -106,7 +106,7 @@ class PatrollingNode(object):
             self.right2_start = time.time()
 
         elif msg.tag == "left3":
-            if self.right3_cost > self.right4_cost:
+            if self.right3_cost >= self.right4_cost:
                 self.right3_start = time.time()
                 self.left2_target = True
                 cmd.data = 1
@@ -116,7 +116,7 @@ class PatrollingNode(object):
             self.left3_start = time.time()
 
         elif msg.tag == "right3":
-            if self.left3_cost > self.left2_cost:
+            if self.left3_cost >= self.left2_cost:
                 self.right4_target = True
                 self.left3_start = time.time()
                 cmd.data = 1
@@ -126,7 +126,7 @@ class PatrollingNode(object):
             self.right3_start = time.time()
 
         elif msg.tag == "left4":
-            if self.right4_cost > self.right1_cost:
+            if self.right4_cost >= self.right1_cost:
                 self.right4_start = time.time()
                 self.left3_target = True
                 cmd.data = 1
@@ -136,7 +136,7 @@ class PatrollingNode(object):
             self.left4_start = time.time()
 
         elif msg.tag == "right4":
-            if self.left4_cost > self.left3_cost:
+            if self.left4_cost >= self.left3_cost:
                 self.right1_target = True
                 self.left4_start = time.time()
                 cmd.data = 1
