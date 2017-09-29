@@ -7,6 +7,7 @@ from duckietown_msgs.msg import PatrolBot, BoolStamped
 import numpy as np
 import tf.transformations as tr
 from geometry_msgs.msg import PoseStamped
+import time
 
 class PatrollingNode(object):
 
