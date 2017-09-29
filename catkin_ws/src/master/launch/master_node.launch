@@ -10,9 +10,16 @@
         <rosparam command="load" file="$(find duckietown)/config/$(arg config)/joy/joy_node/$(arg param_file_name).yaml"/>
     </node>
 
-	<!-- start basic args -->
+	<!-- start node node -->
 	<include file="$(find master)/launch/master_name_node.launch">
 		<arg name="veh" value="$(arg veh)"/>
 		<arg name="param_file_name" default="default" />
 	</include>
+
+	<!-- start basic args -->
+	<include file="$(find patrolling_node)/launch/patrolling_node.launch">
+		<arg name="veh" value="$(arg veh)"/>
+		<arg name="local" value="$(arg local)" />
+	</include>
+
 </launch>

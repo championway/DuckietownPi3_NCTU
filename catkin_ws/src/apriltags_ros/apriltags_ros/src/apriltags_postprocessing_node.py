@@ -52,20 +52,28 @@ class AprilPostPros(object):
             id_info = self.tags_dict[new_info.id]
             if new_info.id == 1:
                 patrol_bot.tag = "left1"
+                print "detect tag 1"
             elif new_info.id == 2:
                 patrol_bot.tag = "left2"
+                print "detect tag 2"
             elif new_info.id == 3:
                 patrol_bot.tag = "left3"
+                print "detect tag 3"
             elif new_info.id == 4:
                 patrol_bot.tag = "left4"
+                print "detect tag 4"
             elif new_info.id == 5:
                 patrol_bot.tag = "right1"
+                print "detect tag 5"
             elif new_info.id == 6:
                 patrol_bot.tag = "right2"
+                print "detect tag 6"
             elif new_info.id == 7:
                 patrol_bot.tag = "right3"
+                print "detect tag 7"
             elif new_info.id == 8:
                 patrol_bot.tag = "right4"
+                print "detect tag 8"
         self.pub_info.publish(patrol_bot)
         
 if __name__ == '__main__': 
