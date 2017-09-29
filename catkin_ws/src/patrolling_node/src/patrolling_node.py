@@ -2,7 +2,7 @@
 import rospkg
 import rospy
 import yaml
-from std_msgs import Int8
+from std_msgs.msg import Int8
 from duckietown_msgs.msg import PatrolBot, BoolStamped
 import numpy as np
 import tf.transformations as tr
