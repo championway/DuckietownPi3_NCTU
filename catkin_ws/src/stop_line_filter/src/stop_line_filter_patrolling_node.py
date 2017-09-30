@@ -14,6 +14,7 @@ class StopLineFilterNode(object):
         ## state vars
         self.lane_pose = LanePose()
         self.patrol_info = PatrolBot()
+        self.past_patrol_info = PatrolBot()
         ## params
         self.stop_distance = self.setupParam("~stop_distance", 0.2) # distance from the stop line that we should stop 
         self.min_segs      = self.setupParam("~min_segs", 2) # minimum number of red segments that we should detect to estimate a stop
@@ -103,14 +104,14 @@ class StopLineFilterNode(object):
             msg = BoolStamped()
             msg.header.stamp = stop_line_reading_msg.header.stamp
             msg.data = True
-            '''if segment.color == segment.BLUE:
-                self.pub_sendmessage = rospy.Publisher("/arg2/stop_line_filter_node/send",BoolStamped,queue_size=1)
-                self.pub_sendmessage.publish(msg)'''
+            
             if segment.color == segment.RED:
-                print "-------at stop line-------"
-                self.pub_at_stop_line.publish(msg)
-                self.pub_info.publish(self.patrol_info)
-   
+                if self.past_patrol_info != self.patrol_info:
+                    self.past_patrol_info = self.patrol_info
+                    print "-------at stop line-------"
+                    self.pub_at_stop_line.publish(msg)
+                    self.pub_info.publish(self.patrol_info)
+       
     def to_lane_frame(self, point):
         p_homo = np.array([point.x,point.y,1])
         phi = self.lane_pose.phi
