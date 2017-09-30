@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import copy
+from std_msgs.msg import Int8
 from duckietown_msgs.msg import FSMState, BoolStamped
 from duckietown_msgs.srv import SetFSMState, SetFSMStateRequest, SetFSMStateResponse
 import Adafruit_PCA9685
