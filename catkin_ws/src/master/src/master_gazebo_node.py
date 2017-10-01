@@ -16,8 +16,8 @@ class carName(object):
         self.robot = "robot"
         self.robotlist = {}
         self.rlist = []
-        self.rnumber = len(self.rlist)
-        self.rcount = 0
+        self.rnumber = 2
+        self.rcount = 1
         self.allrb = False
         # Setup parameters
         self.name = "master"
@@ -81,7 +81,7 @@ class carName(object):
                 self.rlist.append(msg.robot_name)
             else :
                 self.robotlist[msg.robot_name]=0
-        self.rnumber = len(self.rlist)
+        #self.rnumber = len(self.rlist)
         self.count()
 
     def AllRobot(self, pub, msg):
@@ -141,6 +141,7 @@ class carName(object):
         car_twist_msg.linear.x = car_cmd_msg.v*1.5
         car_twist_msg.angular.z = car_cmd_msg.omega*1.5
         self.pub_car_cmd.publish(car_cmd_msg)
+        self.pub_car_twist = rospy.Publisher(self.robot+"/cmd_vel",Twist,queue_size=1)
         self.pub_car_twist.publish(car_twist_msg)
 
 
@@ -172,34 +173,18 @@ class carName(object):
             self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
         elif (joy_msg.buttons[3] == 1):
             rospy.loginfo('Press "Y"')
-            self.allrb = False
-            '''if self.rnumber == 0:
-                self.allrb = False
-                self.rcount = 0
-                print "no robot exist"
-            elif self.rcount+1 <= self.rnumber:
-                self.robot = self.rlist[self.rcount]
-                self.allrb = False
+            if self.rcount == 1:
+                self.robot = "lakers"
                 print "choose", self.robot
-            elif self.rcount == self.rnumber and self.rnumber != 1:
-                self.allrb = True
-                print "broadcast to all robots"
-            else:
-                self.rcount = 0
-                self.robot = self.rlist[self.rcount]
+            elif self.rcount == 2:
+                self.robot = "celtics"
                 print "choose", self.robot
-                self.allrb = False
-            self.rcount += 1'''
-            '''self.rcount += 1
-            if self.rcount == self.rnumber:
-                self.allrb = True
-                print "broadcast to all robots"
-            else:
-                self.allrb = False
-                if self.rcount > self.rnumber:
-                    self.rcount = 0
-                self.robot = self.rlist[self.rcount]
-                print "choose", self.robot'''
+            elif self.rcount > 2:
+                self.rcount = 1
+                self.robot = "lakers"
+                print "choose", self.robot
+            self.rcount += 1
+
         elif (joy_msg.buttons[2] == 1):
             print "--------- ", len(self.robotlist), " ---------"
             print self.rlist
