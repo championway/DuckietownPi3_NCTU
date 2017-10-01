@@ -100,7 +100,7 @@ class lane_controller(object):
         #vel_right = (speed_gain*speed + steer_gain*steering)
         #wheels_cmd_msg.vel_left = np.clip(vel_left,-1.0,1.0)
         #wheels_cmd_msg.vel_right = np.clip(vel_right,-1.0,1.0)
-        #print "skip"
+
         self.pub_car_cmd.publish(car_cmd_msg)
         #self.pub_wheels_cmd.publish(wheels_cmd_msg)
 
@@ -142,12 +142,9 @@ class lane_controller(object):
             self.trim = -.4;
         if(cross_track_err > 0):
             self.trim = .4;
-        '''
+
         car_twist_msg.linear.x = 0.4
         car_twist_msg.angular.z = self.trim
-        '''
-        car_twist_msg.linear.x = 0.386
-        car_twist_msg.angular.z = car_control_msg.omega
 
 
         """

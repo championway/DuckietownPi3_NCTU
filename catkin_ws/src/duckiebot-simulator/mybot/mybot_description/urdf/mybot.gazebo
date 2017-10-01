@@ -37,20 +37,20 @@
 
 
   <gazebo reference="chassis">
-    <material>Gazebo/Orange</material>
+    <material>Gazebo/Red</material>
   </gazebo>
 
   <gazebo reference="left_wheel">
-    <material>Gazebo/Blue</material>
+    <material>Gazebo/Black</material>
   </gazebo>
 
   <gazebo reference="right_wheel">
-    <material>Gazebo/Blue</material>
+    <material>Gazebo/Black</material>
   </gazebo>
 
 
   <gazebo reference="camera">
-    <material>Gazebo/Green</material>
+    <material>Gazebo/Blue</material>
     <sensor type="camera" name="camera1">
       <!--update_rate>30.0</update_rate-->
       <update_rate>2.0</update_rate>
@@ -73,7 +73,7 @@
         <updateRate>0.0</updateRate>
         <!--cameraName>mybot/camera1</cameraName>
         <imageTopicName>image_raw</imageTopicName-->
-        <cameraName>jack/camera_node</cameraName>
+        <cameraName>$(arg veh)/camera_node</cameraName>
         <imageTopicName>image/raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>camera</frameName>

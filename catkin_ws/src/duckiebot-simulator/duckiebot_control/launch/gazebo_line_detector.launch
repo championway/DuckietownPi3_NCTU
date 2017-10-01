@@ -24,7 +24,8 @@
 
 	<!--remap from="/jack/line_detector_node/image" to="/mybot/camera1/image_raw/compressed"/-->
 	<!--remap from="/$(arg veh)/line_detector_node/image" to="/mybot/camera1/image_raw/compressed"/-->
-	<remap from="/$(arg veh)/line_detector_node/image" to="/jack/camera_node/image/raw/compressed"/>
+	<remap from="/$(arg veh)/line_detector_node/image" to="camera_node/image/raw/compressed"/>
+
 	<!-- Line Detector -->
 	<include file="$(find duckiebot_control)/launch/gazebo_line_detector_node.launch">
 	    <arg name="veh" value="$(arg veh)"/>
