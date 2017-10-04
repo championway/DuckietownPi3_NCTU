@@ -48,14 +48,14 @@ class PatrollingNode(object):
 
         #======Subscriber======
         self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
-        self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.reset)
+        self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.sub_reset)
         #======Publisher======
         self.pub_command = rospy.Publisher("~command", Int8, queue_size=1)
 
         #======start to count the time======
         self.start_time()
 
-    self.reset(self, msg):
+    def sub_reset(self, msg):
         if msg.data:
             self.__init__()
 
