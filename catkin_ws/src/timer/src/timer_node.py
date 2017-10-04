@@ -70,37 +70,38 @@ class Timer(object):
 		self.pub_lane_recovery.publish(msg)
 
 	def count_time(self):
-		if not self.start: # if timer not start yet
-			self.timer_start = time.time() # record start time
-			self.start = True # change timer state to start
-			print "start time: ", self.timer_start
-		self.timer_end = time.time() # record time now
-		print "time: ", self.timer_end - self.timer_start
-		if(self.state == "LANE_FOLLOWING_TURN_RIGHT" or self.state == "LANE_FOLLOWING_TURN_LEFT"):
-			if (self.timer_end - self.timer_start) > 2: #if time duration between start time and time now bigger than 2 seconsds
-				# publish time is up
-				msg = BoolStamped()
-				msg.data = True
-				self.pub_time_is_up.publish(msg)
-				print "recovery"
-				
-		elif(self.state == "WAIT_FOR_TURN"):
-			if (self.timer_end - self.timer_start) > 1:
-				msg = BoolStamped()
-				msg.data = True
-				if self.forward:
-					self.pub_forward.publish(msg)
-					print "go forward"
-				elif self.backward:
-					self.pub_backward.publish(msg)
-					print "go backward"
+		while True:
+			if not self.start: # if timer not start yet
+				self.timer_start = time.time() # record start time
+				self.start = True # change timer state to start
+				print "start time: ", self.timer_start
+			self.timer_end = time.time() # record time now
+			print "time: ", self.timer_end - self.timer_start
+			if(self.state == "LANE_FOLLOWING_TURN_RIGHT" or self.state == "LANE_FOLLOWING_TURN_LEFT"):
+				if (self.timer_end - self.timer_start) > 2: #if time duration between start time and time now bigger than 2 seconsds
+					# publish time is up
+					msg = BoolStamped()
+					msg.data = True
+					self.pub_time_is_up.publish(msg)
+					print "recovery"
+					
+			elif(self.state == "WAIT_FOR_TURN"):
+				if (self.timer_end - self.timer_start) > 1:
+					msg = BoolStamped()
+					msg.data = True
+					if self.forward:
+						self.pub_forward.publish(msg)
+						print "go forward"
+					elif self.backward:
+						self.pub_backward.publish(msg)
+						print "go backward"
 
-		elif(self.state == "TURN_AROUND"):
-			if (self.timer_end - self.timer_start) > 2.3:
-				msg = BoolStamped()
-				msg.data = True
-				self.pub_time_is_up.publish(msg)
-				print "turn around"
+			elif(self.state == "TURN_AROUND"):
+				if (self.timer_end - self.timer_start) > 2.3:
+					msg = BoolStamped()
+					msg.data = True
+					self.pub_time_is_up.publish(msg)
+					print "turn around"
 
 	def cbSwitch(self, switch_msg):
 		self.active = switch_msg.data

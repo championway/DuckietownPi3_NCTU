@@ -156,6 +156,9 @@ class PatrollingNode(object):
         print "tag6 -->  " + str(self.right3_cost)
         print "tag7 -->  " + str(self.left4_cost)
         print "tag8 -->  " + str(self.right4_cost)
+        print "---------------------"
+        print "---------------------"
+        print ""
 
     #count the cost of each node (idleness)
     def count_cost(self):
