@@ -47,6 +47,7 @@ class carName(object):
         self.pub_pressB = rospy.Publisher("~press_B",BoolStamped,queue_size=1)
         self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
         self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
+        self.pub_reset = rospy.Publisher("~reset",BoolStamped,queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
@@ -157,9 +158,11 @@ class carName(object):
             override_msg.data = False
             self.pub_joy_override.publish(override_msg)
         elif (joy_msg.buttons[5] == 1): # Right back button
-            self.state_verbose ^= True
-            rospy.loginfo('state_verbose = %s' % self.state_verbose)
-            rospy.set_param('line_detector_node/verbose', self.state_verbose) # bad - should be published for all to hear - not set a specific param
+            reset_msg = BoolStamped()
+            reset_msg.header.stamp = self.joy.header.stamp
+            reset_msg.data = True
+            self.pub_reset.publish(reset_msg)
+        
         elif (joy_msg.buttons[4] == 1): #Left back button
             self.state_parallel_autonomy ^= True
             rospy.loginfo('state_parallel_autonomy = %s' % self.state_parallel_autonomy)

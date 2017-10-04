@@ -17,6 +17,7 @@
 	</include>
 
 	<!-- start basic args -->
+	<remap from="patrolling_node/reset" to="master_name_node/reset"/>
 	<include file="$(find patrolling_node)/launch/patrolling_node.launch">
 		<arg name="veh" value="$(arg veh)"/>
 		<arg name="local" value="$(arg local)" />

@@ -35,7 +35,7 @@ class PatrollingNode(object):
         self.right3_target = False
         self.left4_target = False
         self.right4_target = False
-
+        print "initial"
         '''#iniital starting time of each node
         self.left1_start = self.timer_start
         self.right1_start = self.timer_start
@@ -48,12 +48,16 @@ class PatrollingNode(object):
 
         #======Subscriber======
         self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
-
+        self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.reset)
         #======Publisher======
         self.pub_command = rospy.Publisher("~command", Int8, queue_size=1)
 
         #======start to count the time======
         self.start_time()
+
+    self.reset(self, msg):
+        if msg.data:
+            self.__init__()
 
     #suppose msg.name--> robotrname msg.tag--> current tag ex:left1, right3
     def sub_robot(self, msg):
