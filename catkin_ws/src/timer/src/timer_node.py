@@ -84,6 +84,7 @@ class Timer(object):
 					msg.data = True
 					self.pub_time_is_up.publish(msg)
 					print "recovery"
+					break
 					
 			elif(self.state == "WAIT_FOR_TURN"):
 				if (self.timer_end - self.timer_start) > 1:
@@ -95,6 +96,7 @@ class Timer(object):
 					elif self.backward:
 						self.pub_backward.publish(msg)
 						print "go backward"
+					break
 
 			elif(self.state == "TURN_AROUND"):
 				if (self.timer_end - self.timer_start) > 2.3:
@@ -102,6 +104,7 @@ class Timer(object):
 					msg.data = True
 					self.pub_time_is_up.publish(msg)
 					print "turn around"
+					break
 
 	def cbSwitch(self, switch_msg):
 		self.active = switch_msg.data
