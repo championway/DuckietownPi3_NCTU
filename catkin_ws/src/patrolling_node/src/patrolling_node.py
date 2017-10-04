@@ -191,7 +191,7 @@ class PatrollingNode(object):
 
     #return current time - starting time
     def count_time(self, t):
-        return time.time()-t
+        return int(time.time()-t)
 
     def count_target(self):
         if self.left1_target:
