@@ -159,41 +159,42 @@ class PatrollingNode(object):
             self.right4_start = time.time()
         self.count_target()
         self.print_cost()
+        self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
         self.pub_command.publish(cmd)
 
     def print_cost(self):
         if self.left1_target:
-            print "tag1 -->  " + str(self.left1_cost) + " (target)"
+            print "left1 -->  " + str(self.left1_cost) + " (target)"
         else:
-            print "tag1 -->  " + str(self.left1_cost)
-        if self.left2_target:
-            print "tag2 -->  " + str(self.left2_cost) + " (target)"
-        else:
-            print "tag2 -->  " + str(self.left2_cost)
-        if self.left3_target:
-            print "tag3 -->  " + str(self.left3_cost) + " (target)"
-        else:
-            print "tag3 -->  " + str(self.left3_cost)
-        if self.left4_target:
-            print "tag4 -->  " + str(self.left4_cost) + " (target)"
-        else:
-            print "tag4 -->  " + str(self.left4_cost)
+            print "left1 -->  " + str(self.left1_cost)
         if self.right1_target:
-            print "tag5 -->  " + str(self.right1_cost) + " (target)"
+            print "right1 -->  " + str(self.right1_cost) + " (target)"
         else:
-            print "tag5 -->  " + str(self.right1_cost)   
+            print "right1 -->  " + str(self.right1_cost)
+        if self.left2_target:
+            print "left2 -->  " + str(self.left2_cost) + " (target)"
+        else:
+            print "left2 -->  " + str(self.left2_cost)
         if self.right2_target:
-            print "tag6 -->  " + str(self.right2_cost) + " (target)"
+            print "right2 -->  " + str(self.right2_cost) + " (target)"
         else:
-            print "tag6 -->  " + str(self.right2_cost)  
+            print "right2 -->  " + str(self.right2_cost) 
+        if self.left3_target:
+            print "left3 -->  " + str(self.left3_cost) + " (target)"
+        else:
+            print "left3 -->  " + str(self.left3_cost)
         if self.right3_target:
-            print "tag7 -->  " + str(self.right3_cost) + " (target)"
+            print "right3 -->  " + str(self.right3_cost) + " (target)"
         else:
-            print "tag7 -->  " + str(self.right3_cost)  
+            print "right3 -->  " + str(self.right3_cost) 
+        if self.left4_target:
+            print "left4 -->  " + str(self.left4_cost) + " (target)"
+        else:
+            print "left4 -->  " + str(self.left4_cost)
         if self.right4_target:
-            print "tag8 -->  " + str(self.right4_cost) + " (target)"
+            print "right4 -->  " + str(self.right4_cost) + " (target)"
         else:
-            print "tag8 -->  " + str(self.right4_cost)     
+            print "right4 -->  " + str(self.right4_cost)     
         print "---------------------"
         print "---------------------"
         print ""
