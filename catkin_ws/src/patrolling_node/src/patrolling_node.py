@@ -152,14 +152,38 @@ class PatrollingNode(object):
         self.pub_command.publish(cmd)
 
     def print_cost(self):
-        print "tag1 -->  " + str(self.left1_cost)
-        print "tag2 -->  " + str(self.right1_cost)
-        print "tag3 -->  " + str(self.left2_cost)
-        print "tag4 -->  " + str(self.right2_cost)
-        print "tag5 -->  " + str(self.left3_cost)
-        print "tag6 -->  " + str(self.right3_cost)
-        print "tag7 -->  " + str(self.left4_cost)
-        print "tag8 -->  " + str(self.right4_cost)
+        if self.left1_target:
+            print "tag1 -->  " + str(self.left1_cost) + " (target)"
+        else:
+            print "tag1 -->  " + str(self.left1_cost)
+        if self.right1_target:
+            print "tag5 -->  " + str(self.right1_costt) + " (target)"
+        else:
+            print "tag5 -->  " + str(self.right1_cost)
+        if self.left2_target:
+            print "tag2 -->  " + str(self.left2_cost) + " (target)"
+        else:
+            print "tag2 -->  " + str(self.left2_cost)
+        if self.right2_target:
+            print "tag6 -->  " + str(self.right2_cost) + " (target)"
+        else:
+            print "tag6 -->  " + str(self.right2_cost)
+        if self.left3_target:
+            print "tag3 -->  " + str(self.left3_cost) + " (target)"
+        else:
+            print "tag3 -->  " + str(self.left3_cost)
+        if self.right3_target:
+            print "tag7 -->  " + str(self.right3_cost) + " (target)"
+        else:
+            print "tag7 -->  " + str(self.right3_cost)
+        if self.left4_target:
+            print "tag4 -->  " + str(self.left4_cost) + " (target)"
+        else:
+            print "tag4 -->  " + str(self.left4_cost)
+        if self.right4_target:
+            print "tag8 -->  " + str(self.right4_cost) + " (target)"
+        else:
+            print "tag8 -->  " + str(self.right4_cost)
         print "---------------------"
         print "---------------------"
         print ""
