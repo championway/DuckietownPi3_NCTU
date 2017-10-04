@@ -157,7 +157,7 @@ class PatrollingNode(object):
         else:
             print "tag1 -->  " + str(self.left1_cost)
         if self.right1_target:
-            print "tag5 -->  " + str(self.right1_costt) + " (target)"
+            print "tag5 -->  " + str(self.right1_cost) + " (target)"
         else:
             print "tag5 -->  " + str(self.right1_cost)
         if self.left2_target:
