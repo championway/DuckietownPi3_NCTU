@@ -85,7 +85,7 @@ class Timer(object):
 				print "recovery"
 				
 		elif(self.state == "WAIT_FOR_TURN"):
-			if (self.timer_end - self.timer_start) > 1:
+			if int(self.timer_end - self.timer_start) >= 1:
 				msg = BoolStamped()
 				msg.data = True
 				if self.forward:
@@ -96,7 +96,7 @@ class Timer(object):
 					print "go backward"
 
 		elif(self.state == "TURN_AROUND"):
-			if (self.timer_end - self.timer_start) > 2.3:
+			if int(self.timer_end - self.timer_start) >= 2:
 				msg = BoolStamped()
 				msg.data = True
 				self.pub_time_is_up.publish(msg)
