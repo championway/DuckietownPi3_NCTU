@@ -144,8 +144,18 @@ class PatrollingNode(object):
                 self.left3_target = True
                 cmd.data = 2
             self.right4_start = time.time()
-
+        self.print_cost()
         self.pub_command.publish(cmd)
+
+    def print_cost(self):
+        print "tag1 -->  " + self.left1_cost
+        print "tag2 -->  " + self.right1_cost
+        print "tag3 -->  " + self.left2_cost
+        print "tag4 -->  " + self.right2_cost
+        print "tag5 -->  " + self.left3_cost
+        print "tag6 -->  " + self.right3_cost
+        print "tag7 -->  " + self.left4_cost
+        print "tag8 -->  " + self.right4_cost
 
     #count the cost of each node (idleness)
     def count_cost(self):
