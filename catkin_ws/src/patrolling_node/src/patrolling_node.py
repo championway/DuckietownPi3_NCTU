@@ -74,6 +74,7 @@ class PatrollingNode(object):
             self.left4_cost = 0
             self.right4_cost = 0
             self.start_time()
+            print "initial"
 
     #suppose msg.name--> robotrname msg.tag--> current tag ex:left1, right3
     def sub_robot(self, msg):
@@ -175,6 +176,7 @@ class PatrollingNode(object):
         self.print_cost()
         #self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
         self.pub_command = rospy.Publisher("/lala", Int8, queue_size=1)
+        self.pub_command.publish(cmd)
         self.pub_command.publish(cmd)
 
     def print_cost(self):
