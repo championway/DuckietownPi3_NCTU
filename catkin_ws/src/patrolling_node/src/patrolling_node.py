@@ -174,9 +174,12 @@ class PatrollingNode(object):
             self.right4_start = time.time()
         self.count_target()
         self.print_cost()
-        self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
-        print("/"+msg.name+"/timer_node/command")
+        self.pubcom(msg.name)
+        #self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
         self.pub_command.publish(cmd)
+
+    def pubcom(self, pub):
+        self.pub_command = rospy.Publisher("/"+pub+"/timer_node/command", Int8, queue_size=1)
 
     def print_cost(self):
         if self.left1_target:
