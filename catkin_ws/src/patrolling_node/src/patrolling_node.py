@@ -175,6 +175,10 @@ class PatrollingNode(object):
         self.count_target()
         self.print_cost()
         #self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
+        ss = BoolStamped()
+        ss.data = True
+        self.pub_aaa = rospy.Publisher("/test", BoolStamped ,queue_size=1)
+        self.pub_aaa.publish(ss)
         self.pub_command = rospy.Publisher("/lala", Int8, queue_size=1)
         self.pub_command.publish(cmd)
         self.pub_command.publish(cmd)
