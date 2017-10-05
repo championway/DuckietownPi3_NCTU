@@ -56,7 +56,24 @@ class PatrollingNode(object):
 
     def reset(self, msg):
         if msg.data:
-            self.__init__()
+            self.start = False
+            self.left1_target = False
+            self.right1_target = False
+            self.left2_target = False
+            self.right2_target = False
+            self.left3_target = False
+            self.right3_target = False
+            self.left4_target = False
+            self.right4_target = False
+            self.left1_cost = 0
+            self.right1_cost = 0
+            self.left2_cost = 0
+            self.right2_cost = 0
+            self.left3_cost = 0
+            self.right3_cost = 0
+            self.left4_cost = 0
+            self.right4_cost = 0
+            self.start_time()
 
     #suppose msg.name--> robotrname msg.tag--> current tag ex:left1, right3
     def sub_robot(self, msg):
