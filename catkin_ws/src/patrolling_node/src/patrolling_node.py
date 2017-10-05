@@ -50,8 +50,7 @@ class PatrollingNode(object):
         self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
         self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.reset)
         #======Publisher======
-        #self.pub_command = rospy.Publisher("~command", Int8, queue_size=1)
-        self.pub_command = rospy.Publisher("/lalala", Int8, queue_size=1)
+        self.pub_command = rospy.Publisher("/master/timer_node/command", Int8, queue_size=1)
         #======start to count the time======
         self.start_time()
 
@@ -158,8 +157,7 @@ class PatrollingNode(object):
             self.right4_start = time.time()
         self.count_target()
         self.print_cost()
-        #self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
-        self.pub_command = rospy.Publisher("/lalala", Int8, queue_size=1)
+        self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
         self.pub_command.publish(cmd)
 
     def print_cost(self):
