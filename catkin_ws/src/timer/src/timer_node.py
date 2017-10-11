@@ -27,7 +27,7 @@ class Timer(object):
 		self.pub_command = rospy.Publisher("~command", Int8, queue_size=1)
 		self.cmd = Int8()
 		self.cmd.data = 0
-		self.pub_command.publish(self.cmd)
+		#self.pub_command.publish(self.cmd)
 
 		self.pub_time_is_up = rospy.Publisher("~time_is_up", BoolStamped, queue_size=1, latch=True)
 		self.pub_forward = rospy.Publisher("~forward", BoolStamped, queue_size=1, latch=True)
