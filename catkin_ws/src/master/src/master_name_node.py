@@ -48,6 +48,7 @@ class carName(object):
         self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
         self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
         self.pub_reset = rospy.Publisher("~reset",BoolStamped,queue_size=1)
+        self.pub_set = rospy.Publisher("~setpub", RobotName, queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
@@ -76,6 +77,7 @@ class carName(object):
     def subname(self, msg):
         if msg.send == True :
             if msg.robot_name not in self.robotlist :
+                self.pub_set.publish(msg)
                 self.robotlist[msg.robot_name]=0
                 self.rlist.append(msg.robot_name)
             else :
