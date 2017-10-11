@@ -25,8 +25,8 @@ class Timer(object):
 		self.sub_time_for_stop = rospy.Subscriber("~time_for_stop", Float32, self.cbtime, queue_size=1)
 		self.sub_mode = rospy.Subscriber("~command", Int8, self.command)
 		self.pub_command = rospy.Publisher("~command", Int8, queue_size=1)
-		cmd = Int8()
-		cmd.data = 0
+		self.cmd = Int8()
+		self.cmd.data = 0
 		self.pub_command.publish(cmd)
 
 		self.pub_time_is_up = rospy.Publisher("~time_is_up", BoolStamped, queue_size=1, latch=True)
