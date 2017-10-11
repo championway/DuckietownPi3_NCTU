@@ -96,7 +96,7 @@ class Timer(object):
 					print "go backward"
 
 		elif(self.state == "TURN_AROUND"):
-			if self.timer_end - self.timer_start >= 2:
+			if self.timer_end - self.timer_start >= 10:
 				msg = BoolStamped()
 				msg.data = True
 				self.pub_time_is_up.publish(msg)
