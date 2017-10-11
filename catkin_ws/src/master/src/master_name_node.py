@@ -7,7 +7,6 @@ import math
 from sensor_msgs.msg import Joy
 import time
 from __builtin__ import True
-from std_msgs.msg import Int8
 
 class carName(object):
     def __init__(self):
@@ -77,7 +76,6 @@ class carName(object):
     def subname(self, msg):
         if msg.send == True :
             if msg.robot_name not in self.robotlist :
-                self.pub_command = rospy.Publisher("/"+msg.robot_name+"/timer_node/command", Int8, queue_size=1)
                 self.robotlist[msg.robot_name]=0
                 self.rlist.append(msg.robot_name)
             else :
