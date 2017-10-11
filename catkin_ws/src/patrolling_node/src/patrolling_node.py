@@ -3,7 +3,7 @@ import rospkg
 import rospy
 import yaml
 from std_msgs.msg import Int8
-from duckietown_msgs.msg import PatrolBot, BoolStamped
+from duckietown_msgs.msg import PatrolBot, BoolStamped, RobotName
 import numpy as np
 import tf.transformations as tr
 from geometry_msgs.msg import PoseStamped
@@ -48,7 +48,7 @@ class PatrollingNode(object):
 
         #======Subscriber======
         self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
-        self.sub_set_pub = rospy.Subscriber("~setpub", PatrolBot, self.sub_setpub)
+        self.sub_set_pub = rospy.Subscriber("~setpub", RobotName, self.sub_setpub)
         self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.reset)
         #======Publisher======
         self.pub_command = rospy.Publisher("/arg4/timer_node/command", Int8, queue_size=1)
