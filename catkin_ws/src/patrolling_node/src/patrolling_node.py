@@ -51,7 +51,6 @@ class PatrollingNode(object):
         self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.reset)
         #======Publisher======
         self.pub_command = rospy.Publisher("/master/timer_node/command", Int8, queue_size=1)
-        #self.pub_command = rospy.Publisher("/arg4/timer_node/command", Int8, queue_size=1)
         #======start to count the time======
         self.start_time()
 
