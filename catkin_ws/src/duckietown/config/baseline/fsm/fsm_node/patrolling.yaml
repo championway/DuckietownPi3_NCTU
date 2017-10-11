@@ -166,6 +166,7 @@ states:
     active_nodes:
       - lane_filter_node
       - line_detector_node
+      - timer
     lights: ["lane_following"]
 
   CLOSE_TO_INTERSECTION:
