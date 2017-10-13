@@ -67,7 +67,7 @@
     <!-- decoder_node -->
     <group if="$(arg /camera/raw)">
         <remap from="decoder_node/compressed_image" to="camera_node/image/compressed"/>
-        <!--remap from="decoder_node/image/raw" to="camera_node/image/raw"/-->
+        <remap from="decoder_node/image/raw" to="camera_node/image/raw"/>
         <include file="$(find pi_camera)/launch/decoder_node.launch">
             <arg name="veh" value="$(arg veh)"/>
             <arg name="local" value="$(arg /camera/local)"/>
@@ -265,7 +265,7 @@
 	<!-- Start April Tags -->
 	<group if="$(arg apriltags)">
 		<!-- AprilTags Detections -->
-		<remap from="image_rect" to="decoder_node/image" />
+		<remap from="image_rect" to="camera_node/image/raw" />
 		<!--remap from="image_rect" to="camera_node/image/rect" /-->
 		<remap from="compressed" to="camera_node/image/compressed" />
 		<!--remap from="camera_node/image/camera_info" to="cam_info_reader_node/camera_info" /-->
