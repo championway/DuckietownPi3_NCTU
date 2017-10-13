@@ -27,7 +27,7 @@ class AprilPostPros(object):
 
         #self.sub_mode = rospy.Subscriber("~mode",FSMState, self.processStateChange)
         self.pub_info = rospy.Publisher("~info", PatrolBot, queue_size=1)
-        self.pub_detected = rospy.Publisher("~detected", BoolStamped, queue_size=1)
+        #self.pub_detected = rospy.Publisher("~detected", BoolStamped, queue_size=1)
         self.sub_prePros        = rospy.Subscriber("~apriltags_in", AprilTagDetectionArray, self.callback, queue_size=1)
 
     def setupParam(self,param_name,default_value):
@@ -40,9 +40,9 @@ class AprilPostPros(object):
         patrol_bot = PatrolBot()
         patrol_bot.name = self.veh
 
-        detect_msg = BoolStamped()
-        detect_msg.data = True
-        self.pub_detected.publish(detect_msg)
+        #detect_msg = BoolStamped()
+        #detect_msg.data = True
+        #self.pub_detected.publish(detect_msg)
 
         # Load tag detections message
         for detection in msg.detections:
