@@ -24,7 +24,7 @@
       <param name="~config_file_name" value="$(arg veh)"/>
       <remap from="~lineseglist_in" to="line_detector_node/segment_list"/>
       <remap from="~cali_image" to="$(arg camera_topic)/image/raw"/>
-      <remap from="~camera_info" to="$(arg camera_topic)/camera_info"/>
+      <remap from="~camera_info" to="cam_info_reader_node/camera_info"/>
     </node>
   </group>
 </launch>
