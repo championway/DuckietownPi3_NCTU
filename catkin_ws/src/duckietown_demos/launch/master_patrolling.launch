@@ -57,6 +57,7 @@
 
 	<!-- Start Camera -->  
 	<group if="$(arg camera)">
+		<remap from="camera_node/image/camera_info" to="camera_node/raw_camera_info" />
 		<include  file="$(find pi_camera)/launch/camera_node.launch">
 			<arg name="veh" value="$(arg veh)"/>
 			<arg name="config" value="$(arg config)"/>
@@ -66,7 +67,6 @@
 
     <!-- decoder_node -->
     <group if="$(arg /camera/raw)">
-    	<remap from="camera_node/image/camera_info" to="camera_node/raw_camera_info" />
         <remap from="decoder_node/compressed_image" to="camera_node/image/compressed"/>
         <remap from="decoder_node/image/raw" to="camera_node/image/raw"/>
         <include file="$(find pi_camera)/launch/decoder_node.launch">
