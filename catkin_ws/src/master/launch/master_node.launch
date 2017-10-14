@@ -1,4 +1,5 @@
 <launch>
+	<arg name="p_num" default="$(env PATROLLING_NUMBER)"/>
 	<arg name="veh" default="master"/>
 	<arg name="local" default="true"/>
     <arg name="config" default="baseline" doc="Specify a config."/>
@@ -20,8 +21,9 @@
 	<remap from="patrolling_node/setpub" to="master_name_node/setpub"/>
 	<remap from="patrolling_node/reset" to="master_name_node/reset"/>
 	<include file="$(find patrolling_node)/launch/patrolling_node.launch">
+		<arg name="p_num" value="$(arg veh)"/>
 		<arg name="veh" value="$(arg veh)"/>
-		<arg name="local" value="$(arg local)" />
+		<arg name="local" value="$(arg local)"/>
 	</include>
 
 </launch>

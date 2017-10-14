@@ -1,4 +1,5 @@
 <launch>
+    <arg name="p_num" default="4"/>
     <arg name="pkg_name" value="patrolling_node"/>
     <arg name="node_name" default="patrolling_node"/>
     <arg name="veh" doc="Name of vehicle. ex: megaman"/>
@@ -8,6 +9,7 @@
     <group ns="$(arg veh)">
         <!-- run local -->
         <node if="$(arg local)" name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" output="screen">
+            <param name="p_num" value="$(arg p_num)"/>
         </node>
     </group>
 </launch>

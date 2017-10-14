@@ -15,36 +15,26 @@ class PatrollingNode(object):
         #initial
         self.start = False
         self.node_name = "patrolling_node"
-        self.p_num = int(rospy.get_param('~p_num'))
-        #cost of each node
-        for i in range(p_num):
-            left_cost = "self.left" + str(p_num) + "_cost"
-            right_cost = "self.right" + str(p_num) + "_cost"
-            left_target = "self.left" + str(p_num) + "_target"
-            right_target = "self.right" + str(p_num) + "_target"
-            vars()[left_cost] = 0
-            vars()[right_cost] = 0
-            vars()[left_target] = False
-            vars()[right_target] = False
 
-        '''self.left1_cost = 0
+        #cost of each node
+        self.left1_cost = 0
         self.right1_cost = 0
         self.left2_cost = 0
         self.right2_cost = 0
         self.left3_cost = 0
         self.right3_cost = 0
         self.left4_cost = 0
-        self.right4_cost = 0'''
+        self.right4_cost = 0
 
         #to see each node are target or not
-        '''self.left1_target = False
+        self.left1_target = False
         self.right1_target = False
         self.left2_target = False
         self.right2_target = False
         self.left3_target = False
         self.right3_target = False
         self.left4_target = False
-        self.right4_target = False'''
+        self.right4_target = False
         print "initial"
         '''#iniital starting time of each node
         self.left1_start = self.timer_start
@@ -71,24 +61,6 @@ class PatrollingNode(object):
 
     def reset(self, msg):
         if msg.data:
-            print self.left1_target
-            print self.right1_target
-            print self.left2_target
-            print self.right2_target
-            print self.left3_target
-            print self.right3_target
-            print self.left4_target
-            print self.right4_target
-            print self.left1_cost
-            print self.right1_cost
-            print self.left2_cost
-            print self.right2_cost
-            print self.left3_cost
-            print self.right3_cost
-            print self.left4_cost
-            print self.right4_cost
-            print "initial"
-        '''if msg.data:
             self.start = False
             self.left1_target = False
             self.right1_target = False
@@ -107,7 +79,7 @@ class PatrollingNode(object):
             self.left4_cost = 0
             self.right4_cost = 0
             self.start_time()
-            print "initial"'''
+            print "initial"
 
     #suppose msg.name--> robotrname msg.tag--> current tag ex:left1, right3
     def sub_robot(self, msg):
