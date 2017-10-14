@@ -51,28 +51,36 @@ class AprilPostPros(object):
             new_info.id = int(detection.id)
             id_info = self.tags_dict[new_info.id]
             if new_info.id == 1:
-                patrol_bot.tag = "left1"
+                patrol_bot.direction = "cw"
+                patrol_bot.id = 1
                 print "detect tag 1"
             elif new_info.id == 2:
-                patrol_bot.tag = "left2"
+                patrol_bot.direction = "cw"
+                patrol_bot.id = 2
                 print "detect tag 2"
             elif new_info.id == 3:
-                patrol_bot.tag = "left3"
+                patrol_bot.direction = "cw"
+                patrol_bot.id = 3
                 print "detect tag 3"
             elif new_info.id == 4:
-                patrol_bot.tag = "left4"
+                patrol_bot.direction = "cw"
+                patrol_bot.id = 4
                 print "detect tag 4"
             elif new_info.id == 5:
-                patrol_bot.tag = "right1"
+                patrol_bot.direction = "ccw"
+                patrol_bot.id = 1
                 print "detect tag 5"
             elif new_info.id == 6:
-                patrol_bot.tag = "right2"
+                patrol_bot.direction = "ccw"
+                patrol_bot.id = 2
                 print "detect tag 6"
             elif new_info.id == 7:
-                patrol_bot.tag = "right3"
+                patrol_bot.direction = "ccw"
+                patrol_bot.id = 3
                 print "detect tag 7"
             elif new_info.id == 8:
-                patrol_bot.tag = "right4"
+                patrol_bot.direction = "ccw"
+                patrol_bot.id = 4
                 print "detect tag 8"
             else:
                 continue

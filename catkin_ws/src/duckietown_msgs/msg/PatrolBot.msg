@@ -1,2 +1,3 @@
 string name
-string tag
+string direction
+int32 id

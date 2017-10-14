@@ -157,7 +157,7 @@ class PatrollingNode(object):
             self.right3_start = time.time()
 
         elif msg.tag == "left4":
-            self.right3_target = False
+            self.left4_target = False
             if self.right4_cost >= self.right1_cost:
                 self.right4_start = time.time()
                 self.left3_target = True
