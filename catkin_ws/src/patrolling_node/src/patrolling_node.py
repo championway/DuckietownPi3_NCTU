@@ -16,8 +16,10 @@ class PatrollingNode(object):
         self.start = False
         self.node_name = "patrolling_node"
         self.p_num = rospy.get_param('~p_num')
+        print self.p_num
+        self.i = str(self.p_num)
         #cost of each node
-        for i in range(int(self.p_num)):
+        for i in range(int(self.i)):
             left_cost = "self.left" + str(p_num) + "_cost"
             right_cost = "self.right" + str(p_num) + "_cost"
             left_target = "self.left" + str(p_num) + "_target"
