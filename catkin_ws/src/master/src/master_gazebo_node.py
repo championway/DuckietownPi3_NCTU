@@ -184,8 +184,8 @@ class carName(object):
                 self.robot = "lakers"
                 print "choose", self.robot
             self.rcount += 1
-            #self.pub_car_twist = rospy.Publisher("/"+self.robot+"/cmd_vel",Twist,queue_size=1)
-            self.pub_car_twist = rospy.Publisher("/cmd_vel",Twist,queue_size=1)
+            self.pub_car_twist = rospy.Publisher("/"+self.robot+"/cmd_vel",Twist,queue_size=1)
+            #self.pub_car_twist = rospy.Publisher("/cmd_vel",Twist,queue_size=1)
 
         elif (joy_msg.buttons[2] == 1):
             print "--------- ", len(self.robotlist), " ---------"
