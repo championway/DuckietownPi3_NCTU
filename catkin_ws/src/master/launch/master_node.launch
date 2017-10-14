@@ -1,5 +1,5 @@
 <launch>
-	<arg name="p_num" default="$(env PATROLLING_NUMBER)"/>
+	<arg name="p_num" default="4"/>
 	<arg name="veh" default="master"/>
 	<arg name="local" default="true"/>
     <arg name="config" default="baseline" doc="Specify a config."/>
