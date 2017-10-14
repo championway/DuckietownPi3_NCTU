@@ -26,7 +26,7 @@ class PatrollingNode(object):
             vars()[right_cost] = 0
             vars()[left_target] = False
             vars()[right_target] = False
-
+        print self.left3_cost
         '''self.left1_cost = 0
         self.right1_cost = 0
         self.left2_cost = 0
