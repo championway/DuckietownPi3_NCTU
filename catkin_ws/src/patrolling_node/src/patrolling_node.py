@@ -83,7 +83,7 @@ class PatrollingNode(object):
                 print " cw  -->" , self.cw_cost[i] , " (target)"       
             else:
                 print " cw  -->" , self.cw_cost[i]
-                 
+
             if self.ccw_target[i]:
                 print " ccw -->" , self.ccw_cost[i] , " (target)"       
             else:
@@ -134,7 +134,7 @@ class PatrollingNode(object):
                 else:
                     self.cw_target[self.p_num-1] = True
                     cmd.data = 2
-                self.ccw_target[tag] = time.time()
+                self.ccw_timer[tag] = time.time()
 
         if tag == self.p_num-1:
             if msg.direction == "cw":
@@ -156,7 +156,7 @@ class PatrollingNode(object):
                 else:
                     self.cw_target[tag-1] = True
                     cmd.data = 2
-                self.ccw_target[tag] = time.time()
+                self.ccw_timer[tag] = time.time()
 
         else:
             if msg.direction == "cw":
@@ -178,7 +178,7 @@ class PatrollingNode(object):
                 else:
                     self.cw_target[tag-1] = True
                     cmd.data = 2
-                self.ccw_target[tag] = time.time()
+                self.ccw_timer[tag] = time.time()
         self.count_target()
         self.print_cost()
         self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
