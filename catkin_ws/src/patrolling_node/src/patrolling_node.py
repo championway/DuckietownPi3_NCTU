@@ -2,7 +2,7 @@
 import rospkg
 import rospy
 import yaml
-from std_msgs.msg import Int8
+from std_msgs.msg import Int8, String
 from duckietown_msgs.msg import PatrolBot, BoolStamped, RobotName
 import numpy as np
 import tf.transformations as tr
@@ -22,6 +22,7 @@ class PatrollingNode(object):
         self.start_time()
 
         #======Subscriber======
+        self.sub_rm_robot = rospy.Subscriber("~rm_robot", String, self.rm_robot)
         self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
         self.sub_set_pub = rospy.Subscriber("~setpub", RobotName, self.sub_setpub)
         self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.reset)
@@ -29,6 +30,9 @@ class PatrollingNode(object):
         self.pub_command = rospy.Publisher("/master/timer_node/command", Int8, queue_size=1)
 
         print "start patrolling node"
+
+    def rm_robot(self, msg):
+        a=1
 
     def sub_setpub(self, msg):
         self.pub_command = rospy.Publisher("/"+msg.robot_name+"/timer_node/command", Int8, queue_size=1)
@@ -40,11 +44,19 @@ class PatrollingNode(object):
         #to see each node are targeted or not
         self.cw_target = list()
         self.ccw_target = list()
+        self.cw_arrived = list()
+        self.ccw_arrived = list()
+        self.cw_next_arrived = list()
+        self.ccw_next_arrived = list()
         for i in range(self.p_num):
             self.cw_cost.append(0)
             self.ccw_cost.append(0)
             self.cw_target.append(False)
             self.ccw_target.append(False)
+            self.cw_arrived.append("")
+            self.ccw_arrived.append("")
+            self.cw_next_arrived.append("")
+            self.ccw_next_arrived.append("")
 
     #initial time of all the nodes
     def start_time(self):
@@ -72,8 +84,19 @@ class PatrollingNode(object):
             self.ccw_cost[i] = self.count_time(now, self.ccw_timer[i])
 
     #return current time - starting time
-    def count_time(self ,now , t):
+    def count_time(self ,now ,t):
         return int(now-t)
+
+    def clean_old_data(self, car):
+        for i in range(self.p_num):
+            if self.cw_arrived[i] == car:
+                self.cw_arrived[i] = ""
+            if self.cw_next_arrived[i] == car:
+                self.cw_next_arrived[i] = ""
+            if self.ccw_arrived[i] == car:
+                self.ccw_arrived[i] = ""
+            if self.ccw_next_arrived[i] == car:
+                self.ccw_next_arrived[i] = ""
 
     def print_cost(self):
         print "====================="
@@ -92,6 +115,15 @@ class PatrollingNode(object):
         print "====================="
         print ""
 
+    def print_info(self):
+        print ("\t\tNow\tNext")
+        print ("-------------------------")
+        for i in range(self.p_num):
+            print i
+            print "  cw\t", self.cw_arrived(i), "\t", self.cw_next_arrived(i)
+            print " ccw\t", self.ccw_arrived(i), "\t", self.ccw_next_arrived(i)
+            print ""
+
     def reset(self, msg):
         self.start = False
         self.initial()
@@ -109,6 +141,7 @@ class PatrollingNode(object):
     #msg.direction --> direction : cw, ccw 
     #msg.id --> tag id 
     def sub_robot(self, msg):
+        self.clean_old_data(msg.name)
         self.count_cost()
         cmd = Int8()
         cmd.data = 0 # 1=forward 2=turnaround
@@ -117,70 +150,89 @@ class PatrollingNode(object):
         if tag == 0:
             if msg.direction == "cw":
                 self.cw_target[tag] = False
+                self.cw_arrived[tag] = msg.name
                 if self.ccw_cost[tag] >= self.ccw_cost[tag+1]:
                     self.ccw_timer[tag] = time.time()
                     self.cw_target[self.p_num-1] = True
+                    self.cw_next_arrived[self.p_num-1] = msg.name
                     cmd.data = 1
                 else:
                     self.ccw_target[tag+1] = True
+                    self.ccw_next_arrived[tag+1] = msg.name
                     cmd.data = 2
                 self.cw_timer[tag]= time.time()
             elif msg.direction == "ccw":
                 self.ccw_target[tag] = False
+                self.ccw_arrived[tag] = msg.name
                 if self.cw_cost[tag]>= self.cw_cost[self.p_num-1]:
                     self.ccw_target[tag+1] = True
+                    self.ccw_next_arrived[tag+1] = msg.name
                     self.cw_timer[tag] = time.time()
                     cmd.data = 1
                 else:
                     self.cw_target[self.p_num-1] = True
+                    self.cw_next_arrived[self.p_num-1] = msg.name
                     cmd.data = 2
                 self.ccw_timer[tag] = time.time()
 
         if tag == self.p_num-1:
             if msg.direction == "cw":
                 self.cw_target[tag] = False
+                self.cw_arrived[tag] = msg.name
                 if self.ccw_cost[tag] >= self.ccw_cost[0]:
                     self.ccw_timer[tag] = time.time()
                     self.cw_target[tag-1] = True
+                    self.cw_next_arrived[tag-1] = msg.name
                     cmd.data = 1
                 else:
                     self.ccw_target[0] = True
+                    self.ccw_next_arrived[0] = msg.name
                     cmd.data = 2
                 self.cw_timer[tag] = time.time()
             elif msg.direction == "ccw":
                 self.ccw_target[tag] = False
+                self.ccw_arrived[tag] = msg.name
                 if self.cw_cost[tag] >= self.cw_cost[tag-1]:
                     self.ccw_target[0] = True
+                    self.ccw_next_arrived[0] = msg.name
                     self.cw_timer[tag] = time.time()
                     cmd.data = 1
                 else:
                     self.cw_target[tag-1] = True
+                    self.cw_next_arrived[tag-1] = msg.name
                     cmd.data = 2
                 self.ccw_timer[tag] = time.time()
 
         else:
             if msg.direction == "cw":
                 self.cw_target[tag] = False
+                self.cw_arrived[tag] = msg.name
                 if self.ccw_cost[tag] >= self.ccw_cost[tag+1]:
                     self.ccw_timer[tag] = time.time()
                     self.cw_target[tag-1] = True
+                    self.cw_next_arrived[tag-1] = msg.name
                     cmd.data = 1
                 else:
                     self.ccw_target[tag+1] = True
+                    self.ccw_next_arrived[tag+1] = msg.name
                     cmd.data = 2
                 self.cw_timer[tag] = time.time()
             elif msg.direction == "ccw":
                 self.ccw_target[tag] = False
+                self.ccw_arrived[tag] = msg.name
                 if self.cw_cost[tag] >= self.cw_cost[tag-1]:
                     self.ccw_target[tag+1] = True
+                    self.ccw_next_arrived[tag+1] = msg.name
                     self.cw_timer[tag] = time.time()
                     cmd.data = 1
                 else:
                     self.cw_target[tag-1] = True
+                    self.cw_next_arrived[tag-1] = msg.name
                     cmd.data = 2
                 self.ccw_timer[tag] = time.time()
         self.count_target()
-        self.print_cost()
+        #self.print_cost()
+        self.print_info()
         self.pub_command = rospy.Publisher("/"+msg.name+"/timer_node/command", Int8, queue_size=1)
         self.pub_command.publish(cmd)
 

@@ -7,6 +7,7 @@ import math
 from sensor_msgs.msg import Joy
 import time
 from __builtin__ import True
+from std_msgs.msg import String
 
 class carName(object):
     def __init__(self):
@@ -47,8 +48,10 @@ class carName(object):
         self.pub_pressB = rospy.Publisher("~press_B",BoolStamped,queue_size=1)
         self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
         self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
+        self.pub_pressLB = rospy.Publisher("~press_LB",BoolStamped,queue_size=1) 
         self.pub_reset = rospy.Publisher("~reset",BoolStamped,queue_size=1)
         self.pub_set = rospy.Publisher("~setpub", RobotName, queue_size=1)
+        self.remove_robot = rospy.Publisher("~rm_robot", String, queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
@@ -71,6 +74,9 @@ class carName(object):
         for i in self.robotlist.keys():
             self.robotlist[i] = self.robotlist[i] + 1
             if self.robotlist[i] >=10 :
+                msg = String()
+                msg.data = rlist(i)
+                self.remove_robot.publish(msg)
                 self.robotlist.pop(i)
                 self.rlist.remove(i)
 
@@ -93,7 +99,8 @@ class carName(object):
             self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
             self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
             self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
-            if pub == 1:
+            pub.publish(msg)
+            '''if pub == 1:
                 self.pub_car_cmd.publish(msg)
             elif pub == 2:
                 self.pub_pressA.publish(msg)
@@ -102,7 +109,7 @@ class carName(object):
             elif pub == 4:
                 self.pub_pressX.publish(msg)
             elif pub == 5:
-                self.pub_pressY.publish(msg)
+                self.pub_pressY.publish(msg)'''
             #rospy.sleep(0.1)
 
     def MultiRobot(self):
@@ -110,7 +117,8 @@ class carName(object):
         self.pub_pressA = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_A",BoolStamped,queue_size=1)
         self.pub_pressB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_B",BoolStamped,queue_size=1)
         self.pub_pressX = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_X",BoolStamped,queue_size=1)
-        self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1) 
+        self.pub_pressY = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_Y",BoolStamped,queue_size=1)
+        self.pub_pressLB = rospy.Publisher("/"+self.robot+"/joy_mapper_node/press_LB",BoolStamped,queue_size=1) 
 
     def cbParamTimer(self,event):
         self.v_gain = rospy.get_param("~speed_gain", 1.0)
@@ -139,7 +147,8 @@ class carName(object):
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
         if self.allrb == True:
-            self.AllRobot(1,car_cmd_msg)
+            #self.AllRobot(1,car_cmd_msg)
+            self.AllRobot(self.pub_car_cmd, car_cmd_msg)
         else:
             self.MultiRobot()
             self.pub_car_cmd.publish(car_cmd_msg)
@@ -166,12 +175,21 @@ class carName(object):
             self.pub_reset.publish(reset_msg)
         
         elif (joy_msg.buttons[4] == 1): #Left back button
-            self.state_parallel_autonomy ^= True
-            rospy.loginfo('state_parallel_autonomy = %s' % self.state_parallel_autonomy)
-            parallel_autonomy_msg = BoolStamped()
-            parallel_autonomy_msg.header.stamp = self.joy.header.stamp
-            parallel_autonomy_msg.data = self.state_parallel_autonomy
-            self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
+            pressLB_msg = BoolStamped()
+            pressLB_msg.header.stamp = self.joy.header.stamp
+            pressLB_msg.data = True
+            rospy.loginfo('Press "Left back"')
+            rospy.loginfo(self.robot + " stop patrolling")
+            if self.allrb == True:
+                #self.AllRobot(2,pressA_msg)
+                print "skip"
+            else:
+                self.MultiRobot()
+                self.pub_pressLB.publish(pressLB_msg)
+                msg = String()
+                msg.data = self.robot
+                self.remove_robot.publish(msg)
+
         elif (joy_msg.buttons[3] == 1):
             rospy.loginfo('Press "Y"')
             if self.rnumber == 0:
@@ -224,7 +242,8 @@ class carName(object):
             pressA_msg.header.stamp = self.joy.header.stamp
             pressA_msg.data = True 
             if self.allrb == True:
-                self.AllRobot(2,pressA_msg)
+                #self.AllRobot(2,pressA_msg)
+                self.AllRobot(self.pub_pressA, pressA_msg)
             else:
                 self.MultiRobot()
                 self.pub_pressA.publish(pressA_msg)
@@ -235,7 +254,8 @@ class carName(object):
             pressB_msg.header.stamp = self.joy.header.stamp
             pressB_msg.data = True 
             if self.allrb == True:
-                self.AllRobot(3,pressB_msg)
+                #self.AllRobot(3,pressB_msg)
+                self.AllRobot(self.pub_pressB, pressB_msg)
             else:
                 self.MultiRobot()
                 self.pub_pressB.publish(pressB_msg)

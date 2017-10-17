@@ -18,6 +18,7 @@
 	</include>
 
 	<!-- start basic args -->
+	<remap from="patrolling_node/setpub" to="master_name_node/rm_robot"/>
 	<remap from="patrolling_node/setpub" to="master_name_node/setpub"/>
 	<remap from="patrolling_node/reset" to="master_name_node/reset"/>
 	<include file="$(find patrolling_node)/launch/patrolling_node.launch">
