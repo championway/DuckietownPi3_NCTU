@@ -55,6 +55,7 @@ class AprilPostPros(object):
             else:
                 patrol_bot.direction = "ccw"
             patrol_bot.id = new_info.id
+            print "detect id ", new_info.id
 
             '''if new_info.id == 1:
                 patrol_bot.direction = "cw"
