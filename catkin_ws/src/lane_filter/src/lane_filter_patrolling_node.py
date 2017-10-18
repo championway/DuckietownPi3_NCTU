@@ -139,7 +139,7 @@ For more info on algorithm and parameters please refer to the google doc:
         measurement_likelihood = np.zeros(self.d.shape)
 
         for segment in segment_list_msg.segments:
-            if segment.color != segment.WHITE and segment.color != segment.YELLOW:
+            if segment.color != segment.YELLOW:
                 continue
             if segment.points[0].x < 0 or segment.points[1].x < 0:
                 continue
