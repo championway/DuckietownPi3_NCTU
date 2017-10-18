@@ -23,6 +23,8 @@ class PatrollingNode(object):
 
         #======Subscriber======
         self.sub_rm_robot = rospy.Subscriber("~rm_robot", String, self.rm_robot)
+        self.sub_print_cost = rospy.Subscriber("~print_cost", BoolStamped, self.sub_print_cost)
+        self.sub_print_state = rospy.Subscriber("~print_state", BoolStamped, self.sub_print_state)
         self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
         self.sub_set_pub = rospy.Subscriber("~setpub", RobotName, self.sub_setpub)
         self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.reset)
@@ -32,7 +34,16 @@ class PatrollingNode(object):
         print "start patrolling node"
 
     def rm_robot(self, msg):
-        a=1
+        if msg.data in self.cw_arrived:
+            self.cw_arrived[self.cw_arrived.index(msg.data)]=""
+        if msg.data in self.ccw_arrived:
+            self.ccw_arrived[self.ccw_arrived.index(msg.data)]=""
+        if msg.data in self.cw_next_arrived:
+            self.cw_target[self.cw_next_arrived.index(msg.data)]=False
+            self.cw_next_arrived[self.cw_next_arrived.index(msg.data)]=""
+        if msg.data in self.ccw_next_arrived:
+            self.ccw_target[self.ccw_next_arrived.index(msg.data)]=False
+            self.ccw_next_arrived[self.ccw_next_arrived.index(msg.data)]=""
 
     def sub_setpub(self, msg):
         self.pub_command = rospy.Publisher("/"+msg.robot_name+"/timer_node/command", Int8, queue_size=1)
@@ -98,6 +109,12 @@ class PatrollingNode(object):
             if self.ccw_next_arrived[i] == car:
                 self.ccw_next_arrived[i] = ""
 
+    def sub_print_cost(self, msg):
+        self.print_cost()
+
+    def sub_print_state(self, msg):
+        self.print_info()
+
     def print_cost(self):
         print "====================="
         for i in range(self.p_num):
@@ -116,12 +133,11 @@ class PatrollingNode(object):
         print ""
 
     def print_info(self):
-        print ("\t\tNow\tNext")
+        print ("\tNow\tNext")
         print ("-------------------------")
         for i in range(self.p_num):
-            print i
-            print "  cw\t", self.cw_arrived(i), "\t", self.cw_next_arrived(i)
-            print " ccw\t", self.ccw_arrived(i), "\t", self.ccw_next_arrived(i)
+            print i,"_cw\t", self.cw_arrived[i], "\t", self.cw_next_arrived[i]
+            print i,"_ccw\t", self.ccw_arrived[i], "\t", self.ccw_next_arrived[i]
             print ""
 
     def reset(self, msg):

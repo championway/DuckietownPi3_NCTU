@@ -6,8 +6,8 @@ events: #Maps from subscribing topic to signal ids
     topic: "joy_mapper_node/joystick_override"
     msg_type: "BoolStamped"
     trigger: True
-  pressLB:
-    topic: "joy_mapper_node/press_LB"
+  pressBK:
+    topic: "joy_mapper_node/press_BK"
     msg_type: "BoolStamped"
     trigger: True
   pressA: 
@@ -106,7 +106,7 @@ states:
   LANE_FOLLOWING:
     transitions:
       pressA: "JOYSTICK_CONTROL"
-      pressLB: "JOYSTICK_CONTROL"
+      pressBK: "JOYSTICK_CONTROL"
       at_stop_line: "WAIT_FOR_TURN"
     active_nodes:
       - lane_filter_node
@@ -122,7 +122,7 @@ states:
       forward: "LANE_FOLLOWING"
       backward: "TURN_AROUND"
       pressA: "JOYSTICK_CONTROL"
-      pressLB: "JOYSTICK_CONTROL"
+      pressBK: "JOYSTICK_CONTROL"
     active_nodes:
       - lane_filter_node
       - line_detector_node
@@ -136,7 +136,7 @@ states:
       turn_around: "TURN_AROUND"
       turn_right: "LANE_FOLLOWING_TURN_RIGHT"
       turn_left: "LANE_FOLLOWING_TURN_LEFT"
-      pressLB: "JOYSTICK_CONTROL"
+      pressBK: "JOYSTICK_CONTROL"
       pressA: "JOYSTICK_CONTROL"
     active_nodes:
       - lane_filter_node
@@ -168,7 +168,7 @@ states:
 
   TURN_AROUND:
     transitions:
-      pressLB: "JOYSTICK_CONTROL"
+      pressBK: "JOYSTICK_CONTROL"
       pressA: "JOYSTICK_CONTROL"
       time_is_up: "LANE_FOLLOWING"
     active_nodes:
