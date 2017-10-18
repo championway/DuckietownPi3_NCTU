@@ -50,7 +50,7 @@ class AprilPostPros(object):
             new_info = TagInfo()
             new_info.id = int(detection.id)
             id_info = self.tags_dict[new_info.id]
-            if detection.pose.orientation.y <= 0.5:
+            if detection.pose.pose.orientation.y <= 0.5:
                 patrol_bot.direction = "cw"
             else:
                 patrol_bot.direction = "ccw"
