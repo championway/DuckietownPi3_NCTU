@@ -50,7 +50,13 @@ class AprilPostPros(object):
             new_info = TagInfo()
             new_info.id = int(detection.id)
             id_info = self.tags_dict[new_info.id]
-            if new_info.id == 1:
+            if detection.pose.orientation.y <= 0.5:
+                patrol_bot.direction = "cw"
+            else:
+                patrol_bot.direction = "ccw"
+            patrol_bot.id = new_info.id
+
+            '''if new_info.id == 1:
                 patrol_bot.direction = "cw"
                 patrol_bot.id = 1
                 print "detect tag 1"
@@ -83,7 +89,7 @@ class AprilPostPros(object):
                 patrol_bot.id = 4
                 print "detect tag 8"
             else:
-                continue
+                continue'''
             self.pub_info.publish(patrol_bot)
         
 if __name__ == '__main__': 
