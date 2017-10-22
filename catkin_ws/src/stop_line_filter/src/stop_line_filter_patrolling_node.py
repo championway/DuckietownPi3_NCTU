@@ -109,6 +109,7 @@ class StopLineFilterNode(object):
             msg.data = True
             print"Here C"
             if segment.color == segment.RED:
+                print "Here D"
                 if self.past_patrol_info != self.patrol_info:
                     self.past_patrol_info = self.patrol_info
                     print "-------at stop line-------"
