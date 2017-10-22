@@ -72,7 +72,7 @@ class StopLineFilterNode(object):
         stop_line_x_accumulator=0.0
         stop_line_y_accumulator=0.0
         for segment in segment_list_msg.segments:
-            if segment.color != segment.RED and segment.color != segment.BLUE:
+            if segment.color != segment.RED:
                 continue
             if segment.points[0].x < 0 or segment.points[1].x < 0: # the point is behind us 
                 continue
