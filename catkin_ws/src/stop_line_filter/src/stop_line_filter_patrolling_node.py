@@ -74,6 +74,8 @@ class StopLineFilterNode(object):
         for segment in segment_list_msg.segments:
             if segment.color != segment.RED:
                 continue
+            if segment.color == segment.RED:
+                print "Fuck You"
             if segment.points[0].x < 0 or segment.points[1].x < 0: # the point is behind us 
                 continue
 
