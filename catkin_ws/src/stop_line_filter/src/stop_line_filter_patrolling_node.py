@@ -74,8 +74,6 @@ class StopLineFilterNode(object):
         for segment in segment_list_msg.segments:
             if segment.color != segment.RED:
                 continue
-            if segment.color == segment.RED:
-                print "Fuck You"
             if segment.points[0].x < 0 or segment.points[1].x < 0: # the point is behind us 
                 continue
 
@@ -102,21 +100,17 @@ class StopLineFilterNode(object):
         stop_line_reading_msg.stop_line_point = stop_line_point
         #stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance and math.fabs(stop_line_point.y) < self.lanewidth/4 
         stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance
-        print"Here A"
         self.pub_stop_line_reading.publish(stop_line_reading_msg)  
-        print "Here B"  
         if stop_line_reading_msg.at_stop_line:
             msg = BoolStamped()
             msg.header.stamp = stop_line_reading_msg.header.stamp
             msg.data = True
-            print"Here C"
-            if segment.color == segment.RED:
-                print "Here D"
-                if self.past_patrol_info != self.patrol_info:
-                    self.past_patrol_info = self.patrol_info
-                    print "-------at stop line-------"
-                    self.pub_at_stop_line.publish(msg)
-                    self.pub_info.publish(self.patrol_info)
+            print"detect stop line"
+            if self.past_patrol_info != self.patrol_info:
+                self.past_patrol_info = self.patrol_info
+                print "-------at stop line-------"
+                self.pub_at_stop_line.publish(msg)
+                self.pub_info.publish(self.patrol_info)
        
     def to_lane_frame(self, point):
         p_homo = np.array([point.x,point.y,1])
