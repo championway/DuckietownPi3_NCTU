@@ -106,6 +106,7 @@ class StopLineFilterNode(object):
             msg.data = True
             
             if segment.color == segment.RED:
+                print "detect stop line"
                 if self.past_patrol_info != self.patrol_info:
                     self.past_patrol_info = self.patrol_info
                     print "-------at stop line-------"
