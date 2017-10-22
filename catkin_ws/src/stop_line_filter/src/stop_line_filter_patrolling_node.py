@@ -73,9 +73,9 @@ class StopLineFilterNode(object):
         stop_line_y_accumulator=0.0
         for segment in segment_list_msg.segments:
             if segment.color != segment.RED:
-                continue
+                return
             if segment.points[0].x < 0 or segment.points[1].x < 0: # the point is behind us 
-                continue
+                return
 
             p1_lane = self.to_lane_frame(segment.points[0])
             p2_lane = self.to_lane_frame(segment.points[1])
@@ -100,8 +100,8 @@ class StopLineFilterNode(object):
         stop_line_point.y = stop_line_y_accumulator/good_seg_count
         stop_line_reading_msg.stop_line_point = stop_line_point
         #stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance and math.fabs(stop_line_point.y) < self.lanewidth/4 
-        #stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance
-        stop_line_reading_msg.at_stop_line = True
+        stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance
+        #stop_line_reading_msg.at_stop_line = True
         self.pub_stop_line_reading.publish(stop_line_reading_msg)  
         print "here C"  
         if stop_line_reading_msg.at_stop_line:
