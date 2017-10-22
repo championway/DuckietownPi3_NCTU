@@ -38,6 +38,7 @@ class StopLineFilterNode(object):
     def reset(self, msg):
         if msg.data:
             self.past_patrol_info = PatrolBot()
+            print "initial"
 
     def get_PatrolBot(self, msg):
         self.patrol_info = msg
