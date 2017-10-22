@@ -22,7 +22,7 @@
 	<remap from="patrolling_node/print_cost" to="master_name_node/print_cost"/>
 	<remap from="patrolling_node/print_state" to="master_name_node/print_state"/>
 	<remap from="patrolling_node/setpub" to="master_name_node/setpub"/>
-	<remap from="patrolling_node/reset" to="master_name_node/reset"/>
+	<!-- remap from="patrolling_node/reset" to="master_name_node/reset"/-->
 	<include file="$(find patrolling_node)/launch/patrolling_node.launch">
 		<arg name="p_num" value="$(arg p_num)"/>
 		<arg name="veh" value="$(arg veh)"/>

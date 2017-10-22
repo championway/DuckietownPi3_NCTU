@@ -27,7 +27,7 @@ class PatrollingNode(object):
         self.sub_print_state = rospy.Subscriber("~print_state", BoolStamped, self.sub_print_state)
         self.sub_robot_info = rospy.Subscriber("/patrol", PatrolBot, self.sub_robot)
         self.sub_set_pub = rospy.Subscriber("~setpub", RobotName, self.sub_setpub)
-        self.sub_reset = rospy.Subscriber("/reset", BoolStamped, self.reset)
+        self.sub_reset = rospy.Subscriber("~reset", BoolStamped, self.reset)
         #======Publisher======
         self.pub_command = rospy.Publisher("/master/timer_node/command", Int8, queue_size=1)
 
@@ -167,27 +167,27 @@ class PatrollingNode(object):
             if msg.direction == "cw":
                 self.cw_target[tag] = False
                 self.cw_arrived[tag] = msg.name
-                if self.ccw_cost[tag] >= self.ccw_cost[self.p_num-1]:
+                if self.ccw_cost[tag] >= self.ccw_cost[tag+1]:
                     self.ccw_timer[tag] = time.time()
-                    self.cw_target[tag+1] = True
-                    self.cw_next_arrived[tag+1] = msg.name
+                    self.cw_target[self.p_num-1] = True
+                    self.cw_next_arrived[self.p_num-1] = msg.name
                     cmd.data = 1
                 else:
-                    self.ccw_target[self.p_num-1] = True
-                    self.ccw_next_arrived[self.p_num-1] = msg.name
+                    self.ccw_target[tag+1] = True
+                    self.ccw_next_arrived[tag+1] = msg.name
                     cmd.data = 2
                 self.cw_timer[tag]= time.time()
             elif msg.direction == "ccw":
                 self.ccw_target[tag] = False
                 self.ccw_arrived[tag] = msg.name
-                if self.cw_cost[tag]>= self.cw_cost[tag+1]:
-                    self.ccw_target[self.p_num-1] = True
-                    self.ccw_next_arrived[self.p_num-1] = msg.name
+                if self.cw_cost[tag]>= self.cw_cost[self.p_num-1]:
+                    self.ccw_target[tag+1] = True
+                    self.ccw_next_arrived[tag+1] = msg.name
                     self.cw_timer[tag] = time.time()
                     cmd.data = 1
                 else:
-                    self.cw_target[tag+1] = True
-                    self.cw_next_arrived[tag+1] = msg.name
+                    self.cw_target[self.p_num-1] = True
+                    self.cw_next_arrived[self.p_num-1] = msg.name
                     cmd.data = 2
                 self.ccw_timer[tag] = time.time()
 
@@ -195,27 +195,27 @@ class PatrollingNode(object):
             if msg.direction == "cw":
                 self.cw_target[tag] = False
                 self.cw_arrived[tag] = msg.name
-                if self.ccw_cost[tag] >= self.ccw_cost[tag-1]:
+                if self.ccw_cost[tag] >= self.ccw_cost[0]:
                     self.ccw_timer[tag] = time.time()
-                    self.cw_target[0] = True
-                    self.cw_next_arrived[0] = msg.name
+                    self.cw_target[tag-1] = True
+                    self.cw_next_arrived[tag-1] = msg.name
                     cmd.data = 1
                 else:
-                    self.ccw_target[tag-1] = True
-                    self.ccw_next_arrived[tag-1] = msg.name
+                    self.ccw_target[0] = True
+                    self.ccw_next_arrived[0] = msg.name
                     cmd.data = 2
                 self.cw_timer[tag] = time.time()
             elif msg.direction == "ccw":
                 self.ccw_target[tag] = False
                 self.ccw_arrived[tag] = msg.name
-                if self.cw_cost[tag] >= self.cw_cost[0]:
-                    self.ccw_target[tag-1] = True
-                    self.ccw_next_arrived[tag-1] = msg.name
+                if self.cw_cost[tag] >= self.cw_cost[tag-1]:
+                    self.ccw_target[0] = True
+                    self.ccw_next_arrived[0] = msg.name
                     self.cw_timer[tag] = time.time()
                     cmd.data = 1
                 else:
-                    self.cw_target[0] = True
-                    self.cw_next_arrived[0] = msg.name
+                    self.cw_target[tag-1] = True
+                    self.cw_next_arrived[tag-1] = msg.name
                     cmd.data = 2
                 self.ccw_timer[tag] = time.time()
 
@@ -223,27 +223,27 @@ class PatrollingNode(object):
             if msg.direction == "cw":
                 self.cw_target[tag] = False
                 self.cw_arrived[tag] = msg.name
-                if self.ccw_cost[tag] >= self.ccw_cost[tag-1]:
+                if self.ccw_cost[tag] >= self.ccw_cost[tag+1]:
                     self.ccw_timer[tag] = time.time()
-                    self.cw_target[tag+1] = True
-                    self.cw_next_arrived[tag+1] = msg.name
+                    self.cw_target[tag-1] = True
+                    self.cw_next_arrived[tag-1] = msg.name
                     cmd.data = 1
                 else:
-                    self.ccw_target[tag-1] = True
-                    self.ccw_next_arrived[tag-1] = msg.name
+                    self.ccw_target[tag+1] = True
+                    self.ccw_next_arrived[tag+1] = msg.name
                     cmd.data = 2
                 self.cw_timer[tag] = time.time()
             elif msg.direction == "ccw":
                 self.ccw_target[tag] = False
                 self.ccw_arrived[tag] = msg.name
-                if self.cw_cost[tag] >= self.cw_cost[tag+1]:
-                    self.ccw_target[tag-1] = True
-                    self.ccw_next_arrived[tag-1] = msg.name
+                if self.cw_cost[tag] >= self.cw_cost[tag-1]:
+                    self.ccw_target[tag+1] = True
+                    self.ccw_next_arrived[tag+1] = msg.name
                     self.cw_timer[tag] = time.time()
                     cmd.data = 1
                 else:
-                    self.cw_target[tag+1] = True
-                    self.cw_next_arrived[tag+1] = msg.name
+                    self.cw_target[tag-1] = True
+                    self.cw_next_arrived[tag-1] = msg.name
                     cmd.data = 2
                 self.ccw_timer[tag] = time.time()
         self.count_target()

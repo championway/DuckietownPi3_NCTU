@@ -24,6 +24,7 @@ class StopLineFilterNode(object):
         self.state = "JOYSTICK_CONTROL"
         self.sleep = False
         ## publishers and subscribers
+        self.sub_reset     = rospy.Subscriber("/reset", BoolStamped, self.reset)
         self.sub_info      = rospy.Subscriber("~info", PatrolBot, self.get_PatrolBot)
         self.sub_segs      = rospy.Subscriber("~segment_list", SegmentList, self.processSegments)
         self.sub_lane      = rospy.Subscriber("~lane_pose",LanePose, self.processLanePose)
@@ -33,6 +34,10 @@ class StopLineFilterNode(object):
         self.pub_info = rospy.Publisher("/patrol", PatrolBot, queue_size=1)
         self.sub_switch = rospy.Subscriber("~switch", BoolStamped, self.cbSwitch, queue_size=1)
         self.params_update = rospy.Timer(rospy.Duration.from_sec(1.0), self.updateParams)
+
+    def reset(self, msg):
+        if msg.data:
+            self.past_patrol_info = PatrolBot()
 
     def get_PatrolBot(self, msg):
         self.patrol_info = msg

@@ -49,7 +49,7 @@ class carName(object):
         self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
         self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
         self.pub_pressBK = rospy.Publisher("~press_BK",BoolStamped,queue_size=1)
-        self.pub_reset = rospy.Publisher("~reset",BoolStamped,queue_size=1)
+        self.pub_reset = rospy.Publisher("/reset",BoolStamped,queue_size=1)
         self.pub_set = rospy.Publisher("~setpub", RobotName, queue_size=1)
         self.remove_robot = rospy.Publisher("~rm_robot", String, queue_size=1)
         self.pub_print_cost = rospy.Publisher("~print_cost", BoolStamped, queue_size=1)
