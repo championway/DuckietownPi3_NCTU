@@ -85,7 +85,7 @@ class StopLineFilterNode(object):
             stop_line_y_accumulator += avg_y # TODO output covariance and not just mean
             good_seg_count += 1.0
             #print "-----", good_seg_count, "-----"
-
+        print "here A"
         stop_line_reading_msg = StopLineReading()
         stop_line_reading_msg.header.stamp = segment_list_msg.header.stamp
         if (good_seg_count < self.min_segs):
@@ -93,7 +93,7 @@ class StopLineFilterNode(object):
             stop_line_reading_msg.at_stop_line = False
             self.pub_stop_line_reading.publish(stop_line_reading_msg)
             return
-        
+        print "here B"
         stop_line_reading_msg.stop_line_detected = True
         stop_line_point = Point()
         stop_line_point.x = stop_line_x_accumulator/good_seg_count
@@ -102,12 +102,13 @@ class StopLineFilterNode(object):
         #stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance and math.fabs(stop_line_point.y) < self.lanewidth/4 
         #stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance
         stop_line_reading_msg.at_stop_line = True
-        self.pub_stop_line_reading.publish(stop_line_reading_msg)    
+        self.pub_stop_line_reading.publish(stop_line_reading_msg)  
+        print "here C"  
         if stop_line_reading_msg.at_stop_line:
             msg = BoolStamped()
             msg.header.stamp = stop_line_reading_msg.header.stamp
             msg.data = True
-            
+            print"here D"
             if segment.color == segment.RED:
                 print "detect stop line"
                 if self.past_patrol_info != self.patrol_info:
