@@ -84,7 +84,7 @@ class StopLineFilterNode(object):
             stop_line_x_accumulator += avg_x
             stop_line_y_accumulator += avg_y # TODO output covariance and not just mean
             good_seg_count += 1.0
-            print "-----", good_seg_count, "-----"
+            #print "-----", good_seg_count, "-----"
 
         stop_line_reading_msg = StopLineReading()
         stop_line_reading_msg.header.stamp = segment_list_msg.header.stamp
