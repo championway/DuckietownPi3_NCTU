@@ -73,7 +73,7 @@ class StopLineFilterNode(object):
         stop_line_y_accumulator=0.0
         for segment in segment_list_msg.segments:
             if segment.color != segment.RED:
-                return
+                continue
             if segment.points[0].x < 0 or segment.points[1].x < 0: # the point is behind us 
                 continue
 
@@ -100,12 +100,14 @@ class StopLineFilterNode(object):
         stop_line_reading_msg.stop_line_point = stop_line_point
         #stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance and math.fabs(stop_line_point.y) < self.lanewidth/4 
         stop_line_reading_msg.at_stop_line = stop_line_point.x < self.stop_distance
-        self.pub_stop_line_reading.publish(stop_line_reading_msg)    
+        print"Here A"
+        self.pub_stop_line_reading.publish(stop_line_reading_msg)  
+        print "Here B"  
         if stop_line_reading_msg.at_stop_line:
             msg = BoolStamped()
             msg.header.stamp = stop_line_reading_msg.header.stamp
             msg.data = True
-            
+            print"Here C"
             if segment.color == segment.RED:
                 if self.past_patrol_info != self.patrol_info:
                     self.past_patrol_info = self.patrol_info

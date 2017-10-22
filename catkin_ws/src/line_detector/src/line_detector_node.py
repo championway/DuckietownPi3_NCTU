@@ -192,7 +192,6 @@ class LineDetectorNode(object):
             lines_normalized_yellow = ((yellow.lines + arr_cutoff) * arr_ratio)
             segmentList.segments.extend(self.toSegmentMsg(lines_normalized_yellow, yellow.normals, Segment.YELLOW))
         if len(red.lines) > 0:
-            print "it's red line"
             lines_normalized_red = ((red.lines + arr_cutoff) * arr_ratio)
             segmentList.segments.extend(self.toSegmentMsg(lines_normalized_red, red.normals, Segment.RED))
         if len(blue.lines) > 0:
