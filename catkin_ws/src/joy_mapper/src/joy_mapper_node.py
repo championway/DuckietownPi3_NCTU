@@ -11,6 +11,7 @@ from sensor_msgs.msg import Joy
 from sensor_msgs.msg import CompressedImage, Image
 import time
 from __builtin__ import True
+from geometry_msgs.msg import Twist
 #bridge = CvBridge()
 class JoyMapper(object):
     def __init__(self):
@@ -42,6 +43,7 @@ class JoyMapper(object):
         self.pub_pressB = rospy.Publisher("~press_B",BoolStamped,queue_size=1)
         self.pub_pressX = rospy.Publisher("~press_X",BoolStamped,queue_size=1)
         self.pub_pressY = rospy.Publisher("~press_Y",BoolStamped,queue_size=1)
+        self.pub_car_twist = rospy.Publisher("/cmd_vel",Twist,queue_size=1)
         self.save_image = rospy.Subscriber("~image", CompressedImage, self.cbImage, queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
@@ -92,6 +94,10 @@ class JoyMapper(object):
             # Holonomic Kinematics for Normal Driving
             car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
         self.pub_car_cmd.publish(car_cmd_msg)
+        car_twist_msg = Twist()
+        car_twist_msg.linear.x = car_cmd_msg.v*1.5
+        car_twist_msg.angular.z = car_cmd_msg.omega*1.5     
+        self.pub_car_twist.publish(car_twist_msg)
 
 # Button List index of joy.buttons array:
 # a = 0, b=1, x=2. y=3, lb=4, rb=5, back = 6, start =7,

@@ -2,6 +2,7 @@
 import rospy
 from duckietown_msgs.msg import Twist2DStamped, FSMState, BoolStamped
 import time
+from geometry_msgs.msg import Twist
 
 class CarCmdSwitchNode(object):
     def __init__(self):
@@ -16,6 +17,7 @@ class CarCmdSwitchNode(object):
         self.pub_cmd = rospy.Publisher("~cmd",Twist2DStamped,queue_size=1)
         self.pub_stop_around = rospy.Publisher("~stop_around", BoolStamped, queue_size=1, latch=True)
         # Construct subscribers
+        self.pub_car_twist = rospy.Publisher("/cmd_vel",Twist,queue_size=1)
         self.sub_fsm_state = rospy.Subscriber(rospy.get_param("~mode_topic"),FSMState,self.cbFSMState)
         self.sub_dict = dict()
         for src_name, topic_name in source_topic_dict.items():
@@ -38,18 +40,30 @@ class CarCmdSwitchNode(object):
     def cbWheelsCmd(self,msg,src_name):
         if src_name == self.current_src_name:
             self.pub_cmd.publish(msg)
+            car_twist_msg = Twist()
+            car_twist_msg.linear.x = msg.v*1.5
+            car_twist_msg.angular.z = msg.omega*3
+            self.pub_car_twist.publish(car_twist_msg)
 
     def pubStop(self):
         msg = Twist2DStamped()
         msg.v = 0
         msg.omega = 0
         self.pub_cmd.publish(msg)
+        car_twist_msg = Twist()
+        car_twist_msg.linear.x = msg.v*1.5
+        car_twist_msg.angular.z = msg.omega*3
+        self.pub_car_twist.publish(car_twist_msg)
 
     def pubTurn(self):
         msg = Twist2DStamped()
         msg.v = 0
         msg.omega = 4
         self.pub_cmd.publish(msg)
+        car_twist_msg = Twist()
+        car_twist_msg.linear.x = msg.v*1.5
+        car_twist_msg.angular.z = msg.omega*3
+        self.pub_car_twist.publish(car_twist_msg)
 
     def on_shutdown(self):
         rospy.loginfo("[%s] Shutting down." %(self.node_name))

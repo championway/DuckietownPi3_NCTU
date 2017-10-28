@@ -4,12 +4,13 @@
     <arg name="config" default="baseline" doc="Specify a config."/>
     <arg name="param_file_name" default="patrolling"/>
 
-    <include file="$(find duckietown)/machines"/>
+    
     <!-- intersection control -->
     <node ns="$(arg veh)" if="$(arg local)" pkg="fsm" type="fsm_patrolling_node.py" name="fsm_node" clear_params="true" output="screen" required="true">
         <rosparam command="load" file="$(find duckietown)/config/$(arg config)/fsm/fsm_node/$(arg param_file_name).yaml"/>
     </node>
     
+    <include unless="$(arg local)" file="$(find duckietown)/machines"/>
     <node ns="$(arg veh)" unless="$(arg local)" machine="$(arg veh)" pkg="fsm" type="fsm_patrolling_node.py" name="fsm_node" clear_params="true" output="screen" required="true">
         <rosparam command="load" file="$(find duckietown)/config/$(arg config)/fsm/fsm_node/$(arg param_file_name).yaml"/>
     </node>

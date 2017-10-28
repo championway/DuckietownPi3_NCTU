@@ -8,7 +8,7 @@ from sensor_msgs.msg import Joy
 import time
 from __builtin__ import True
 from std_msgs.msg import String
-
+from geometry_msgs.msg import Twist
 class carName(object):
     def __init__(self):
         #self.node_name = rospy.get_name()
@@ -54,6 +54,7 @@ class carName(object):
         self.remove_robot = rospy.Publisher("~rm_robot", String, queue_size=1)
         self.pub_print_cost = rospy.Publisher("~print_cost", BoolStamped, queue_size=1)
         self.pub_print_state = rospy.Publisher("~print_state", BoolStamped, queue_size=1)
+        self.pub_car_twist = rospy.Publisher("/cmd_vel",Twist,queue_size=1)
 #        self.pub_picture = rospy.Subscriber("~photo",sensor_msgs,queue_size=1))
         # Subscriptions
         self.sub_joy_ = rospy.Subscriber("joy", Joy, self.cbJoy, queue_size=1)
@@ -154,6 +155,10 @@ class carName(object):
         else:
             self.MultiRobot()
             self.pub_car_cmd.publish(car_cmd_msg)
+        car_twist_msg = Twist()
+        car_twist_msg.linear.x = car_cmd_msg.v*1.5
+        car_twist_msg.angular.z = car_cmd_msg.omega*1.5     
+        self.pub_car_twist.publish(car_twist_msg)
 
 # Button List index of joy.buttons array:
 # a = 0, b=1, x=2. y=3, lb=4, rb=5, back = 6, start =7,

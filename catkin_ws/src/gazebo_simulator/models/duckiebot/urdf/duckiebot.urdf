@@ -1,0 +1,165 @@
+<robot
+  name="duckiebot">
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <legacyMode>false</legacyMode>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>10</updateRate>
+      <leftJoint>lwheel_joint</leftJoint>
+      <rightJoint>rwheel_joint</rightJoint>
+      <wheelSeparation>0.4</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+      <torque>10</torque>
+      <commandTopic>/cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+    </plugin>
+  </gazebo>
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.00142907361684266 0 -0.00923874935969535"
+        rpy="0 0 0" />
+      <mass
+        value="0.244238862961848" />
+      <inertia
+        ixx="0.000275478027021085"
+        ixy="-1.33659057132537E-19"
+        ixz="-2.17101944003054E-05"
+        iyy="0.000716650248412452"
+        iyz="3.0265689925199E-20"
+        izz="0.000951525807268902" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiebot/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiebot/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="lwheel_link">
+    <inertial>
+      <origin
+        xyz="0 -0.00999999999999998 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0557789775644868" />
+      <inertia
+        ixx="1.45803923229503E-05"
+        ixy="-2.77932685817816E-22"
+        ixz="8.01568171190387E-23"
+        iyy="2.54421861416015E-05"
+        iyz="2.84550130718242E-22"
+        izz="1.45803923229503E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiebot/meshes/lwheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiebot/meshes/lwheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lwheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.052 0.078 -0.0199999999999999"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="lwheel_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="rwheel_link">
+    <inertial>
+      <origin
+        xyz="0 0.00999999999999998 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0557789775644867" />
+      <inertia
+        ixx="1.45803923229503E-05"
+        ixy="-1.32348898008493E-23"
+        ixz="7.67886410622989E-22"
+        iyy="2.54421861416015E-05"
+        iyz="1.52201232709758E-22"
+        izz="1.45803923229503E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiebot/meshes/rwheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiebot/meshes/rwheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rwheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.052 -0.078 -0.02"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rwheel_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+</robot>
