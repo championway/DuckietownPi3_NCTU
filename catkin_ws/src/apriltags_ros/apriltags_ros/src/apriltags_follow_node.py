@@ -28,7 +28,7 @@ class AprilFollow(object):
         self.sub_prePros = rospy.Subscriber("~apriltags_in", AprilTags, self.callback, queue_size=1)
 # -------- Subscriber --------
         self.pub_pose = rospy.Publisher("~target_pose", VehiclePose, queue_size=1)
-
+        
     def setupParam(self,param_name,default_value):
         value = rospy.get_param(param_name,default_value)
         rospy.set_param(param_name,value) #Write to parameter server for transparancy
