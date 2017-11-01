@@ -157,7 +157,7 @@
 			<remap from="apriltags_follow_node/apriltags_in" to="apriltags_fast_node/apriltags"/> 	
 			<include file="$(find apriltags_ros)/launch/apriltags_follow_node.launch">
 				<arg name="veh" value="$(arg veh)"/>
-				<arg name="loc" value="false"/>
+				<arg name="local" value="false"/>
 				<arg name="param_file_name" value="$(arg param_file_name)"/>
 				<arg name="config" value="$(arg config)"/>
 			</include>
