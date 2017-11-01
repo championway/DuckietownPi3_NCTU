@@ -47,7 +47,7 @@ class ObjectFollow(object):
         self.pub_april = rospy.Publisher("~apriltag_switch",  BoolStamped, queue_size=1)
 
         #-----Subscriptions-----
-        self.sub_target_pose_bumper = rospy.Subscriber("~target_pose", VehiclePose, self.cb_target_pose_bumper, queue_size=1)
+        #self.sub_target_pose_bumper = rospy.Subscriber("~target_pose", VehiclePose, self.cb_target_pose_bumper, queue_size=1)
         self.params_update = rospy.Timer(rospy.Duration.from_sec(1.0), self.update_params_event)
         self.sub_target_pose_april = rospy.Subscriber("~target_pose_april", VehiclePose, self.cb_target_pose_april, queue_size=1)
 
@@ -112,7 +112,7 @@ class ObjectFollow(object):
         rospy.sleep(0.5)  # To make sure that it gets published.
         rospy.loginfo("[%s] Shutdown" % self.node_name)
 
-    def cb_target_pose_bumper(self, vehicle_pose_msg):
+    '''def cb_target_pose_bumper(self, vehicle_pose_msg):
 
         if vehicle_pose_msg.detection: # detection of a bumper
             # Have not lost bumper, stop april tags
@@ -148,22 +148,26 @@ class ObjectFollow(object):
             #             self.car_cmd_msg.v = 0.0
             #             self.car_cmd_msg.omega = 0.0
             #             self.pub_car_cmd.publish(self.car_cmd_msg)
-            #             time.sleep( self.delay_pause )
+            #             time.sleep( self.delay_pause )'''
 
     def cb_target_pose_april(self, vehicle_pose_msg):
-        if self.lost_bumper:
-            if vehicle_pose_msg.detection:
-                # control vehicle
-                self.control_vehicle(vehicle_pose_msg)
-                
-                if self.stop_pause :
-                    time.sleep( self.delay_go )
-                    self.stop_vehicle()
-                    time.sleep( self.delay_pause )
-
-            else:
-                #self.control_vehicle(self.last_vehicle_pose)
+        if vehicle_pose_msg.detection:
+            # control vehicle
+            self.control_vehicle(vehicle_pose_msg)
+            print ('rho:',vehicle_pose_msg.rho)
+            print ('theta:',vehicle_pose_msg.theta)
+            print ('psi:',vehicle_pose_msg.phi)
+            print ('x:',vehicle_pose_msg.x)
+            print ('z:',vehicle_pose_msg.z)
+            print ('detection:',vehicle_pose_msg.detection)
+            if self.stop_pause :
+                time.sleep( self.delay_go )
                 self.stop_vehicle()
+                time.sleep( self.delay_pause )
+
+        else:
+            #self.control_vehicle(self.last_vehicle_pose)
+            self.stop_vehicle()
                 
                 
     def stop_vehicle(self):
