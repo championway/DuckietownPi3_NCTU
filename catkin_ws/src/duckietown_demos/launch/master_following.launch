@@ -37,9 +37,9 @@
 	<arg name="fsm" default="true"/>
 	<arg name="apriltags" default="true"/>
 	<arg name="/apriltags/local" default="false" />
-	<arg name="/apriltags/preprocessing)"  default="true"/>
-	<arg name="/apriltags/fast)"  default="true"/>
-	<arg name="/apriltags/postprocessing)"  default="true"/>
+	<arg name="/apriltags/preprocessing"  default="true"/>
+	<arg name="/apriltags/fast"  default="true"/>
+	<arg name="/apriltags/postprocessing"  default="true"/>
 	<!-- end switch args -->
 	
 	<!-- Enable statistics -->
