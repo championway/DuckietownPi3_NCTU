@@ -74,7 +74,7 @@ class AprilPrePros(object):
             
     def fast_detection(self,event):
         """ Pre-pros image and publish """
-        if not self.camera_IMG == None:
+        if not self.camera_IMG is None:
         
             # Crop
             a = self.fast_v_crop # up/down edge crop

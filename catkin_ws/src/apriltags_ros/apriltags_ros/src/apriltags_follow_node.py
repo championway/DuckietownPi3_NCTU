@@ -95,6 +95,8 @@ class AprilFollow(object):
         target_pose_out.rho = np.linalg.norm([target_pose_out.x, target_pose_out.y])
         target_pose_out.theta = np.arctan2(target_pose_out.y, target_pose_out.x)
         target_pose_out.psi = 2 * detection.transform.rotation.z
+        print ("(x,y) = ", target_pose_out.x, target_pose_out.y)
+        print ("(rho, theta, psi)= ", target_pose_out.rho, target_pose_out.theta, target_pose_out.psi)
         self.pub_pose.publish(target_pose_out)
         
 if __name__ == '__main__': 
