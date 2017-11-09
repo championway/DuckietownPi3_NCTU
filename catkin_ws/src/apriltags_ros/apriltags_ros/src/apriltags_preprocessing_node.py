@@ -101,8 +101,6 @@ class AprilPrePros(object):
             img_msg.header.frame_id = self.camera_msg.header.frame_id
             self.pub_ToApril_fast.publish(img_msg)
             
-            rospy.loginfo("[%s] Fast Detection Published " %(self.node_name))
-            
         else:
             rospy.loginfo("[%s] Fast Detection: No camera image to process " %(self.node_name))
 

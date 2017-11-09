@@ -2,7 +2,7 @@
 import rospkg
 import rospy
 import yaml
-from duckietown_msgs.msg import AprilTagsWithInfos, TagInfo, AprilTagDetectionArray, BoolStamped, PatrolBot
+from duckietown_msgs.msg import AprilTags, AprilTagsWithInfos, TagInfo, AprilTagDetectionArray, BoolStamped
 import numpy as np
 import tf.transformations as tr
 from geometry_msgs.msg import PoseStamped
