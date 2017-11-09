@@ -26,7 +26,7 @@ class AprilPrePros(object):
         self.camera_msg  = None
         
         self.load_params( None )
-        #self.init_timers()
+        self.init_timers()
         
     def cbimage(self, image_msg):
         pose_msg_out = VehiclePose()
@@ -44,10 +44,6 @@ class AprilPrePros(object):
         #cv_img = cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
         self.camera_IMG  = cv_img
         self.camera_msg  = image_msg_out
-        img_msg = self.bridge.cv2_to_imgmsg( self.camera_IMG , "bgr8")
-        img_msg.header.stamp = self.camera_msg.header.stamp
-        img_msg.header.frame_id = self.camera_msg.header.frame_id
-        self.pub_ToApril_fast.publish(img_msg)
 
     def load_params(self, event):
         """ """
