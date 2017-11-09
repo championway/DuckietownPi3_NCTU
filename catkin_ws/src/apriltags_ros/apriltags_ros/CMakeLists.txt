@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   duckietown_msgs
   tf
+  tf_conversions
   cv_bridge
   message_generation
   nodelet
@@ -58,6 +59,10 @@ target_link_libraries(apriltag_detector_node
   ${catkin_LIBRARIES}
   apriltag_detector
 )
+
+add_executable(april_tag_detector src/april_tag_detector.cpp)
+add_dependencies(april_tag_detector ${catkin_EXPORTED_TARGETS})
+target_link_libraries(april_tag_detector ${catkin_LIBRARIES} apriltags)
 
 #############
 ## Install ##
