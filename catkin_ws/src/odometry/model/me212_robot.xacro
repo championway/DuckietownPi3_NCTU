@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="me212_robot">
+
+<link name="base_link">
+    <visual>
+        <geometry>
+            <mesh scale="0.001 0.001 0.001" filename="package://me212_robot/model/meshes/visual/me212_robot.stl"/>
+        </geometry>
+        <material name="blue">
+            <color rgba="0.8 0.8 .8 1"/>
+        </material>
+    </visual>
+</link>
+</robot>
