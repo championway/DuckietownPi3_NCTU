@@ -158,7 +158,6 @@ class ObjectFollow(object):
             print 'theta:',vehicle_pose_msg.theta
             print 'psi:',vehicle_pose_msg.psi
             print 'x:',vehicle_pose_msg.x
-            print 'z:',vehicle_pose_msg.z
             print 'detection:',vehicle_pose_msg.detection
             print ""
             if self.stop_pause :
