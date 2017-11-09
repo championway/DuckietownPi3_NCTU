@@ -34,7 +34,7 @@ class AprilPrePros(object):
 #           image_cv=self.bridge.imgmsg_to_cv2(image_msg,"bgr8")
             np_arr = np.fromstring(image_msg.data, np.uint8)
             pose_msg_out.header.stamp = image_msg.header.stamp
-            image_cv = cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
+            image_cv = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
             image_msg_out = self.bridge.cv2_to_imgmsg(image_cv, "bgr8")
         except CvBridgeError as e:
             print e
