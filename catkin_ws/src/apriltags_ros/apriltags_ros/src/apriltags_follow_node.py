@@ -37,6 +37,7 @@ class AprilFollow(object):
 
     def callback(self, msg):
         # Load tag detections message
+        print ("Here")
         target_pose_out = VehiclePose()
         target_pose_out.detection = False
         if len(msg.detections) == 0:
