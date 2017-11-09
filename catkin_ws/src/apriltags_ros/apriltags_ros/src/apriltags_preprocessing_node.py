@@ -74,40 +74,37 @@ class AprilPrePros(object):
             
     def fast_detection(self,event):
         """ Pre-pros image and publish """
+        if not self.camera_IMG == None:
         
-        if self.fast_enabled:
-            if not self.camera_IMG == None:
+            # Crop
+            a = self.fast_v_crop # up/down edge crop
+            c = self.fast_v_off # horizontal offset
+            b = self.fast_h_crop  # Side crop
+            d = self.fast_h_off # horizontal offset
             
-                # Crop
-                a = self.fast_v_crop # up/down edge crop
-                c = self.fast_v_off # horizontal offset
-                b = self.fast_h_crop  # Side crop
-                d = self.fast_h_off # horizontal offset
-                
-                crop_img = self.camera_IMG[0+a+c:480-a+c, 0+b+d:640-b+d]
-                #crop_img = self.camera_IMG
-                
-                # Downsample
-                if self.fast_x_down == 1:
-                    """ No down sampling """
-                    processed_img = crop_img
-                    
-                else:
-                    h,w           = crop_img.shape[:2]
-                    dstsize       = ( int( w / self.fast_x_down ) , int( h / self.fast_x_down ) )
-                    processed_img = cv2.pyrDown( crop_img , dstsize )
-        
-                # Publish Message
-                img_msg = self.bridge.cv2_to_imgmsg( processed_img , "bgr8")
-                img_msg.header.stamp = self.camera_msg.header.stamp
-                img_msg.header.frame_id = self.camera_msg.header.frame_id
-                self.pub_ToApril_fast.publish(img_msg)
-                
-                rospy.loginfo("[%s] Fast Detection Published " %(self.node_name))
+            crop_img = self.camera_IMG[0+a+c:480-a+c, 0+b+d:640-b+d]
+            #crop_img = self.camera_IMG
+            
+            # Downsample
+            if self.fast_x_down == 1:
+                """ No down sampling """
+                processed_img = crop_img
                 
             else:
-                
-                rospy.loginfo("[%s] Fast Detection: No camera image to process " %(self.node_name))
+                h,w           = crop_img.shape[:2]
+                dstsize       = ( int( w / self.fast_x_down ) , int( h / self.fast_x_down ) )
+                processed_img = cv2.pyrDown( crop_img , dstsize )
+        
+            # Publish Message
+            img_msg = self.bridge.cv2_to_imgmsg( processed_img , "bgr8")
+            img_msg.header.stamp = self.camera_msg.header.stamp
+            img_msg.header.frame_id = self.camera_msg.header.frame_id
+            self.pub_ToApril_fast.publish(img_msg)
+            
+            rospy.loginfo("[%s] Fast Detection Published " %(self.node_name))
+            
+        else:
+            rospy.loginfo("[%s] Fast Detection: No camera image to process " %(self.node_name))
 
 if __name__ == '__main__': 
     rospy.init_node('AprilPrePros',anonymous=False)
