@@ -23,7 +23,7 @@
               type="$(arg node_name).py" output="screen">
             <param name="veh" value="$(arg veh)"/>
             <rosparam command="load"
-                      file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg param_file_name).yaml"/>
+                      file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
         </node>
     </group>
 </launch>
