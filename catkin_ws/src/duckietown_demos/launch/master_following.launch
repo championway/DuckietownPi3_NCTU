@@ -135,7 +135,7 @@
 
 	<!-- Start April Tags -->
 	<group if="$(arg /apriltags/preprocessing)">
-		<remap from="apriltags_preprocessing_node/image_in" to="camera_node/camera_info"/>
+		<remap from="apriltags_preprocessing_node/image_in" to="camera_node/image/compressed"/>
 		<include file="$(find apriltags_ros)/launch/apriltags_preprocessing_node.launch">
 			<arg name="veh" value="$(arg veh)"/>
 			<arg name="config" value="$(arg config)"/>
