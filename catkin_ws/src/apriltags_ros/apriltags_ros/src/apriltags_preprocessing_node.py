@@ -4,7 +4,7 @@ from cv_bridge import CvBridge, CvBridgeError
 import cv2
 import numpy as np
 from sensor_msgs.msg import CompressedImage,Image
-from duckietown_msgs.msg import BoolStamped
+from duckietown_msgs.msg import BoolStamped, VehiclePose
 import time
 class AprilPrePros(object):
     """ """
@@ -29,6 +29,7 @@ class AprilPrePros(object):
         self.init_timers()
         
     def cbimage(self, image_msg):
+        pose_msg_out = VehiclePose()
         try:
 #           image_cv=self.bridge.imgmsg_to_cv2(image_msg,"bgr8")
             np_arr = np.fromstring(image_msg.data, np.uint8)
