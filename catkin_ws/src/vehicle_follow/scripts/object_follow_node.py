@@ -154,12 +154,13 @@ class ObjectFollow(object):
         if vehicle_pose_msg.detection:
             # control vehicle
             self.control_vehicle(vehicle_pose_msg)
-            print ('rho:',vehicle_pose_msg.rho)
-            print ('theta:',vehicle_pose_msg.theta)
-            print ('psi:',vehicle_pose_msg.phi)
-            print ('x:',vehicle_pose_msg.x)
-            print ('z:',vehicle_pose_msg.z)
-            print ('detection:',vehicle_pose_msg.detection)
+            print 'rho:',vehicle_pose_msg.rho
+            print 'theta:',vehicle_pose_msg.theta
+            print 'psi:',vehicle_pose_msg.psi
+            print 'x:',vehicle_pose_msg.x
+            print 'z:',vehicle_pose_msg.z
+            print 'detection:',vehicle_pose_msg.detection
+            print ""
             if self.stop_pause :
                 time.sleep( self.delay_go )
                 self.stop_vehicle()
