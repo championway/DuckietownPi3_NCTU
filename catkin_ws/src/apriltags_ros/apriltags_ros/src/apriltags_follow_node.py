@@ -6,6 +6,7 @@ from duckietown_msgs.msg import AprilTags, VehiclePose, TagInfo, AprilTagDetecti
 import numpy as np
 import tf.transformations as tr
 from geometry_msgs.msg import PoseStamped
+import kinematic as k
 
 class AprilFollow(object):
     """ """
